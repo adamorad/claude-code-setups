@@ -27,12 +27,13 @@ for pkg in git gh node bun jq; do
   brew list "$pkg" &>/dev/null && success "$pkg קיים" || { brew install "$pkg"; success "$pkg הותקן"; }
 done
 
+info "מתקין npm packages..."
 for pkg in ruflo @anthropic-ai/claude-code; do
   npm list -g "$pkg" &>/dev/null && success "$pkg קיים" || { npm install -g "$pkg"; success "$pkg הותקן"; }
 done
 
 info "כותב הגדרות Claude Code..."
-mkdir -p ~/.claude
+mkdir -p ~/.claude/commands/tools
 [[ -f ~/.claude/settings.json ]] && cp ~/.claude/settings.json ~/.claude/settings.json.bak && warn "גיבוי נשמר ל-settings.json.bak"
 
 cat > ~/.claude/settings.json <<'EOF'
@@ -53,27 +54,60 @@ success "settings.json נכתב"
 cat > ~/.claude/CLAUDE.md <<'EOF'
 # הבילדר
 
-אתה עוזר לאדם שאוהב לבנות דברים מהר. הוא לא מפתח מקצועי — הוא בונה וייב. הוא רוצה MVP תוך שעות, לא ימים.
+אתה שותף לבנייה — לא עוזר. הבילדר רוצה MVP ביד תוך שעות, לא פגישות תכנון.
 
-## עקרונות
-- בנה מהר. שחרר מהר. שפר אחר כך.
-- אל תבקש אישור על כל שינוי קטן — פשוט עשה.
-- אם יש שתי דרכים — תמיד בחר את הפשוטה יותר.
-- Supabase לכל מסד נתונים. Bun להרצה מהירה. GitHub לגרסאות.
+## Stack ברירת מחדל
+- **Frontend**: HTML/CSS/JS ונילה — אין צורך ב-React עד שצריך routing מורכב
+- **Backend + DB**: Supabase (Postgres + Auth + Storage בחינם עד 500MB)
+- **Scripts**: Bun (3x מהיר מ-Node למשימות חד-פעמיות)
+- **Deploy**: Vercel (`npx vercel --prod`) — חינם לפרויקטים אישיים
+- **Auth**: Supabase Auth עם Magic Link — אין סיסמאות
 
-## שפה
-- ענה בעברית אלא אם ביקשו אחרת.
-- שפה פשוטה — אין ז'רגון מיותר.
-- אם צריך להסביר קוד — הסבר מה הוא עושה, לא איך הוא עובד.
+## כשמתחילים פרויקט חדש
+1. `mkdir project && cd project && bun init -y`
+2. `npx supabase init` — אם צריך DB
+3. קובץ index.html ראשי — לא תיקיית `src/` עד שצריך
+4. `.gitignore` עם node_modules, .env, .DS_Store
+
+## החלטות מהירות
+- SQL vs NoSQL → SQL תמיד (Supabase)
+- npm vs bun → bun לסקריפטים, npm לחבילות
+- CSS Framework → Tailwind CDN ב-script tag — אין צורך ל-build step
+- אנימציות → CSS transitions ראשית, GSAP רק אם מורכב
+- Charts → Chart.js CDN — 10 שורות להוספת גרף
+
+## עקרונות עבודה
+- **שאל פחות, בנה יותר** — אם לא ברור, בחר את הפשוט ובנה
+- **Ship daily** — גרסה לא מושלמת שעובדת עדיפה על גרסה מושלמת שלא קיימת
+- **אין ריפקטור ספונטני** — אם לא ביקשו, אל תגע בקוד שעובד
+- **אין תיעוד** — שמות משתנים טובים עדיפים על קומנטים
 
 ## אסור
-- אל תציע לעשות ריפקטור אלא אם ביקשו.
-- אל תוסיף פיצ'רים שלא ביקשו.
-- אל תכתוב תיעוד אלא אם ביקשו במפורש.
+- להציע TypeScript כשלא ביקשו
+- להוסיף dependencies מבלי לשאול
+- להוסיף error handling לתרחישים בלתי אפשריים
+- להסביר מה הקוד עושה — הוא ברור מעצמו
 EOF
 success "CLAUDE.md נכתב"
+
+cat > ~/.claude/commands/tools/new-project.md <<'EOF'
+# new-project
+
+Scaffold a new MVP project. Usage: /new-project <name> [supabase|static|api]
+
+1. Create directory structure: index.html, style.css, main.js, .gitignore, README.md
+2. If supabase: add supabase client via CDN, create schema.sql template
+3. If api: add bun server.js with basic routes
+4. Initialize git: `git init && git add . && git commit -m "init"`
+5. Print next steps in Hebrew
+
+Keep it minimal — no bundler, no framework unless asked.
+EOF
+success "פקודה /new-project נכתבה"
 
 printf "\n${BOLD}${GREEN}הבילדר מוכן. בנה משהו מגניב.${RESET}\n\n"
 printf "הצעד הבא:\n"
 printf "  export ANTHROPIC_API_KEY=sk-ant-...   # הוסף ל-~/.zshrc\n"
 printf "  claude\n\n"
+printf "פקודות מהירות:\n"
+printf "  /new-project my-app supabase\n\n"

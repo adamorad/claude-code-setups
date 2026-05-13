@@ -29,7 +29,8 @@ done
 npm list -g "@anthropic-ai/claude-code" &>/dev/null && success "claude-code קיים" || { npm install -g "@anthropic-ai/claude-code"; success "claude-code הותקן"; }
 
 info "כותב הגדרות Claude Code..."
-mkdir -p ~/.claude
+mkdir -p ~/.claude/commands/tools
+mkdir -p ~/.claude/templates/p5-starter
 [[ -f ~/.claude/settings.json ]] && cp ~/.claude/settings.json ~/.claude/settings.json.bak && warn "גיבוי נשמר"
 
 cat > ~/.claude/settings.json <<'EOF'
@@ -46,32 +47,116 @@ EOF
 cat > ~/.claude/CLAUDE.md <<'EOF'
 # האמן
 
-אתה עוזר לאמן דיגיטלי ישראלי שבונה חוויות ויזואליות, אמנות גנרטיבית ואתרי פורטפוליו.
+אתה עוזר לאמן דיגיטלי ישראלי. קוד הוא חומר גלם — לא מטרה. מה שמופיע על המסך חשוב יותר ממה שכתוב בקוד.
 
-## מה אנחנו בונים
-- אמנות גנרטיבית עם p5.js ו-Canvas API
-- אנימציות ואינטרקציות עם Three.js
-- אתרי פורטפוליו ייחודיים
-- חוויות web אינטרקטיביות
+## ספריות וכשמשתמשים בהן
+| ספרייה | מתי | CDN |
+|--------|-----|-----|
+| **p5.js** | אמנות גנרטיבית, פרטיקלים, גיאומטריה | `<script src="https://cdn.jsdelivr.net/npm/p5@1.9.4/lib/p5.min.js">` |
+| **Three.js** | תלת-מימד, סצנות 3D, shader art | `<script src="https://cdn.jsdelivr.net/npm/three@0.168.0/build/three.min.js">` |
+| **GSAP** | אנימציות מורכבות, timeline | `<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js">` |
+| **Tone.js** | מוזיקה גנרטיבית, Web Audio | `<script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js">` |
+| **Vanilla JS** | כל השאר — אינטרקציה פשוטה | ––– |
 
-## גישה
-- קוד הוא חומר גלם אמנותי — לא רק כלי
-- עדיף משהו שנראה מדהים על פני משהו שנכתב נכון
-- p5.js לאמנות גנרטיבית, Three.js לתלת-מימד, Vanilla JS לכל השאר
-- GitHub Pages לפרסום מיידי — ללא שרתים
+## p5.js — דפוסים שימושיים
+```javascript
+// פרטיקלים שנעים לעכבר
+let particles = [];
+function draw() {
+  background(0, 20); // trail effect
+  particles.forEach(p => { p.update(); p.draw(); });
+}
 
-## שפה
-- ענה בעברית
-- כשמסביר קוד ויזואלי — תאר מה יראה המשתמש, לא מה הקוד עושה
-- השתמש במטאפורות ויזואליות וא1מנותיות
+// צבע מ-HSB (יפה יותר מ-RGB)
+colorMode(HSB, 360, 100, 100);
+fill(frameCount % 360, 80, 90);
+
+// Noise לתנועה אורגנית
+x += map(noise(t), 0, 1, -2, 2);
+```
+
+## Three.js — התחלה מהירה
+```javascript
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(75, w/h, 0.1, 1000);
+const renderer = new THREE.WebGLRenderer({ antialias: true });
+// → הוסף mesh, אנימציה ב-requestAnimationFrame
+```
 
 ## עקרונות
-- אל תשאל "למה" — עשה ואז תן לאמן לראות
-- ניסוי וטעייה הוא חלק מהתהליך — עודד אותו
-- פשוט וייחודי עדיף על מורכב ורגיל
+- **תאר מה יראה המשתמש**, לא מה הקוד עושה
+  - "עיגולים שנופלים עם זנב של אור" לא "circles with alpha trail"
+- **ניסוי וטעייה** הוא חלק מהתהליך — עודד אותו
+- **פשוט וייחודי** עדיף על מורכב ורגיל
+- כל פרויקט = קובץ HTML בודד — קל לשתף וסבייב ב-GitHub Pages
+- צבעי ברירת מחדל: רקע שחור, accent ניאון — אלא אם ביקשו אחרת
+
+## פרסום GitHub Pages
+```bash
+git init && git add . && git commit -m "artwork"
+gh repo create --public my-art && git push -u origin main
+gh api repos/USERNAME/my-art/pages --method POST -f 'source[branch]=main' -f 'source[path]=/'
+# → https://USERNAME.github.io/my-art/
+```
 EOF
-success "הגדרות נכתבו"
+success "CLAUDE.md נכתב"
+
+cat > ~/.claude/templates/p5-starter/index.html <<'EOF'
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Artwork</title>
+  <style>
+    body { margin: 0; background: #000; overflow: hidden; }
+    canvas { display: block; }
+  </style>
+</head>
+<body>
+  <script src="https://cdn.jsdelivr.net/npm/p5@1.9.4/lib/p5.min.js"></script>
+  <script>
+    function setup() {
+      createCanvas(windowWidth, windowHeight);
+      colorMode(HSB, 360, 100, 100);
+    }
+
+    function draw() {
+      background(0, 10);
+      // כתוב כאן את האמנות שלך
+    }
+
+    function windowResized() {
+      resizeCanvas(windowWidth, windowHeight);
+    }
+  </script>
+</body>
+</html>
+EOF
+success "תבנית p5.js נכתבה"
+
+cat > ~/.claude/commands/tools/new-artwork.md <<'EOF'
+# new-artwork
+
+Scaffold a new creative coding project.
+
+Usage: /new-artwork <idea-description> [p5|three|vanilla]
+
+Steps:
+1. Listen to the artistic idea — describe what it should LOOK like
+2. Choose library: p5.js for generative/2D, Three.js for 3D, vanilla for interactive
+3. Copy the p5-starter template from ~/.claude/templates/p5-starter/
+4. Build the initial sketch — focus on visual result, not code elegance
+5. Describe what the user will see: "יופיעו עיגולים שנעים לעכבר..."
+6. Print: "פתח index.html בדפדפן — לחץ Cmd+Shift+R לרענון"
+
+Iterate fast. First version doesn't need to be perfect.
+Always use full-screen canvas (windowWidth/windowHeight).
+EOF
+success "פקודה /new-artwork נכתבה"
 
 printf "\n${BOLD}${GREEN}האמן מוכן. צור משהו יפה.${RESET}\n\n"
 printf "  export ANTHROPIC_API_KEY=sk-ant-...\n"
 printf "  claude\n\n"
+printf "פקודות מהירות:\n"
+printf "  /new-artwork \"פרטיקלים שמגיבים למוזיקה\" p5\n\n"
+printf "תבנית p5.js נמצאת ב: ~/.claude/templates/p5-starter/index.html\n\n"
