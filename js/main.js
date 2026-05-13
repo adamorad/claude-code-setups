@@ -408,11 +408,71 @@ function closeModal() {
   }
 }
 
+// ── Confetti ──────────────────────────────────────────────────────────────────
+function triggerConfetti() {
+  const canvas = document.createElement("canvas");
+  canvas.style.cssText =
+    "position:fixed;inset:0;pointer-events:none;z-index:9999;";
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  document.body.appendChild(canvas);
+  const ctx = canvas.getContext("2d");
+
+  const colors = [
+    "#4ecdc4",
+    "#c4a05e",
+    "#9b72cf",
+    "#ff6b6b",
+    "#ffd93d",
+    "#6bcb77",
+  ];
+  const particles = Array.from({ length: 90 }, () => ({
+    x: canvas.width * 0.15 + Math.random() * canvas.width * 0.7,
+    y: canvas.height * 0.45,
+    vx: (Math.random() - 0.5) * 9,
+    vy: -(Math.random() * 8 + 3),
+    color: colors[Math.floor(Math.random() * colors.length)],
+    w: Math.random() * 9 + 4,
+    h: Math.random() * 5 + 3,
+    rot: Math.random() * Math.PI * 2,
+    rotV: (Math.random() - 0.5) * 0.28,
+    g: 0.22 + Math.random() * 0.1,
+  }));
+
+  const start = performance.now();
+  const dur = 2200;
+
+  function frame(now) {
+    const t = now - start;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    particles.forEach((p) => {
+      p.x += p.vx;
+      p.y += p.vy;
+      p.vy += p.g;
+      p.rot += p.rotV;
+      ctx.save();
+      ctx.translate(p.x, p.y);
+      ctx.rotate(p.rot);
+      ctx.fillStyle = p.color;
+      ctx.globalAlpha = Math.max(0, 1 - t / dur);
+      ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+      ctx.restore();
+    });
+    if (t < dur) requestAnimationFrame(frame);
+    else canvas.remove();
+  }
+  requestAnimationFrame(frame);
+}
+
 function copyCmd(id) {
   const text = document.getElementById(`cmd-${id}`).textContent;
   navigator.clipboard.writeText(text).then(() => {
     showToast("הועתק ✓");
     if (navigator.vibrate) navigator.vibrate(50);
+    if (!localStorage.getItem("confetti_done")) {
+      localStorage.setItem("confetti_done", "1");
+      triggerConfetti();
+    }
   });
 }
 
