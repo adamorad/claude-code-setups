@@ -395,12 +395,24 @@ function openModal(setup) {
       ${setup.features.map((f) => `<li>${f}</li>`).join("")}
     </ul>
     <h3>התקנה</h3>
+    <details class="prereqs-details">
+      <summary class="prereqs-summary">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+        דרישות קדם
+      </summary>
+      <ul class="prereqs-list">
+        <li><label class="prereq-item"><input type="checkbox" class="prereq-check"><span>macOS עם Apple Silicon (M1/M2/M3/M4)</span></label></li>
+        <li><label class="prereq-item"><input type="checkbox" class="prereq-check"><span>Xcode Command Line Tools — <code class="inline-cmd">xcode-select --install</code></span></label></li>
+        <li><label class="prereq-item"><input type="checkbox" class="prereq-check"><span>Terminal פתוח (Terminal.app או iTerm2)</span></label></li>
+        <li><label class="prereq-item"><input type="checkbox" class="prereq-check"><span>חיבור לאינטרנט</span></label></li>
+      </ul>
+    </details>
     <div class="install-block">
       <code id="cmd-${setup.id}">${setup.installCmd}</code>
       <button class="copy-btn" id="copy-btn-${setup.id}" title="העתק">⎘</button>
     </div>
     <div class="modal-footer-row">
-      <p class="prereqs">Prerequisites: macOS · Apple Silicon · Xcode CLI Tools</p>
+      <p class="prereqs" style="display:none"></p>
       <button class="share-btn" id="share-btn-${setup.id}">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/>
