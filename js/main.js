@@ -223,6 +223,206 @@ const SETUPS = [
     installCmd:
       "bash <(curl -fsSL https://raw.githubusercontent.com/adamorad/claude-code-setups/main/setups/parent/install.sh)",
   },
+  {
+    id: "student",
+    name: "הסטודנט",
+    user: "@student_builds",
+    time: "3 דק׳",
+    level: "מתחיל",
+    description:
+      "סטודנט שבונה כלים ללמידה, מחקר ועבודות גמר — Python, סיכומים ובחינות.",
+    tags: ["לימודים", "מחקר", "Python"],
+    features: [
+      "Jupyter Lab מוכן — ניתוח נתונים לקורסים",
+      "פקודה /summarize-paper — סיכום מאמר אקדמי ב-5 נקודות",
+      "CLAUDE.md עם APA7 referencing אוטומטי",
+      "Git workflow לעבודות — commit לכל שלב",
+      "Python + matplotlib + seaborn לוויזואליזציה",
+      "פקודה /study-quiz — חידון חזרה מהחומר שלך",
+    ],
+    week1: [
+      "סיכום אוטומטי של 10 מאמרים לעבודה סמינרית",
+      "ניתוח dataset של הקורס עם גרפים מוכנים",
+      "חידון חזרה מוכן לפני הבחינה",
+    ],
+    installCmd:
+      "bash <(curl -fsSL https://raw.githubusercontent.com/adamorad/claude-code-setups/main/setups/student/install.sh)",
+  },
+  {
+    id: "startup",
+    name: "הסטארטאפר",
+    user: "@startup_vibe",
+    time: "5 דק׳",
+    level: "בינוני",
+    description:
+      "מייסד שרץ לפגישת משקיעים. בונה MVP, pitch deck ו-metrics dashboard תוך ימים.",
+    tags: ["סטארטאפ", "משקיעים", "MVP"],
+    features: [
+      "פקודה /pitch-deck — מצגת משקיעים מהרעיון תוך דקות",
+      "פקודה /runway-calc — מחשבון runway עם תחזיות שרידות",
+      "CLAUDE.md עם YC template ו-unit economics",
+      "Supabase plugin לאנליטיקה ו-user tracking",
+      "Ruflo MCP — בניית features במקביל",
+      "פקודה /one-pager — executive summary PDF",
+    ],
+    week1: [
+      "MVP עם auth ו-waitlist רץ בפרודקשן",
+      "pitch deck 10 שקפים מוכן לפגישה",
+      "metrics dashboard חי בזמן אמת",
+    ],
+    installCmd:
+      "bash <(curl -fsSL https://raw.githubusercontent.com/adamorad/claude-code-setups/main/setups/startup/install.sh)",
+  },
+  {
+    id: "gamer",
+    name: "הגיימר",
+    user: "@game_vibe",
+    time: "6 דק׳",
+    level: "בינוני",
+    description:
+      "מפתח משחקים עצמאי שבונה משחקי browser ו-2D — ללא ניסיון קודם.",
+    tags: ["גיימינג", "Phaser", "2D"],
+    features: [
+      "Phaser.js template מוכן — game loop, sprites, sound",
+      "פקודה /new-game — scaffold משחק חדש עם physics",
+      "CLAUDE.md עם game design patterns ו-mobile touch",
+      "itch.io deployment — פרסום ב-3 פקודות",
+      "Web Audio API — sound effects מוכנים",
+      "leaderboard עם Supabase — ציונים בזמן אמת",
+    ],
+    week1: [
+      "משחק runner בסיסי שרץ בדפדפן",
+      "leaderboard חי עם Supabase",
+      "פרסום ב-itch.io עם thumbnail",
+    ],
+    installCmd:
+      "bash <(curl -fsSL https://raw.githubusercontent.com/adamorad/claude-code-setups/main/setups/gamer/install.sh)",
+  },
+  {
+    id: "podcaster",
+    name: "הפודקאסטר",
+    user: "@podcast_il",
+    time: "4 דק׳",
+    level: "מתחיל",
+    description:
+      "מפיק פודקאסט עברי שמאוטומט תמלול, שו נוטס וקטעים לרשתות חברתיות.",
+    tags: ["פודקאסט", "תמלול", "תוכן"],
+    features: [
+      "Whisper API — תמלול עברי אוטומטי",
+      "פקודה /show-notes — שו נוטס מוכן מהתמלול",
+      "פקודה /clips — 5 קטעים ויראליים לאינסטגרם",
+      "CLAUDE.md עם voice ו-tone של הפודקאסט",
+      "RSS feed generator — הפצה לכל הפלטפורמות",
+      "פקודה /episode-title — 10 כותרות לבחירה",
+    ],
+    week1: [
+      "תמלול פרק קיים + שו נוטס מוכן לפרסום",
+      "5 קטעי ריל לאינסטגרם",
+      "RSS feed שמוזן ל-Spotify ו-Apple Podcasts",
+    ],
+    installCmd:
+      "bash <(curl -fsSL https://raw.githubusercontent.com/adamorad/claude-code-setups/main/setups/podcaster/install.sh)",
+  },
+  {
+    id: "coach",
+    name: "המאמן",
+    user: "@coach_builds",
+    time: "4 דק׳",
+    level: "מתחיל",
+    description:
+      "מאמן כושר או חיים שבונה מערכת ניהול לקוחות, תוכניות אימון ועקיבת התקדמות.",
+    tags: ["כושר", "לקוחות", "תוכניות"],
+    features: [
+      "פקודה /training-plan — תוכנית אימון ל-8 שבועות",
+      "Supabase לניהול לקוחות, מדידות ו-check-ins",
+      "פקודה /progress-report — דוח התקדמות ויזואלי",
+      "WhatsApp template — עדכון שבועי ללקוח",
+      "CLAUDE.md עם כללי תזונה ו-periodization",
+      "calendar integration — תזמון אימונים אוטומטי",
+    ],
+    week1: [
+      "פורטל לקוח עם תוכנית אימון ומדידות",
+      "3 לקוחות פעילים רשומים במערכת",
+      "דוח התקדמות חודשי אוטומטי",
+    ],
+    installCmd:
+      "bash <(curl -fsSL https://raw.githubusercontent.com/adamorad/claude-code-setups/main/setups/coach/install.sh)",
+  },
+  {
+    id: "realestate",
+    name: "הסוכן",
+    user: "@realestate_il",
+    time: "5 דק׳",
+    level: "מתחיל",
+    description:
+      'סוכן נדל"ן שבונה כלים לחישוב משכנתאות, ניהול לידים ודפי נכס בעברית.',
+    tags: ['נדל"ן', "משכנתא", "לידים"],
+    features: [
+      "פקודה /mortgage-calc — מחשבון משכנתא ישראלי מלא",
+      "פקודה /property-page — דף נכס RTL עם תמונות",
+      'CLAUDE.md עם שוק הנדל"ן הישראלי ומסי רכישה',
+      "Supabase לניהול לידים ונכסים",
+      "מחשבון מס שבח ומס רכישה עדכני",
+      "WhatsApp follow-up אוטומטי ללידים",
+    ],
+    week1: [
+      "מחשבון משכנתא עם טבלת החזרים",
+      "דף נכס ראשון עם תמונות ו-contact form",
+      "CRM לידים עם status tracking",
+    ],
+    installCmd:
+      "bash <(curl -fsSL https://raw.githubusercontent.com/adamorad/claude-code-setups/main/setups/realestate/install.sh)",
+  },
+  {
+    id: "musician",
+    name: "המוזיקאי",
+    user: "@music_builds",
+    time: "5 דק׳",
+    level: "מתחיל",
+    description:
+      "מוזיקאי עצמאי שבונה כלים להפצה, ניהול royalties ופרזנטציה מקצועית.",
+    tags: ["מוזיקה", "הפצה", "קטלוג"],
+    features: [
+      "פקודה /release-checklist — רשימת שחרור single/album",
+      "CLAUDE.md עם פלטפורמות הפצה ישראליות ובינלאומיות",
+      "פקודה /bio — bio מוכן ל-Spotify ו-press kit",
+      "royalties tracker עם Supabase",
+      "EPK generator — press kit PDF מקצועי",
+      "עמוד אמן עם embedded player",
+    ],
+    week1: [
+      "press kit ו-bio מוכן ב-3 שפות",
+      "royalties tracking מכל הפלטפורמות",
+      "עמוד אמן חי עם player",
+    ],
+    installCmd:
+      "bash <(curl -fsSL https://raw.githubusercontent.com/adamorad/claude-code-setups/main/setups/musician/install.sh)",
+  },
+  {
+    id: "engineer",
+    name: "המהנדס",
+    user: "@eng_builds",
+    time: "6 דק׳",
+    level: "מתקדם",
+    description:
+      "מהנדס תוכנה שבונה CLI tools, automations ו-internal dashboards לצוות.",
+    tags: ["CLI", "אוטומציה", "צוות"],
+    features: [
+      "Bun + TypeScript — CLI tools מהירים לצוות",
+      "פקודה /new-tool — scaffold CLI חדש עם yargs",
+      "CLAUDE.md עם coding standards ו-PR conventions",
+      "Ruflo MCP — orchestration של וורקפלואים מורכבים",
+      "internal dashboard עם Supabase + React",
+      "Prettier + ESLint hooks אוטומטיים",
+    ],
+    week1: [
+      "CLI tool שחוסך 2 שעות שבועיות לצוות",
+      "dashboard פנימי עם metrics של הצוות",
+      "automation לפרוצס ה-onboarding",
+    ],
+    installCmd:
+      "bash <(curl -fsSL https://raw.githubusercontent.com/adamorad/claude-code-setups/main/setups/engineer/install.sh)",
+  },
 ];
 
 // ── Toast ─────────────────────────────────────────────────────────────────────
@@ -747,18 +947,13 @@ SETUPS.forEach((setup, i) => {
   });
 
   tile.addEventListener("click", () => {
-    if (compareMode) return;
     openModal(setup);
   });
 
   tile.addEventListener("keydown", (e) => {
     if (e.key === "Enter" || e.key === " ") {
       e.preventDefault();
-      if (compareMode) {
-        toggleCompareTile(setup, tile);
-      } else {
-        openModal(setup);
-      }
+      openModal(setup);
       return;
     }
     const visible = tileEls.filter((t) => !t.classList.contains("hidden"));
@@ -804,10 +999,6 @@ tileEls.forEach((tile) => {
   tile.setAttribute("draggable", "true");
 
   tile.addEventListener("dragstart", (e) => {
-    if (compareMode) {
-      e.preventDefault();
-      return;
-    }
     draggedTile = tile;
     tile.classList.add("dragging");
     e.dataTransfer.effectAllowed = "move";
@@ -854,28 +1045,6 @@ tileEls.forEach((tile) => {
 
 restoreTileOrder();
 
-// ── Shuffle ───────────────────────────────────────────────────────────────────
-const shuffleBtn = document.getElementById("shuffle-btn");
-if (shuffleBtn) {
-  shuffleBtn.addEventListener("click", () => {
-    const copy = [...tileEls];
-    for (let i = copy.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [copy[i], copy[j]] = [copy[j], copy[i]];
-    }
-    copy.forEach((tile) => grid.appendChild(tile));
-    let idx = 0;
-    copy.forEach((tile) => {
-      if (!tile.classList.contains("hidden")) {
-        tile.style.setProperty("--i", idx++);
-        tile.style.animation = "none";
-        tile.offsetHeight;
-        tile.style.animation = "";
-      }
-    });
-  });
-}
-
 // ── Density toggle ────────────────────────────────────────────────────────────
 function applyDensity(d) {
   ["compact", "comfortable", "spacious"].forEach((c) =>
@@ -895,34 +1064,6 @@ document.querySelectorAll(".density-btn").forEach((btn) => {
   btn.addEventListener("click", () => applyDensity(btn.dataset.density));
 });
 applyDensity(localStorage.getItem("density") || "comfortable");
-
-// ── Font size controls ────────────────────────────────────────────────────────
-const FONT_SIZES = [12, 14, 16, 18, 20];
-const FONT_DEFAULT = 16;
-let currentFontSize = parseInt(
-  localStorage.getItem("font-size") || FONT_DEFAULT,
-  10,
-);
-
-function applyFontSize(size) {
-  currentFontSize = Math.max(
-    FONT_SIZES[0],
-    Math.min(FONT_SIZES[FONT_SIZES.length - 1], size),
-  );
-  document.documentElement.style.fontSize = `${currentFontSize}px`;
-  localStorage.setItem("font-size", currentFontSize);
-}
-
-document
-  .getElementById("font-decrease")
-  .addEventListener("click", () => applyFontSize(currentFontSize - 2));
-document
-  .getElementById("font-reset")
-  .addEventListener("click", () => applyFontSize(FONT_DEFAULT));
-document
-  .getElementById("font-increase")
-  .addEventListener("click", () => applyFontSize(currentFontSize + 2));
-applyFontSize(currentFontSize);
 
 // ── High contrast toggle ──────────────────────────────────────────────────────
 const contrastToggle = document.getElementById("contrast-toggle");
@@ -1067,108 +1208,6 @@ quizOverlay.addEventListener("click", (e) => {
 });
 document.addEventListener("keydown", (e) => {
   if (e.key === "Escape" && !quizOverlay.hidden) closeQuiz();
-});
-
-// ── Comparison mode ───────────────────────────────────────────────────────────
-const compareBtn = document.getElementById("compare-btn");
-const compareBar = document.getElementById("compare-bar");
-const compareCount = document.getElementById("compare-count");
-const compareGo = document.getElementById("compare-go");
-const compareCancel = document.getElementById("compare-cancel");
-const compareOverlay = document.getElementById("compare-overlay");
-const compareGrid = document.getElementById("compare-grid");
-let compareMode = false;
-let compareSelected = [];
-
-function enterCompareMode() {
-  compareMode = true;
-  compareSelected = [];
-  compareBtn.classList.add("active");
-  compareBar.hidden = false;
-  updateCompareBar();
-  document.body.classList.add("compare-mode");
-}
-
-function exitCompareMode() {
-  compareMode = false;
-  compareSelected = [];
-  compareBtn.classList.remove("active");
-  compareBar.hidden = true;
-  document.body.classList.remove("compare-mode");
-  tileEls.forEach((t) => t.classList.remove("compare-selected"));
-}
-
-function updateCompareBar() {
-  compareCount.textContent = `${compareSelected.length} / 2 נבחרו`;
-  compareGo.disabled = compareSelected.length < 2;
-}
-
-function toggleCompareTile(setup, tileEl) {
-  const idx = compareSelected.findIndex((s) => s.id === setup.id);
-  if (idx > -1) {
-    compareSelected.splice(idx, 1);
-    tileEl.classList.remove("compare-selected");
-  } else if (compareSelected.length < 2) {
-    compareSelected.push(setup);
-    tileEl.classList.add("compare-selected");
-  }
-  updateCompareBar();
-}
-
-function openCompare() {
-  const [a, b] = compareSelected;
-  document.getElementById("compare-title").textContent =
-    `${a.name} vs ${b.name}`;
-
-  compareGrid.innerHTML = [a, b]
-    .map(
-      (s) => `
-    <div class="compare-col" style="--c-accent:${s.color || "var(--primary)"}">
-      <div class="compare-col-header">
-        <h3 class="compare-col-name">${s.name}</h3>
-        <div class="compare-col-meta">${s.user} &middot; ⏱ ${s.time} &middot; ${s.level}</div>
-        <p class="compare-col-desc">${s.description}</p>
-      </div>
-      <ul class="compare-features">
-        ${s.features.map((f) => `<li class="compare-feat">${f}</li>`).join("")}
-      </ul>
-    </div>`,
-    )
-    .join("");
-
-  compareOverlay.hidden = false;
-  document.body.style.overflow = "hidden";
-}
-
-function closeCompare() {
-  compareOverlay.hidden = true;
-  document.body.style.overflow = "";
-}
-
-compareBtn.addEventListener("click", () => {
-  if (compareMode) exitCompareMode();
-  else enterCompareMode();
-});
-compareGo.addEventListener("click", openCompare);
-compareCancel.addEventListener("click", exitCompareMode);
-document
-  .getElementById("compare-close")
-  .addEventListener("click", closeCompare);
-compareOverlay.addEventListener("click", (e) => {
-  if (e.target === compareOverlay) closeCompare();
-});
-
-// Wire compare click onto tiles
-tileEls.forEach((tileEl, i) => {
-  tileEl.addEventListener(
-    "click",
-    (e) => {
-      if (!compareMode) return;
-      e.stopPropagation();
-      toggleCompareTile(SETUPS[i], tileEl);
-    },
-    true,
-  );
 });
 
 // ── Search ────────────────────────────────────────────────────────────────────

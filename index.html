@@ -6,7 +6,7 @@
     <title>Claude Code Setups — לבוני הוייב</title>
     <meta
       name="description"
-      content="8 סביבות עבודה מוכנות ל-Claude Code על Mac mini. פקודה אחת להתקנה."
+      content="16 וורקפלואים מוכנים ל-Claude Code על Mac mini. פקודה אחת להתקנה."
     />
 
     <!-- Open Graph -->
@@ -14,7 +14,7 @@
     <meta property="og:title" content="Claude Code Setups — לבוני הוייב" />
     <meta
       property="og:description"
-      content="8 סביבות עבודה מוכנות ל-Claude Code על Mac mini. פקודה אחת להתקנה. בעברית."
+      content="16 וורקפלואים מוכנים ל-Claude Code על Mac mini. פקודה אחת להתקנה. בעברית."
     />
     <meta
       property="og:url"
@@ -28,7 +28,7 @@
     <meta name="twitter:title" content="Claude Code Setups — לבוני הוייב" />
     <meta
       name="twitter:description"
-      content="8 סביבות עבודה מוכנות ל-Claude Code על Mac mini. פקודה אחת להתקנה."
+      content="16 וורקפלואים מוכנים ל-Claude Code על Mac mini. פקודה אחת להתקנה."
     />
 
     <!-- PWA -->
@@ -46,7 +46,7 @@
         "@context": "https://schema.org",
         "@type": "WebApplication",
         "name": "Claude Code Setups",
-        "description": "8 סביבות עבודה מוכנות ל-Claude Code על Mac mini",
+        "description": "16 וורקפלואים מוכנים ל-Claude Code על Mac mini",
         "url": "https://adamorad.github.io/claude-code-setups/",
         "applicationCategory": "DeveloperApplication",
         "operatingSystem": "macOS",
@@ -122,7 +122,7 @@
       <div class="header-label">Claude Code Setups</div>
       <h1>בנה מהר יותר עם AI</h1>
       <p>
-        8 סביבות עבודה מוכנות ל-Mac mini &middot; פקודה אחת להתקנה &middot;
+        16 וורקפלואים מוכנים ל-Mac mini &middot; פקודה אחת להתקנה &middot;
         בעברית
       </p>
     </header>
@@ -147,7 +147,7 @@
         <input
           id="search-input"
           type="search"
-          placeholder="חפש סביבת עבודה..."
+          placeholder="חפש וורקפלואו..."
           autocomplete="off"
         />
         <button id="search-clear" class="search-clear" aria-label="נקה חיפוש">
@@ -159,9 +159,7 @@
     <div id="filter-bar"></div>
 
     <div class="toolbar-row">
-      <button id="shuffle-btn">⇄ ערבב</button>
-      <button id="quiz-btn">✦ מצא את הסטאפ שלך</button>
-      <button id="compare-btn">⊞ השווה</button>
+      <button id="quiz-btn">✦ מצא את הוורקפלואו שלך</button>
       <div id="density-toggle" role="group" aria-label="צפיפות תצוגה">
         <button class="density-btn" data-density="compact" title="צפוף">
           <svg
@@ -207,32 +205,6 @@
           </svg>
         </button>
       </div>
-      <div id="font-size-ctrl" role="group" aria-label="גודל גופן">
-        <button
-          class="font-size-btn"
-          id="font-decrease"
-          aria-label="הקטן גופן"
-          title="הקטן"
-        >
-          A−
-        </button>
-        <button
-          class="font-size-btn"
-          id="font-reset"
-          aria-label="אפס גודל גופן"
-          title="אפס"
-        >
-          A
-        </button>
-        <button
-          class="font-size-btn"
-          id="font-increase"
-          aria-label="הגדל גופן"
-          title="הגדל"
-        >
-          A+
-        </button>
-      </div>
     </div>
 
     <div
@@ -244,6 +216,14 @@
 
     <main>
       <div id="grid">
+        <div class="skeleton" aria-hidden="true"></div>
+        <div class="skeleton" aria-hidden="true"></div>
+        <div class="skeleton" aria-hidden="true"></div>
+        <div class="skeleton" aria-hidden="true"></div>
+        <div class="skeleton" aria-hidden="true"></div>
+        <div class="skeleton" aria-hidden="true"></div>
+        <div class="skeleton" aria-hidden="true"></div>
+        <div class="skeleton" aria-hidden="true"></div>
         <div class="skeleton" aria-hidden="true"></div>
         <div class="skeleton" aria-hidden="true"></div>
         <div class="skeleton" aria-hidden="true"></div>
@@ -266,8 +246,8 @@
         </p>
         <h2 class="contact-heading">בוא נדבר</h2>
         <p class="contact-sub">
-          אני עוזר ליחידים ועסקים להתחיל לעבוד עם Claude Code — סטאפ, ווקפלואים,
-          סוכנים.
+          אני עוזר ליחידים ועסקים להתחיל לעבוד עם Claude Code — וורקפלואים,
+          סוכנים, אוטומציה.
         </p>
         <div class="contact-links">
           <a
@@ -313,12 +293,38 @@
     </section>
 
     <footer>
-      בנוי ל-Mac mini &middot; Apple Silicon &middot;
-      <a
-        href="https://github.com/adamorad/claude-code-setups"
-        class="footer-link"
-        >GitHub</a
-      >
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <span class="footer-logo">Claude Code Setups</span>
+          <span class="footer-tagline"
+            >16 וורקפלואים מוכנים ל-Mac mini · Apple Silicon</span
+          >
+        </div>
+        <nav class="footer-nav" aria-label="קישורים">
+          <a
+            href="https://github.com/adamorad/claude-code-setups"
+            class="footer-link"
+            target="_blank"
+            rel="noopener"
+            >GitHub</a
+          >
+          <a
+            href="https://www.linkedin.com/in/adam-morad/"
+            class="footer-link"
+            target="_blank"
+            rel="noopener"
+            >LinkedIn</a
+          >
+          <a
+            href="https://t.me/muffin37"
+            class="footer-link"
+            target="_blank"
+            rel="noopener"
+            >Telegram</a
+          >
+        </nav>
+        <span class="footer-copy">&copy; 2026 Adam Morad</span>
+      </div>
     </footer>
 
     <div
@@ -331,28 +337,6 @@
       <div id="quiz-panel">
         <button id="quiz-close" aria-label="סגור חידון">✕</button>
         <div id="quiz-body"></div>
-      </div>
-    </div>
-
-    <div id="compare-bar" hidden>
-      <span id="compare-count">0 / 2 נבחרו</span>
-      <button id="compare-go" disabled>השווה ←</button>
-      <button id="compare-cancel">ביטול</button>
-    </div>
-
-    <div
-      id="compare-overlay"
-      role="dialog"
-      aria-modal="true"
-      aria-label="השוואת סטאפים"
-      hidden
-    >
-      <div id="compare-panel">
-        <div id="compare-header">
-          <h2 id="compare-title">השוואה</h2>
-          <button id="compare-close" aria-label="סגור השוואה">✕</button>
-        </div>
-        <div id="compare-grid"></div>
       </div>
     </div>
 
