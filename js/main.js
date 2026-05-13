@@ -295,6 +295,33 @@ SETUPS.forEach((setup, i) => {
   tileEls.push(tile);
 });
 
+// ── Search ────────────────────────────────────────────────────────────────
+
+const searchInput = document.getElementById("search-input");
+const searchClear = document.getElementById("search-clear");
+let searchQuery = "";
+
+// Build a searchable text blob per setup for fast matching
+const searchIndex = SETUPS.map((s) =>
+  [s.name, s.user, s.description, ...s.tags, ...s.features]
+    .join(" ")
+    .toLowerCase(),
+);
+
+searchInput.addEventListener("input", () => {
+  searchQuery = searchInput.value.trim().toLowerCase();
+  searchClear.classList.toggle("visible", searchQuery.length > 0);
+  applyFilter();
+});
+
+searchClear.addEventListener("click", () => {
+  searchInput.value = "";
+  searchQuery = "";
+  searchClear.classList.remove("visible");
+  searchInput.focus();
+  applyFilter();
+});
+
 // ── Filter bar ────────────────────────────────────────────────────────────
 
 const filterBar = document.getElementById("filter-bar");
@@ -331,17 +358,40 @@ function renderFilterBar() {
 function applyFilter() {
   renderFilterBar();
   let visibleIndex = 0;
-  tileEls.forEach((tile) => {
+  let visibleCount = 0;
+
+  tileEls.forEach((tile, i) => {
     const tags = tile.dataset.tags.split(",");
-    const show = activeTag === null || tags.includes(activeTag);
+    const tagMatch = activeTag === null || tags.includes(activeTag);
+    const searchMatch =
+      searchQuery === "" || searchIndex[i].includes(searchQuery);
+    const show = tagMatch && searchMatch;
+
     tile.classList.toggle("hidden", !show);
     if (show) {
+      visibleCount++;
       tile.style.setProperty("--i", visibleIndex++);
       tile.style.animation = "none";
-      tile.offsetHeight; // reflow to restart animation
+      tile.offsetHeight;
       tile.style.animation = "";
     }
   });
+
+  // show/hide empty state
+  let emptyEl = document.getElementById("no-results");
+  if (visibleCount === 0) {
+    if (!emptyEl) {
+      emptyEl = document.createElement("p");
+      emptyEl.id = "no-results";
+      emptyEl.className = "no-results";
+      emptyEl.textContent = `אין תוצאות עבור "${searchInput.value}"`;
+      grid.appendChild(emptyEl);
+    } else {
+      emptyEl.textContent = `אין תוצאות עבור "${searchInput.value}"`;
+    }
+  } else if (emptyEl) {
+    emptyEl.remove();
+  }
 }
 
 renderFilterBar();
