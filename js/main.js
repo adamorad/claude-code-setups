@@ -294,6 +294,12 @@ function disableFocusTrap() {
 const modal = document.getElementById("modal");
 const modalContent = document.getElementById("modal-content");
 let _lastFocused = null;
+let currentModalIndex = -1;
+
+function navigateModal(direction) {
+  const next = SETUPS[currentModalIndex + direction];
+  if (next) openModal(next);
+}
 
 async function shareSetup(setup) {
   const url = `${location.origin}${location.pathname}#${setup.id}`;
@@ -313,9 +319,27 @@ async function shareSetup(setup) {
 }
 
 function openModal(setup) {
-  _lastFocused = document.activeElement;
+  if (modal.classList.contains("open")) {
+    disableFocusTrap();
+  } else {
+    _lastFocused = document.activeElement;
+  }
+  currentModalIndex = SETUPS.findIndex((s) => s.id === setup.id);
+  const hasPrev = currentModalIndex > 0;
+  const hasNext = currentModalIndex < SETUPS.length - 1;
   const accent = setup.color;
   modalContent.innerHTML = `
+    <div class="modal-nav-row">
+      <button class="modal-nav-btn" id="modal-prev" ${!hasPrev ? "disabled" : ""} aria-label="הסטאפ הקודם">
+        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+        הקודם
+      </button>
+      <span class="modal-nav-pos">${currentModalIndex + 1} / ${SETUPS.length}</span>
+      <button class="modal-nav-btn" id="modal-next" ${!hasNext ? "disabled" : ""} aria-label="הסטאפ הבא">
+        הבא
+        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+    </div>
     <button class="modal-close" id="modal-close-btn" aria-label="סגור">✕</button>
     <div class="modal-header">
       <span class="modal-accent" style="color:${accent}">◆</span>
@@ -356,6 +380,14 @@ function openModal(setup) {
   document
     .getElementById(`share-btn-${setup.id}`)
     .addEventListener("click", () => shareSetup(setup));
+  if (hasPrev)
+    document
+      .getElementById("modal-prev")
+      .addEventListener("click", () => navigateModal(-1));
+  if (hasNext)
+    document
+      .getElementById("modal-next")
+      .addEventListener("click", () => navigateModal(1));
 
   modal.classList.add("open");
   document.body.style.overflow = "hidden";
@@ -389,14 +421,29 @@ modal.addEventListener("click", (e) => {
 });
 
 document.addEventListener("keydown", (e) => {
-  if (e.key === "Escape" && modal.classList.contains("open")) closeModal();
+  if (!modal.classList.contains("open")) return;
+  if (e.key === "Escape") {
+    closeModal();
+    return;
+  }
+  if (e.target.tagName === "INPUT") return;
+  if (e.key === "ArrowLeft") {
+    e.preventDefault();
+    navigateModal(1);
+  } // RTL: left = next
+  if (e.key === "ArrowRight") {
+    e.preventDefault();
+    navigateModal(-1);
+  } // RTL: right = prev
 });
 
-// swipe down to close
+// swipe: down = close, left/right = navigate
+let _swipeStartX = 0;
 let _swipeStartY = 0;
 modal.addEventListener(
   "touchstart",
   (e) => {
+    _swipeStartX = e.touches[0].clientX;
     _swipeStartY = e.touches[0].clientY;
   },
   { passive: true },
@@ -404,7 +451,13 @@ modal.addEventListener(
 modal.addEventListener(
   "touchend",
   (e) => {
-    if (e.changedTouches[0].clientY - _swipeStartY > 80) closeModal();
+    const dx = e.changedTouches[0].clientX - _swipeStartX;
+    const dy = e.changedTouches[0].clientY - _swipeStartY;
+    if (Math.abs(dy) > 80 && Math.abs(dy) > Math.abs(dx)) {
+      closeModal();
+    } else if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy)) {
+      navigateModal(dx < 0 ? 1 : -1); // swipe left = next, swipe right = prev
+    }
   },
   { passive: true },
 );

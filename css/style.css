@@ -700,6 +700,48 @@ header p {
   color: var(--text);
 }
 
+/* ── Modal nav (prev / position / next) ── */
+.modal-nav-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border);
+}
+
+.modal-nav-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--muted);
+  font-family: "Heebo", system-ui, sans-serif;
+  font-size: 0.78rem;
+  padding: 5px 12px;
+  cursor: pointer;
+  transition:
+    border-color 0.15s,
+    color 0.15s;
+}
+.modal-nav-btn:hover:not(:disabled) {
+  border-color: var(--muted);
+  color: var(--text);
+}
+.modal-nav-btn:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
+.modal-nav-pos {
+  font-size: 0.75rem;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+  direction: ltr;
+}
+
 .modal-footer-row {
   display: flex;
   align-items: center;
