@@ -673,12 +673,19 @@ SETUPS.forEach((setup, i) => {
     toggleFav(setup.id);
   });
 
-  tile.addEventListener("click", () => openModal(setup));
+  tile.addEventListener("click", () => {
+    if (compareMode) return;
+    openModal(setup);
+  });
 
   tile.addEventListener("keydown", (e) => {
     if (e.key === "Enter" || e.key === " ") {
       e.preventDefault();
-      openModal(setup);
+      if (compareMode) {
+        toggleCompareTile(setup, tile);
+      } else {
+        openModal(setup);
+      }
       return;
     }
     const visible = tileEls.filter((t) => !t.classList.contains("hidden"));
@@ -904,6 +911,108 @@ quizOverlay.addEventListener("click", (e) => {
 });
 document.addEventListener("keydown", (e) => {
   if (e.key === "Escape" && !quizOverlay.hidden) closeQuiz();
+});
+
+// ── Comparison mode ───────────────────────────────────────────────────────────
+const compareBtn = document.getElementById("compare-btn");
+const compareBar = document.getElementById("compare-bar");
+const compareCount = document.getElementById("compare-count");
+const compareGo = document.getElementById("compare-go");
+const compareCancel = document.getElementById("compare-cancel");
+const compareOverlay = document.getElementById("compare-overlay");
+const compareGrid = document.getElementById("compare-grid");
+let compareMode = false;
+let compareSelected = [];
+
+function enterCompareMode() {
+  compareMode = true;
+  compareSelected = [];
+  compareBtn.classList.add("active");
+  compareBar.hidden = false;
+  updateCompareBar();
+  document.body.classList.add("compare-mode");
+}
+
+function exitCompareMode() {
+  compareMode = false;
+  compareSelected = [];
+  compareBtn.classList.remove("active");
+  compareBar.hidden = true;
+  document.body.classList.remove("compare-mode");
+  tileEls.forEach((t) => t.classList.remove("compare-selected"));
+}
+
+function updateCompareBar() {
+  compareCount.textContent = `${compareSelected.length} / 2 נבחרו`;
+  compareGo.disabled = compareSelected.length < 2;
+}
+
+function toggleCompareTile(setup, tileEl) {
+  const idx = compareSelected.findIndex((s) => s.id === setup.id);
+  if (idx > -1) {
+    compareSelected.splice(idx, 1);
+    tileEl.classList.remove("compare-selected");
+  } else if (compareSelected.length < 2) {
+    compareSelected.push(setup);
+    tileEl.classList.add("compare-selected");
+  }
+  updateCompareBar();
+}
+
+function openCompare() {
+  const [a, b] = compareSelected;
+  document.getElementById("compare-title").textContent =
+    `${a.name} vs ${b.name}`;
+
+  compareGrid.innerHTML = [a, b]
+    .map(
+      (s) => `
+    <div class="compare-col" style="--c-accent:${s.color || "var(--primary)"}">
+      <div class="compare-col-header">
+        <h3 class="compare-col-name">${s.name}</h3>
+        <div class="compare-col-meta">${s.user} &middot; ⏱ ${s.time} &middot; ${s.level}</div>
+        <p class="compare-col-desc">${s.description}</p>
+      </div>
+      <ul class="compare-features">
+        ${s.features.map((f) => `<li class="compare-feat">${f}</li>`).join("")}
+      </ul>
+    </div>`,
+    )
+    .join("");
+
+  compareOverlay.hidden = false;
+  document.body.style.overflow = "hidden";
+}
+
+function closeCompare() {
+  compareOverlay.hidden = true;
+  document.body.style.overflow = "";
+}
+
+compareBtn.addEventListener("click", () => {
+  if (compareMode) exitCompareMode();
+  else enterCompareMode();
+});
+compareGo.addEventListener("click", openCompare);
+compareCancel.addEventListener("click", exitCompareMode);
+document
+  .getElementById("compare-close")
+  .addEventListener("click", closeCompare);
+compareOverlay.addEventListener("click", (e) => {
+  if (e.target === compareOverlay) closeCompare();
+});
+
+// Wire compare click onto tiles
+tileEls.forEach((tileEl, i) => {
+  tileEl.addEventListener(
+    "click",
+    (e) => {
+      if (!compareMode) return;
+      e.stopPropagation();
+      toggleCompareTile(SETUPS[i], tileEl);
+    },
+    true,
+  );
 });
 
 // ── Search ────────────────────────────────────────────────────────────────────

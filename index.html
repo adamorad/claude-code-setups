@@ -139,6 +139,7 @@
     <div class="toolbar-row">
       <button id="shuffle-btn">⇄ ערבב</button>
       <button id="quiz-btn">✦ מצא את הסטאפ שלך</button>
+      <button id="compare-btn">⊞ השווה</button>
       <div id="density-toggle" role="group" aria-label="צפיפות תצוגה">
         <button class="density-btn" data-density="compact" title="צפוף">
           <svg
@@ -308,6 +309,28 @@
       <div id="quiz-panel">
         <button id="quiz-close" aria-label="סגור חידון">✕</button>
         <div id="quiz-body"></div>
+      </div>
+    </div>
+
+    <div id="compare-bar" hidden>
+      <span id="compare-count">0 / 2 נבחרו</span>
+      <button id="compare-go" disabled>השווה ←</button>
+      <button id="compare-cancel">ביטול</button>
+    </div>
+
+    <div
+      id="compare-overlay"
+      role="dialog"
+      aria-modal="true"
+      aria-label="השוואת סטאפים"
+      hidden
+    >
+      <div id="compare-panel">
+        <div id="compare-header">
+          <h2 id="compare-title">השוואה</h2>
+          <button id="compare-close" aria-label="סגור השוואה">✕</button>
+        </div>
+        <div id="compare-grid"></div>
       </div>
     </div>
 
