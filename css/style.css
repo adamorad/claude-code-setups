@@ -173,6 +173,68 @@ body {
   border-color: var(--muted);
 }
 
+.contrast-toggle {
+  position: absolute;
+  top: 20px;
+  inset-inline-start: 70px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text);
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    background 0.15s,
+    border-color 0.15s;
+  z-index: 10;
+}
+
+.contrast-toggle:hover {
+  border-color: var(--muted);
+}
+
+.contrast-toggle[aria-pressed="true"] {
+  background: var(--text);
+  color: var(--bg);
+  border-color: var(--text);
+}
+
+/* ── High contrast mode ── */
+body.high-contrast {
+  --border: rgba(255, 255, 255, 0.85);
+  --text: #ffffff;
+  --muted: #e0e0e0;
+  --surface: #0a0505;
+  --bg: #000000;
+  --modal-bg: rgba(0, 0, 0, 0.95);
+}
+
+body.high-contrast[data-theme="light"] {
+  --border: rgba(0, 0, 0, 0.8);
+  --text: #000000;
+  --muted: #1a1a1a;
+  --surface: #ffffff;
+  --bg: #f0f0f0;
+  --modal-bg: rgba(0, 0, 0, 0.85);
+}
+
+body.high-contrast .tile {
+  box-shadow: none !important;
+}
+
+body.high-contrast .tile::after {
+  background: var(--accent);
+  opacity: 1;
+}
+
+body.high-contrast .tile:hover {
+  box-shadow: 0 0 0 2px var(--accent) !important;
+}
+
 header {
   position: relative;
 }

@@ -78,6 +78,25 @@
       >
         <span class="theme-icon">☀️</span>
       </button>
+      <button
+        class="contrast-toggle"
+        id="contrast-toggle"
+        aria-label="מצב ניגודיות גבוהה"
+        aria-pressed="false"
+      >
+        <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
+          <circle
+            cx="12"
+            cy="12"
+            r="10"
+            fill="currentColor"
+            opacity="0.25"
+            stroke="currentColor"
+            stroke-width="2"
+          />
+          <path d="M12 2a10 10 0 0 1 0 20z" fill="currentColor" />
+        </svg>
+      </button>
       <div class="header-label">Claude Code Setups</div>
       <h1>בנה מהר יותר עם AI</h1>
       <p>
@@ -117,8 +136,53 @@
 
     <div id="filter-bar"></div>
 
-    <div style="text-align: center">
+    <div class="toolbar-row">
       <button id="shuffle-btn">⇄ ערבב</button>
+      <div id="density-toggle" role="group" aria-label="צפיפות תצוגה">
+        <button class="density-btn" data-density="compact" title="צפוף">
+          <svg
+            width="15"
+            height="11"
+            viewBox="0 0 15 11"
+            fill="currentColor"
+            aria-hidden="true"
+          >
+            <rect y="0" width="15" height="1.5" rx="0.75" />
+            <rect y="3" width="15" height="1.5" rx="0.75" />
+            <rect y="6" width="15" height="1.5" rx="0.75" />
+            <rect y="9" width="15" height="1.5" rx="0.75" />
+          </svg>
+        </button>
+        <button
+          class="density-btn active"
+          data-density="comfortable"
+          title="רגיל"
+        >
+          <svg
+            width="15"
+            height="11"
+            viewBox="0 0 15 11"
+            fill="currentColor"
+            aria-hidden="true"
+          >
+            <rect y="0" width="15" height="2" rx="1" />
+            <rect y="4.5" width="15" height="2" rx="1" />
+            <rect y="9" width="15" height="2" rx="1" />
+          </svg>
+        </button>
+        <button class="density-btn" data-density="spacious" title="מרווח">
+          <svg
+            width="15"
+            height="11"
+            viewBox="0 0 15 11"
+            fill="currentColor"
+            aria-hidden="true"
+          >
+            <rect y="0" width="15" height="2.5" rx="1.25" />
+            <rect y="8.5" width="15" height="2.5" rx="1.25" />
+          </svg>
+        </button>
+      </div>
     </div>
 
     <div

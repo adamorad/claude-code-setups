@@ -744,6 +744,18 @@ document.querySelectorAll(".density-btn").forEach((btn) => {
 });
 applyDensity(localStorage.getItem("density") || "comfortable");
 
+// ── High contrast toggle ──────────────────────────────────────────────────────
+const contrastToggle = document.getElementById("contrast-toggle");
+function applyContrast(on) {
+  document.body.classList.toggle("high-contrast", on);
+  localStorage.setItem("high-contrast", on ? "1" : "");
+  contrastToggle.setAttribute("aria-pressed", String(on));
+}
+contrastToggle.addEventListener("click", () =>
+  applyContrast(!document.body.classList.contains("high-contrast")),
+);
+applyContrast(!!localStorage.getItem("high-contrast"));
+
 // ── Search ────────────────────────────────────────────────────────────────────
 const searchInput = document.getElementById("search-input");
 const searchClear = document.getElementById("search-clear");
