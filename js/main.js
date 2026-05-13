@@ -21,7 +21,7 @@ const SETUPS = [
     id: "influencer",
     name: "המשפיען",
     user: "@vibe_content",
-    color: "#9b72cf",
+    color: "#c4a05e",
     description:
       "יוצר תוכן ישראלי שבונה כלים לקהל שלו. אוטומציה של פוסטים, אנליטיקה, ניוזלטר.",
     tags: ["תוכן", "אוטומציה", "קהילה"],
@@ -40,7 +40,7 @@ const SETUPS = [
     id: "trader",
     name: "הסוחר",
     user: "@trade_vibe",
-    color: "#5cb88a",
+    color: "#9b72cf",
     description:
       "סוחר שבונה דשבורדים, סורקים ובוטים לשוק ההון והקריפטו. ללא רקע בפיתוח.",
     tags: ["שוק ההון", "דשבורד", "בוטים"],
@@ -59,7 +59,7 @@ const SETUPS = [
     id: "bizowner",
     name: "בעל העסק",
     user: "@biz_il",
-    color: "#e07a4f",
+    color: "#4ecdc4",
     description:
       "מסעדן, מאמן, בעל קליניקה — בונה אתר, מערכת הזמנות ו-CRM לעצמו.",
     tags: ["עסק קטן", "אתר", "CRM"],
@@ -78,7 +78,7 @@ const SETUPS = [
     id: "teacher",
     name: "המורה",
     user: "@teacher_builds",
-    color: "#d4a843",
+    color: "#c4a05e",
     description:
       "מורה שבונה חידונים, דפי עבודה ומערכי שיעור אינטרקטיביים — ללא ידע בקוד.",
     tags: ["חינוך", "חידונים", "כיתה"],
@@ -97,7 +97,7 @@ const SETUPS = [
     id: "artist",
     name: "האמן",
     user: "@art_vibe",
-    color: "#5b8ec4",
+    color: "#9b72cf",
     description:
       "אמן דיגיטלי שבונה חוויות אינטרקטיביות, גנרטיב ארט ואתרי פורטפוליו.",
     tags: ["גנרטיב", "אינטרקטיב", "פורטפוליו"],
@@ -116,7 +116,7 @@ const SETUPS = [
     id: "freelancer",
     name: "הפרילנסר",
     user: "@freelance_il",
-    color: "#d46070",
+    color: "#4ecdc4",
     description:
       "פרילנסר ישראלי שמאוטומט הצעות, חשבוניות ותיאום לקוחות — כדי לעבוד פחות.",
     tags: ["אוטומציה", "לקוחות", "חשבוניות"],
@@ -135,7 +135,7 @@ const SETUPS = [
     id: "parent",
     name: "ההורה",
     user: "@parent_builds",
-    color: "#c47ab5",
+    color: "#c4a05e",
     description:
       "הורה שבונה אפליקציות לבית הספר, לועד הורים ולילדים — מהנייד ומהמחשב.",
     tags: ["ילדים", "קהילה", "בית ספר"],
@@ -151,6 +151,20 @@ const SETUPS = [
       "bash <(curl -fsSL https://raw.githubusercontent.com/adamorad/claude-code-setups/main/setups/parent/install.sh)",
   },
 ];
+
+// ── Toast ──────────────────────────────────────────────────────────────────
+
+function showToast(msg) {
+  const t = document.createElement("div");
+  t.className = "toast";
+  t.textContent = msg;
+  document.body.appendChild(t);
+  requestAnimationFrame(() => t.classList.add("toast-show"));
+  setTimeout(() => {
+    t.classList.remove("toast-show");
+    t.addEventListener("transitionend", () => t.remove());
+  }, 1800);
+}
 
 // ── Modal ─────────────────────────────────────────────────────────────────
 
@@ -182,20 +196,18 @@ function openModal(setup) {
   `;
   modal.classList.add("open");
   document.body.style.overflow = "hidden";
+  history.replaceState(null, "", `#${setup.id}`);
 }
 
 function closeModal() {
   modal.classList.remove("open");
   document.body.style.overflow = "";
+  history.replaceState(null, "", location.pathname);
 }
 
 function copyCmd(id) {
   const text = document.getElementById(`cmd-${id}`).textContent;
-  navigator.clipboard.writeText(text).then(() => {
-    const btn = document.querySelector(".copy-btn");
-    btn.textContent = "✓";
-    setTimeout(() => (btn.textContent = "⎘"), 1500);
-  });
+  navigator.clipboard.writeText(text).then(() => showToast("הועתק ✓"));
 }
 
 modal.addEventListener("click", (e) => {
@@ -203,6 +215,16 @@ modal.addEventListener("click", (e) => {
 });
 document.addEventListener("keydown", (e) => {
   if (e.key === "Escape") closeModal();
+});
+
+// ── Deep link on load ─────────────────────────────────────────────────────
+
+window.addEventListener("DOMContentLoaded", () => {
+  const hash = location.hash.slice(1);
+  if (hash) {
+    const setup = SETUPS.find((s) => s.id === hash);
+    if (setup) openModal(setup);
+  }
 });
 
 // ── Render tiles ──────────────────────────────────────────────────────────
