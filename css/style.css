@@ -865,6 +865,40 @@ header p {
   color: var(--muted);
 }
 
+/* ── Week 1 section ── */
+.week1-heading {
+  margin-top: 0;
+}
+
+.week1-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.week1-item {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  font-size: 0.88rem;
+  color: var(--text);
+  background: color-mix(in srgb, var(--accent) 6%, var(--surface));
+  border: 1px solid color-mix(in srgb, var(--accent) 20%, transparent);
+  border-radius: 8px;
+  padding: 8px 12px;
+  line-height: 1.4;
+}
+
+.week1-check {
+  color: var(--accent);
+  font-weight: 700;
+  flex-shrink: 0;
+  font-size: 0.9rem;
+}
+
 /* ── Prerequisites checklist ── */
 .prereqs-details {
   margin-bottom: 12px;

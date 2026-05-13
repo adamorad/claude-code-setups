@@ -40,6 +40,11 @@ const SETUPS = [
       "Prettier hook אוטומטי — קוד מסודר אחרי כל שמירה",
       "CLAUDE.md עם Stack decisions: Supabase, Vercel, Tailwind CDN",
     ],
+    week1: [
+      "לנד פייג׳ עם waitlist — בפחות מיום",
+      "API REST עם Supabase — ב-2 שעות",
+      "בוט Telegram שמשיב אוטומטית",
+    ],
     installCmd:
       "bash <(curl -fsSL https://raw.githubusercontent.com/adamorad/claude-code-setups/main/setups/builder/install.sh)",
   },
@@ -59,6 +64,11 @@ const SETUPS = [
       "CLAUDE.md עם זמני פרסום מדויקים לקהל ישראלי",
       "Python + pandas לאנליטיקה בסיסית",
       "אסטרטגיה: מה עובד בכל פלטפורמה בישראל",
+    ],
+    week1: [
+      "לוח תוכן שבועי מתוכנן אוטומטית",
+      "3 גרסאות פוסט LinkedIn מוכנות לפרסום",
+      "ניוזלטר ראשון שנשלח ל-100 נרשמים",
     ],
     installCmd:
       "bash <(curl -fsSL https://raw.githubusercontent.com/adamorad/claude-code-setups/main/setups/influencer/install.sh)",
@@ -80,6 +90,11 @@ const SETUPS = [
       "CLAUDE.md עם טיקרים ושעות מסחר TASE מדויקים",
       "כלל ברזל: אין ביצוע עסקאות אוטומטי — רק התראות",
     ],
+    week1: [
+      "סורק RSI שבודק 50 מניות TASE בלחיצה",
+      "דשבורד מחירים חי בדפדפן",
+      "התראה כשמניה פורצת רמת מחיר",
+    ],
     installCmd:
       "bash <(curl -fsSL https://raw.githubusercontent.com/adamorad/claude-code-setups/main/setups/trader/install.sh)",
   },
@@ -99,6 +114,11 @@ const SETUPS = [
       "Supabase plugin — ניהול לקוחות ותורים",
       "ידע ישראלי: WhatsApp > מייל, ימי עסקים א'-ה'",
       "הסברים בעברית פשוטה — ללא ז'רגון טכני",
+    ],
+    week1: [
+      "אתר עסקי עם טופס הזמנות — ב-3 שעות",
+      "מערכת ניהול תורים ולקוחות פשוטה",
+      "עמוד מחירים עם כפתור WhatsApp ישיר",
     ],
     installCmd:
       "bash <(curl -fsSL https://raw.githubusercontent.com/adamorad/claude-code-setups/main/setups/bizowner/install.sh)",
@@ -120,6 +140,11 @@ const SETUPS = [
       "כל כלי עובד מהטלפון — ללא הרשמה",
       "גופן גדול, עברית, צבעים חמים — מותאם לכיתה",
     ],
+    week1: [
+      "חידון HTML אינטרקטיבי בכל נושא לכיתה",
+      "דף עבודה מוכן להדפסה — A4 עברית",
+      "מצגת אינטרקטיבית לשיעור הראשון",
+    ],
     installCmd:
       "bash <(curl -fsSL https://raw.githubusercontent.com/adamorad/claude-code-setups/main/setups/teacher/install.sh)",
   },
@@ -139,6 +164,11 @@ const SETUPS = [
       "Tone.js למוזיקה גנרטיבית, Three.js לתלת-מימד",
       "Bun לפיתוח מהיר ללא build step",
       "GitHub Pages deployment — פרסום ב-3 פקודות",
+    ],
+    week1: [
+      "ויזואל גנרטיבי אינטרקטיבי ב-p5.js",
+      "אנימציה לפוסט אינסטגרם",
+      "פורטפוליו מינימליסטי חי ב-GitHub Pages",
     ],
     installCmd:
       "bash <(curl -fsSL https://raw.githubusercontent.com/adamorad/claude-code-setups/main/setups/artist/install.sh)",
@@ -160,6 +190,11 @@ const SETUPS = [
       "ידע: ייצוא לחו״ל = פטור ממע״מ (0%)",
       "Supabase plugin לניהול לקוחות ופרויקטים",
     ],
+    week1: [
+      "הצעת מחיר אוטומטית עם VAT בלחיצה",
+      "תזכורת תשלום אוטומטית לפי ימי איחור",
+      "אתר הצגת שירותים עם טופס יצירת קשר",
+    ],
     installCmd:
       "bash <(curl -fsSL https://raw.githubusercontent.com/adamorad/claude-code-setups/main/setups/freelancer/install.sh)",
   },
@@ -179,6 +214,11 @@ const SETUPS = [
       "אין הרשמה/לוגין — הורים פותחים ישר מהטלפון",
       "CSV export למרשמי נרשמים — פותח באקסל",
       "הסברים בעברית פשוטה — אין צורך ב-terminal ידע",
+    ],
+    week1: [
+      "טופס הרשמה לטיול כיתתי — ישר ב-WhatsApp",
+      "הודעת ועד הורים מוכנה לשליחה",
+      "רשימת נרשמים לאייצוא ל-Excel",
     ],
     installCmd:
       "bash <(curl -fsSL https://raw.githubusercontent.com/adamorad/claude-code-setups/main/setups/parent/install.sh)",
@@ -401,6 +441,14 @@ function openModal(setup) {
     <ul class="feature-list">
       ${setup.features.map((f) => `<li>${f}</li>`).join("")}
     </ul>
+    ${
+      setup.week1
+        ? `<h3 class="week1-heading">מה תבנה בשבוע הראשון</h3>
+    <ul class="week1-list">
+      ${setup.week1.map((p) => `<li class="week1-item"><span class="week1-check" aria-hidden="true">→</span>${p}</li>`).join("")}
+    </ul>`
+        : ""
+    }
     <h3>התקנה</h3>
     <details class="prereqs-details">
       <summary class="prereqs-summary">
