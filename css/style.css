@@ -1472,20 +1472,27 @@ footer {
 
 #quiz-close {
   position: absolute;
-  top: 14px;
-  inset-inline-start: 14px;
+  top: 16px;
+  inset-inline-start: 16px;
   background: none;
-  border: none;
+  border: 1px solid var(--border);
   color: var(--muted);
-  font-size: 1.1rem;
+  font-size: 1rem;
   cursor: pointer;
-  padding: 4px 8px;
-  border-radius: 6px;
-  transition: color 0.15s;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    color 0.15s,
+    background 0.15s;
 }
 
 #quiz-close:hover {
   color: var(--text);
+  background: var(--surface-hover, rgba(255, 255, 255, 0.06));
 }
 
 .quiz-step {
