@@ -637,6 +637,7 @@ SETUPS.forEach((setup, i) => {
   const tile = document.createElement("div");
   tile.className = "tile";
   tile.dataset.tags = setup.tags.join(",");
+  tile.dataset.id = setup.id;
   tile.style.setProperty("--accent", getAccent(i));
   tile.style.setProperty("--i", i);
   tile.setAttribute("tabindex", "0");
@@ -709,6 +710,77 @@ SETUPS.forEach((setup, i) => {
 
 updateFavButtons();
 updateHistoryIndicators();
+
+// ── Drag to reorder ───────────────────────────────────────────────────────────
+let draggedTile = null;
+
+function saveTileOrder() {
+  const ids = [...grid.querySelectorAll(".tile")].map((t) => t.dataset.id);
+  localStorage.setItem("tile-order", JSON.stringify(ids));
+}
+
+function restoreTileOrder() {
+  const saved = JSON.parse(localStorage.getItem("tile-order") || "null");
+  if (!saved) return;
+  saved.forEach((id) => {
+    const tile = tileEls.find((t) => t.dataset.id === id);
+    if (tile) grid.appendChild(tile);
+  });
+}
+
+tileEls.forEach((tile) => {
+  tile.setAttribute("draggable", "true");
+
+  tile.addEventListener("dragstart", (e) => {
+    if (compareMode) {
+      e.preventDefault();
+      return;
+    }
+    draggedTile = tile;
+    tile.classList.add("dragging");
+    e.dataTransfer.effectAllowed = "move";
+  });
+
+  tile.addEventListener("dragend", () => {
+    tile.classList.remove("dragging");
+    grid
+      .querySelectorAll(".drag-over")
+      .forEach((t) => t.classList.remove("drag-over"));
+    draggedTile = null;
+  });
+
+  tile.addEventListener("dragover", (e) => {
+    if (!draggedTile || draggedTile === tile) return;
+    e.preventDefault();
+    e.dataTransfer.dropEffect = "move";
+    grid
+      .querySelectorAll(".drag-over")
+      .forEach((t) => t.classList.remove("drag-over"));
+    tile.classList.add("drag-over");
+  });
+
+  tile.addEventListener("dragleave", () => {
+    tile.classList.remove("drag-over");
+  });
+
+  tile.addEventListener("drop", (e) => {
+    if (!draggedTile || draggedTile === tile) return;
+    e.preventDefault();
+    tile.classList.remove("drag-over");
+    const rect = tile.getBoundingClientRect();
+    const insertBefore =
+      e.clientY < rect.top + rect.height / 2 ||
+      e.clientX > rect.left + rect.width / 2;
+    if (insertBefore) {
+      grid.insertBefore(draggedTile, tile);
+    } else {
+      grid.insertBefore(draggedTile, tile.nextSibling);
+    }
+    saveTileOrder();
+  });
+});
+
+restoreTileOrder();
 
 // ── Shuffle ───────────────────────────────────────────────────────────────────
 const shuffleBtn = document.getElementById("shuffle-btn");

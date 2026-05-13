@@ -499,6 +499,21 @@ header p {
   display: none;
 }
 
+.tile[draggable] {
+  cursor: grab;
+}
+
+.tile.dragging {
+  opacity: 0.35;
+  cursor: grabbing;
+}
+
+.tile.drag-over {
+  outline: 2px dashed var(--primary);
+  outline-offset: 3px;
+  background: color-mix(in srgb, var(--primary) 5%, var(--surface));
+}
+
 .tile:focus-visible {
   outline: 2px solid var(--primary);
   outline-offset: 2px;
