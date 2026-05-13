@@ -718,6 +718,26 @@ if (shuffleBtn) {
   });
 }
 
+// ── Density toggle ────────────────────────────────────────────────────────────
+function applyDensity(d) {
+  ["compact", "comfortable", "spacious"].forEach((c) =>
+    document.body.classList.toggle(
+      `density-${c}`,
+      c === d && c !== "comfortable",
+    ),
+  );
+  localStorage.setItem("density", d);
+  document
+    .querySelectorAll(".density-btn")
+    .forEach((btn) =>
+      btn.classList.toggle("active", btn.dataset.density === d),
+    );
+}
+document.querySelectorAll(".density-btn").forEach((btn) => {
+  btn.addEventListener("click", () => applyDensity(btn.dataset.density));
+});
+applyDensity(localStorage.getItem("density") || "comfortable");
+
 // ── Search ────────────────────────────────────────────────────────────────────
 const searchInput = document.getElementById("search-input");
 const searchClear = document.getElementById("search-clear");
