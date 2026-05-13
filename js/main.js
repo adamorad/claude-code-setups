@@ -1,3 +1,20 @@
+// accent colors: [dark, light]
+const PALETTE = {
+  teal: { dark: "#4ecdc4", light: "#1a8f88" },
+  gold: { dark: "#c4a05e", light: "#7a5c18" },
+  purple: { dark: "#9b72cf", light: "#5a3e9a" },
+};
+const CYCLE = [
+  "teal",
+  "gold",
+  "purple",
+  "teal",
+  "gold",
+  "purple",
+  "teal",
+  "gold",
+];
+
 const SETUPS = [
   {
     id: "builder",
@@ -227,6 +244,30 @@ window.addEventListener("DOMContentLoaded", () => {
   }
 });
 
+// ── Theme toggle ──────────────────────────────────────────────────────────
+
+let currentTheme = localStorage.getItem("theme") || "dark";
+
+function getAccent(i) {
+  const key = CYCLE[i % CYCLE.length];
+  return PALETTE[key][currentTheme === "light" ? "light" : "dark"];
+}
+
+function applyTheme(theme) {
+  currentTheme = theme;
+  document.documentElement.dataset.theme = theme === "light" ? "light" : "";
+  localStorage.setItem("theme", theme);
+  const icon = document.querySelector(".theme-icon");
+  if (icon) icon.textContent = theme === "light" ? "🌙" : "☀️";
+  tileEls.forEach((tile, i) =>
+    tile.style.setProperty("--accent", getAccent(i)),
+  );
+}
+
+document.getElementById("theme-toggle").addEventListener("click", () => {
+  applyTheme(currentTheme === "dark" ? "light" : "dark");
+});
+
 // ── Render tiles ──────────────────────────────────────────────────────────
 
 const grid = document.getElementById("grid");
@@ -236,7 +277,7 @@ SETUPS.forEach((setup, i) => {
   const tile = document.createElement("div");
   tile.className = "tile";
   tile.dataset.tags = setup.tags.join(",");
-  tile.style.setProperty("--accent", setup.color);
+  tile.style.setProperty("--accent", getAccent(i));
   tile.style.setProperty("--i", i);
   tile.innerHTML = `
     <div class="tile-glow"></div>
@@ -304,3 +345,6 @@ function applyFilter() {
 }
 
 renderFilterBar();
+
+// apply saved theme after tiles exist
+applyTheme(currentTheme);
