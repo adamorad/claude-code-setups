@@ -213,6 +213,37 @@ body {
   border-color: var(--text);
 }
 
+.cb-toggle {
+  position: absolute;
+  top: 20px;
+  inset-inline-start: 116px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text);
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    background 0.15s,
+    border-color 0.15s,
+    color 0.15s;
+  z-index: 10;
+}
+
+.cb-toggle:hover {
+  border-color: var(--muted);
+}
+
+.cb-toggle.active {
+  border-color: var(--primary);
+  color: var(--primary);
+  background: color-mix(in srgb, var(--primary) 10%, transparent);
+}
+
 /* ── High contrast mode ── */
 body.high-contrast {
   --border: rgba(255, 255, 255, 0.85);
