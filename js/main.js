@@ -318,6 +318,19 @@ async function shareSetup(setup) {
   navigator.clipboard.writeText(url).then(() => showToast("קישור הועתק ✓"));
 }
 
+function getSimilarSetups(setup, count = 2) {
+  const idx = SETUPS.findIndex((s) => s.id === setup.id);
+  return SETUPS.filter((s) => s.id !== setup.id)
+    .map((s) => ({
+      s,
+      score: s.tags.filter((t) => setup.tags.includes(t)).length,
+      dist: Math.abs(SETUPS.indexOf(s) - idx),
+    }))
+    .sort((a, b) => b.score - a.score || a.dist - b.dist)
+    .slice(0, count)
+    .map((x) => x.s);
+}
+
 function openModal(setup) {
   if (modal.classList.contains("open")) {
     disableFocusTrap();
@@ -369,6 +382,22 @@ function openModal(setup) {
         שתף
       </button>
     </div>
+    <div class="similar-section">
+      <h3>אולי גם יעניין אותך</h3>
+      <div class="similar-grid">
+        ${getSimilarSetups(setup)
+          .map(
+            (s) => `
+          <button class="similar-card" data-id="${s.id}" style="--s-accent:${s.color}">
+            <span class="similar-dot" style="background:${s.color}"></span>
+            <span class="similar-name">${s.name}</span>
+            <span class="similar-tags">${s.tags.slice(0, 2).join(" · ")}</span>
+          </button>
+        `,
+          )
+          .join("")}
+      </div>
+    </div>
   `;
 
   document
@@ -388,6 +417,13 @@ function openModal(setup) {
     document
       .getElementById("modal-next")
       .addEventListener("click", () => navigateModal(1));
+
+  modalContent.querySelectorAll(".similar-card").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const s = SETUPS.find((x) => x.id === btn.dataset.id);
+      if (s) openModal(s);
+    });
+  });
 
   modal.classList.add("open");
   document.body.style.overflow = "hidden";
