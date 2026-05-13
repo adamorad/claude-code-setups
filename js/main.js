@@ -3,7 +3,7 @@ const SETUPS = [
     id: "builder",
     name: "הבילדר",
     user: "@buildil",
-    color: "#00e5ff",
+    color: "#4ecdc4",
     description: "רעיון חדש כל שבוע. בונה MVP תוך יום ומשלח. לא מחכה לאף אחד.",
     tags: ["מהיר", "MVP", "שיחרור"],
     features: [
@@ -21,7 +21,7 @@ const SETUPS = [
     id: "influencer",
     name: "המשפיען",
     user: "@vibe_content",
-    color: "#b400ff",
+    color: "#9b72cf",
     description:
       "יוצר תוכן ישראלי שבונה כלים לקהל שלו. אוטומציה של פוסטים, אנליטיקה, ניוזלטר.",
     tags: ["תוכן", "אוטומציה", "קהילה"],
@@ -40,7 +40,7 @@ const SETUPS = [
     id: "trader",
     name: "הסוחר",
     user: "@trade_vibe",
-    color: "#00ff88",
+    color: "#5cb88a",
     description:
       "סוחר שבונה דשבורדים, סורקים ובוטים לשוק ההון והקריפטו. ללא רקע בפיתוח.",
     tags: ["שוק ההון", "דשבורד", "בוטים"],
@@ -59,7 +59,7 @@ const SETUPS = [
     id: "bizowner",
     name: "בעל העסק",
     user: "@biz_il",
-    color: "#ff6b00",
+    color: "#e07a4f",
     description:
       "מסעדן, מאמן, בעל קליניקה — בונה אתר, מערכת הזמנות ו-CRM לעצמו.",
     tags: ["עסק קטן", "אתר", "CRM"],
@@ -78,7 +78,7 @@ const SETUPS = [
     id: "teacher",
     name: "המורה",
     user: "@teacher_builds",
-    color: "#ffd600",
+    color: "#d4a843",
     description:
       "מורה שבונה חידונים, דפי עבודה ומערכי שיעור אינטרקטיביים — ללא ידע בקוד.",
     tags: ["חינוך", "חידונים", "כיתה"],
@@ -97,7 +97,7 @@ const SETUPS = [
     id: "artist",
     name: "האמן",
     user: "@art_vibe",
-    color: "#0066ff",
+    color: "#5b8ec4",
     description:
       "אמן דיגיטלי שבונה חוויות אינטרקטיביות, גנרטיב ארט ואתרי פורטפוליו.",
     tags: ["גנרטיב", "אינטרקטיב", "פורטפוליו"],
@@ -116,7 +116,7 @@ const SETUPS = [
     id: "freelancer",
     name: "הפרילנסר",
     user: "@freelance_il",
-    color: "#ff2d55",
+    color: "#d46070",
     description:
       "פרילנסר ישראלי שמאוטומט הצעות, חשבוניות ותיאום לקוחות — כדי לעבוד פחות.",
     tags: ["אוטומציה", "לקוחות", "חשבוניות"],
@@ -135,7 +135,7 @@ const SETUPS = [
     id: "parent",
     name: "ההורה",
     user: "@parent_builds",
-    color: "#ff2db0",
+    color: "#c47ab5",
     description:
       "הורה שבונה אפליקציות לבית הספר, לועד הורים ולילדים — מהנייד ומהמחשב.",
     tags: ["ילדים", "קהילה", "בית ספר"],

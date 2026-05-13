@@ -9,9 +9,9 @@
 :root {
   --bg: #0d0d0d;
   --surface: #141414;
-  --border: #222;
-  --text: #f0f0f0;
-  --muted: #666;
+  --border: #252525;
+  --text: #f0ebe3;
+  --muted: #5a5a5a;
   --radius: 12px;
 }
 
@@ -48,7 +48,7 @@ header h1 {
   font-size: clamp(2rem, 5vw, 3.5rem);
   font-weight: 800;
   letter-spacing: -0.02em;
-  background: linear-gradient(135deg, #fff 40%, #555);
+  background: linear-gradient(135deg, #f0ebe3 50%, #4a4540);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -156,7 +156,7 @@ header p {
 .tile:hover {
   transform: translateY(-4px);
   border-color: var(--accent);
-  box-shadow: 0 0 28px color-mix(in srgb, var(--accent) 22%, transparent);
+  box-shadow: 0 4px 20px color-mix(in srgb, var(--accent) 14%, transparent);
 }
 
 .tile-glow {
@@ -164,7 +164,7 @@ header p {
   inset: 0;
   background: radial-gradient(
     ellipse at top right,
-    color-mix(in srgb, var(--accent) 9%, transparent),
+    color-mix(in srgb, var(--accent) 5%, transparent),
     transparent 60%
   );
   pointer-events: none;
@@ -195,7 +195,7 @@ header p {
 
 .tile-desc {
   font-size: 0.84rem;
-  color: #999;
+  color: #888;
   line-height: 1.6;
   flex: 1;
 }
