@@ -744,6 +744,34 @@ document.querySelectorAll(".density-btn").forEach((btn) => {
 });
 applyDensity(localStorage.getItem("density") || "comfortable");
 
+// ── Font size controls ────────────────────────────────────────────────────────
+const FONT_SIZES = [12, 14, 16, 18, 20];
+const FONT_DEFAULT = 16;
+let currentFontSize = parseInt(
+  localStorage.getItem("font-size") || FONT_DEFAULT,
+  10,
+);
+
+function applyFontSize(size) {
+  currentFontSize = Math.max(
+    FONT_SIZES[0],
+    Math.min(FONT_SIZES[FONT_SIZES.length - 1], size),
+  );
+  document.documentElement.style.fontSize = `${currentFontSize}px`;
+  localStorage.setItem("font-size", currentFontSize);
+}
+
+document
+  .getElementById("font-decrease")
+  .addEventListener("click", () => applyFontSize(currentFontSize - 2));
+document
+  .getElementById("font-reset")
+  .addEventListener("click", () => applyFontSize(FONT_DEFAULT));
+document
+  .getElementById("font-increase")
+  .addEventListener("click", () => applyFontSize(currentFontSize + 2));
+applyFontSize(currentFontSize);
+
 // ── High contrast toggle ──────────────────────────────────────────────────────
 const contrastToggle = document.getElementById("contrast-toggle");
 function applyContrast(on) {
