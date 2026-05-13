@@ -632,6 +632,7 @@ function getGridCols() {
   return 1;
 }
 
+grid.innerHTML = "";
 SETUPS.forEach((setup, i) => {
   const tile = document.createElement("div");
   tile.className = "tile";
