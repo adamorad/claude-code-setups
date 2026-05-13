@@ -1045,26 +1045,6 @@ tileEls.forEach((tile) => {
 
 restoreTileOrder();
 
-// ── Density toggle ────────────────────────────────────────────────────────────
-function applyDensity(d) {
-  ["compact", "comfortable", "spacious"].forEach((c) =>
-    document.body.classList.toggle(
-      `density-${c}`,
-      c === d && c !== "comfortable",
-    ),
-  );
-  localStorage.setItem("density", d);
-  document
-    .querySelectorAll(".density-btn")
-    .forEach((btn) =>
-      btn.classList.toggle("active", btn.dataset.density === d),
-    );
-}
-document.querySelectorAll(".density-btn").forEach((btn) => {
-  btn.addEventListener("click", () => applyDensity(btn.dataset.density));
-});
-applyDensity(localStorage.getItem("density") || "comfortable");
-
 // ── High contrast toggle ──────────────────────────────────────────────────────
 const contrastToggle = document.getElementById("contrast-toggle");
 function applyContrast(on) {
