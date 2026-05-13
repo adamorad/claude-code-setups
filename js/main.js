@@ -1,170 +1,165 @@
 const SETUPS = [
   {
-    id: "full-dev",
-    name: "The Full Dev Stack",
-    user: "@adamorad",
+    id: "builder",
+    name: "הבילדר",
+    user: "@buildil",
     color: "#00e5ff",
-    description:
-      "All-in-one setup: Ruflo multi-agent, 47 dev tools, 15 workflows, Supabase plugin, and a custom statusline.",
-    tags: ["Full Stack", "47 tools", "Ruflo"],
+    description: "רעיון חדש כל שבוע. בונה MVP תוך יום ומשלח. לא מחכה לאף אחד.",
+    tags: ["מהיר", "MVP", "שיחרור"],
     features: [
-      "Ruflo MCP — 60+ multi-agent orchestration tools",
-      "47 dev tools (TDD, API scaffold, security scan, and more)",
-      "15 multi-agent workflows",
-      "Supabase plugin",
-      "Prettier auto-format hook on every edit",
-      "macOS notification hook",
-      "Custom statusline (time · model · CTX% · rate limit%)",
-      "Sensible keybindings (Ctrl+Enter, Ctrl+R, Ctrl+S)",
+      "Claude Code + Ruflo לבנייה עם סוכנים מרובים",
+      "Supabase לבסיס נתונים ואותנטיקציה מהיר",
+      "Bun לריצה מהירה של סקריפטים",
+      "GitHub CLI לדחיפה מהירה לגיט",
+      "הוק אוטומטי: עיצוב קוד לאחר כל שמירה",
+      "CLAUDE.md שמנחה קלוד לבנות מהר ולשאול פחות",
     ],
-    installCmd: `bash <(curl -fsSL https://raw.githubusercontent.com/adamorad/claude-code-setups/main/setups/full-dev/install.sh)`,
+    installCmd:
+      "bash <(curl -fsSL https://raw.githubusercontent.com/adamorad/claude-code-setups/main/setups/builder/install.sh)",
   },
   {
-    id: "ai-builder",
-    name: "The AI Builder",
-    user: "@aicraft",
+    id: "influencer",
+    name: "המשפיען",
+    user: "@vibe_content",
     color: "#b400ff",
     description:
-      "Built for AI/ML developers. LangChain agent scaffolding, prompt optimization, and Python-first tooling.",
-    tags: ["AI/ML", "LangChain", "Python"],
+      "יוצר תוכן ישראלי שבונה כלים לקהל שלו. אוטומציה של פוסטים, אנליטיקה, ניוזלטר.",
+    tags: ["תוכן", "אוטומציה", "קהילה"],
     features: [
-      "Python 3.13 + pip",
-      "Ruflo MCP for multi-agent orchestration",
-      "LangChain/LangGraph agent scaffold tool",
-      "Prompt optimization tool",
-      "AI/ML code review tool",
-      "AI assistant development tool",
-      "Data pipeline + data validation tools",
-      "CLAUDE.md tuned for AI engineering workflows",
+      "כלי יצירת תוכן עברי לLinkedIn, אינסטגרם, טיקטוק",
+      "סקריפטים לאוטומציה של פרסום",
+      "CLAUDE.md בעברית עם הנחיות לכתיבת תוכן",
+      "כלי ניתוח ביצועי תוכן",
+      "תבניות לפוסטים ותגובות בעברית",
+      "סקיל: אסטרטגיית LinkedIn ישראלית",
     ],
-    installCmd: `bash <(curl -fsSL https://raw.githubusercontent.com/adamorad/claude-code-setups/main/setups/ai-builder/install.sh)`,
+    installCmd:
+      "bash <(curl -fsSL https://raw.githubusercontent.com/adamorad/claude-code-setups/main/setups/influencer/install.sh)",
   },
   {
-    id: "minimal",
-    name: "The Minimalist",
-    user: "@tinystack",
+    id: "trader",
+    name: "הסוחר",
+    user: "@trade_vibe",
     color: "#00ff88",
     description:
-      "Zero bloat. Just git, gh, and Claude Code. Fast to install, nothing you don't need.",
-    tags: ["Minimal", "Fast", "Clean"],
+      "סוחר שבונה דשבורדים, סורקים ובוטים לשוק ההון והקריפטו. ללא רקע בפיתוח.",
+    tags: ["שוק ההון", "דשבורד", "בוטים"],
     features: [
-      "git + GitHub CLI only",
-      "Claude Code CLI",
-      "No MCP servers",
-      "No hooks",
-      "Bare CLAUDE.md with core principles only",
-      "Default keybindings",
+      "Python 3.13 + pandas לניתוח נתוני שוק",
+      "Jupyter לניסויים ומחקר",
+      "כלי בניית דשבורד מהיר",
+      "סקריפטים לשליפת נתוני מניות וקריפטו",
+      "CLAUDE.md שמבין טרמינולוגיה של שוק הון בעברית",
+      "התראות לWhatsApp/טלגרם על אותות מסחר",
     ],
-    installCmd: `bash <(curl -fsSL https://raw.githubusercontent.com/adamorad/claude-code-setups/main/setups/minimal/install.sh)`,
+    installCmd:
+      "bash <(curl -fsSL https://raw.githubusercontent.com/adamorad/claude-code-setups/main/setups/trader/install.sh)",
   },
   {
-    id: "web-dev",
-    name: "The Web Dev",
-    user: "@webstudio",
+    id: "bizowner",
+    name: "בעל העסק",
+    user: "@biz_il",
     color: "#ff6b00",
     description:
-      "Frontend and fullstack focus. Node, Bun, Deno, Supabase, and deploy tooling ready out of the box.",
-    tags: ["Web", "Node", "Supabase"],
+      "מסעדן, מאמן, בעל קליניקה — בונה אתר, מערכת הזמנות ו-CRM לעצמו.",
+    tags: ["עסק קטן", "אתר", "CRM"],
     features: [
-      "Node.js + Bun + Deno",
-      "GitHub CLI",
-      "Supabase plugin",
-      "Deploy checklist tool",
-      "API scaffold + API mock tools",
-      "Accessibility audit tool",
-      "Docker optimization tool",
-      "Prettier auto-format hook",
-      "CLAUDE.md tuned for web development",
+      "תבניות אתר מוכנות לעסקים ישראלים",
+      "Supabase לניהול לקוחות ותורים",
+      "כלי יצירת דפי נחיתה מהיר",
+      "אינטגרציה לWhatsApp Business",
+      "CLAUDE.md שמדבר עסקים, לא קוד",
+      "אוטומציה של הצעות מחיר ותזכורות",
     ],
-    installCmd: `bash <(curl -fsSL https://raw.githubusercontent.com/adamorad/claude-code-setups/main/setups/web-dev/install.sh)`,
+    installCmd:
+      "bash <(curl -fsSL https://raw.githubusercontent.com/adamorad/claude-code-setups/main/setups/bizowner/install.sh)",
   },
   {
-    id: "data-scientist",
-    name: "The Data Scientist",
-    user: "@datamind",
+    id: "teacher",
+    name: "המורה",
+    user: "@teacher_builds",
     color: "#ffd600",
     description:
-      "Python-first. Data pipelines, validation, and Jupyter-friendly tooling for analytics and ML work.",
-    tags: ["Data", "Python", "Pipelines"],
+      "מורה שבונה חידונים, דפי עבודה ומערכי שיעור אינטרקטיביים — ללא ידע בקוד.",
+    tags: ["חינוך", "חידונים", "כיתה"],
     features: [
-      "Python 3.13 + Jupyter",
-      "Data pipeline architecture tool",
-      "Data validation pipeline tool",
-      "AI/ML code review tool",
-      "Cost optimization tool",
-      "Database migration tool",
-      "CLAUDE.md tuned for data science workflows",
+      "בונה חידונים ומבחנים אוטומטי",
+      "יצירת דפי עבודה בPDF",
+      "CLAUDE.md עם הקשר חינוכי ישראלי",
+      "כלי יצירת מצגות אינטרקטיביות",
+      "מחולל תרגילים מותאם לתוכנית לימודים",
+      "מינימום טכני — קלוד עושה הכל",
     ],
-    installCmd: `bash <(curl -fsSL https://raw.githubusercontent.com/adamorad/claude-code-setups/main/setups/data-scientist/install.sh)`,
+    installCmd:
+      "bash <(curl -fsSL https://raw.githubusercontent.com/adamorad/claude-code-setups/main/setups/teacher/install.sh)",
   },
   {
-    id: "devops",
-    name: "The DevOps Engineer",
-    user: "@opsforge",
+    id: "artist",
+    name: "האמן",
+    user: "@art_vibe",
     color: "#0066ff",
     description:
-      "Infrastructure-first. Kubernetes manifests, monitoring setup, SLOs, and deploy checklists in one command.",
-    tags: ["DevOps", "K8s", "Monitoring"],
+      "אמן דיגיטלי שבונה חוויות אינטרקטיביות, גנרטיב ארט ואתרי פורטפוליו.",
+    tags: ["גנרטיב", "אינטרקטיב", "פורטפוליו"],
     features: [
-      "Docker + kubectl (via Homebrew)",
-      "Kubernetes manifest generator",
-      "Monitor setup tool",
-      "SLO implementation tool",
-      "Deploy checklist tool",
-      "Cost optimization tool",
-      "Error tracking tool",
-      "CLAUDE.md tuned for infrastructure work",
+      "p5.js + Three.js לאמנות גנרטיבית",
+      "Bun לפיתוח מהיר של פרויקטים ויזואליים",
+      "כלי בניית פורטפוליו מהיר",
+      "CLAUDE.md שמבין שפה ויזואלית ואמנותית",
+      "תבניות לאנימציה ואינטרקציה",
+      "פריסה מיידית לGitHub Pages",
     ],
-    installCmd: `bash <(curl -fsSL https://raw.githubusercontent.com/adamorad/claude-code-setups/main/setups/devops/install.sh)`,
+    installCmd:
+      "bash <(curl -fsSL https://raw.githubusercontent.com/adamorad/claude-code-setups/main/setups/artist/install.sh)",
   },
   {
-    id: "security",
-    name: "The Security Researcher",
-    user: "@seclab",
+    id: "freelancer",
+    name: "הפרילנסר",
+    user: "@freelance_il",
     color: "#ff2d55",
     description:
-      "Security-first toolchain. Vulnerability scanning, dependency auditing, and compliance checks built in.",
-    tags: ["Security", "Audit", "Compliance"],
+      "פרילנסר ישראלי שמאוטומט הצעות, חשבוניות ותיאום לקוחות — כדי לעבוד פחות.",
+    tags: ["אוטומציה", "לקוחות", "חשבוניות"],
     features: [
-      "Security scan tool",
-      "Dependency audit tool",
-      "Compliance check tool",
-      "Error analysis tool",
-      "Multi-agent code review",
-      "Tech debt analysis tool",
-      "CLAUDE.md tuned for security-conscious development",
+      "מחולל הצעות מחיר בעברית ואנגלית",
+      "אוטומציה של חשבוניות ותזכורות תשלום",
+      "CLAUDE.md שמבין עבודה עצמאית ישראלית",
+      "כלי ניהול פרויקטים קל",
+      "סקריפטים לדיווח שעות ללקוח",
+      "תבניות חוזים ותנאי שימוש בעברית",
     ],
-    installCmd: `bash <(curl -fsSL https://raw.githubusercontent.com/adamorad/claude-code-setups/main/setups/security/install.sh)`,
+    installCmd:
+      "bash <(curl -fsSL https://raw.githubusercontent.com/adamorad/claude-code-setups/main/setups/freelancer/install.sh)",
   },
   {
-    id: "content-creator",
-    name: "The Content Creator",
-    user: "@contentcraft",
+    id: "parent",
+    name: "ההורה",
+    user: "@parent_builds",
     color: "#ff2db0",
     description:
-      "Built for technical writers and content teams. Doc generation, standup notes, and bilingual social content skills.",
-    tags: ["Content", "Docs", "Social"],
+      "הורה שבונה אפליקציות לבית הספר, לועד הורים ולילדים — מהנייד ומהמחשב.",
+    tags: ["ילדים", "קהילה", "בית ספר"],
     features: [
-      "Doc generation tool",
-      "Standup notes generator",
-      "Code explanation tool",
-      "Israeli LinkedIn strategy skill",
-      "Israeli social content skill",
-      "PR enhancement tool",
-      "CLAUDE.md tuned for content workflows",
+      "בונה אפליקציות WhatsApp Group בקלות",
+      "כלי ניהול אירועי ועד הורים",
+      "CLAUDE.md שמדבר בשפה פשוטה ונגישה",
+      "יצירת סקרים וטפסי הרשמה",
+      "תזמון תזכורות לאספות והורים",
+      "מינימום הגדרות — מתחילים תוך 5 דקות",
     ],
-    installCmd: `bash <(curl -fsSL https://raw.githubusercontent.com/adamorad/claude-code-setups/main/setups/content-creator/install.sh)`,
+    installCmd:
+      "bash <(curl -fsSL https://raw.githubusercontent.com/adamorad/claude-code-setups/main/setups/parent/install.sh)",
   },
 ];
 
-// ── Modal ──────────────────────────────────────────────────────────────────
+// ── Modal ─────────────────────────────────────────────────────────────────
 
 const modal = document.getElementById("modal");
 const modalContent = document.getElementById("modal-content");
 
 function openModal(setup) {
   modalContent.innerHTML = `
-    <button class="modal-close" onclick="closeModal()" aria-label="Close">✕</button>
+    <button class="modal-close" onclick="closeModal()" aria-label="סגור">✕</button>
     <div class="modal-header">
       <span class="modal-accent" style="color:${setup.color}">◆</span>
       <div>
@@ -174,14 +169,14 @@ function openModal(setup) {
       </div>
     </div>
     <p class="modal-desc">${setup.description}</p>
-    <h3>What's included</h3>
+    <h3>מה כלול</h3>
     <ul class="feature-list">
       ${setup.features.map((f) => `<li>${f}</li>`).join("")}
     </ul>
-    <h3>Install</h3>
+    <h3>התקנה</h3>
     <div class="install-block">
       <code id="cmd-${setup.id}">${setup.installCmd}</code>
-      <button class="copy-btn" onclick="copyCmd('${setup.id}')" title="Copy to clipboard">⎘</button>
+      <button class="copy-btn" onclick="copyCmd('${setup.id}')" title="העתק">⎘</button>
     </div>
     <p class="prereqs">Prerequisites: macOS · Apple Silicon · Xcode CLI Tools</p>
   `;
@@ -206,7 +201,6 @@ function copyCmd(id) {
 modal.addEventListener("click", (e) => {
   if (e.target === modal) closeModal();
 });
-
 document.addEventListener("keydown", (e) => {
   if (e.key === "Escape") closeModal();
 });
