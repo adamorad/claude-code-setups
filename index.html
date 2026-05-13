@@ -8,6 +8,57 @@
       name="description"
       content="8 סביבות עבודה מוכנות ל-Claude Code על Mac mini. פקודה אחת להתקנה."
     />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Claude Code Setups — לבוני הוייב" />
+    <meta
+      property="og:description"
+      content="8 סביבות עבודה מוכנות ל-Claude Code על Mac mini. פקודה אחת להתקנה. בעברית."
+    />
+    <meta
+      property="og:url"
+      content="https://adamorad.github.io/claude-code-setups/"
+    />
+    <meta property="og:site_name" content="Claude Code Setups" />
+    <meta property="og:locale" content="he_IL" />
+
+    <!-- Twitter / X -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Claude Code Setups — לבוני הוייב" />
+    <meta
+      name="twitter:description"
+      content="8 סביבות עבודה מוכנות ל-Claude Code על Mac mini. פקודה אחת להתקנה."
+    />
+
+    <!-- PWA -->
+    <link rel="manifest" href="manifest.json" />
+    <meta name="theme-color" content="#140b06" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
+
+    <!-- JSON-LD -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Claude Code Setups",
+        "description": "8 סביבות עבודה מוכנות ל-Claude Code על Mac mini",
+        "url": "https://adamorad.github.io/claude-code-setups/",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "macOS",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+        "author": {
+          "@type": "Person",
+          "name": "Adam Morad",
+          "url": "https://www.linkedin.com/in/adam-morad/"
+        }
+      }
+    </script>
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -17,6 +68,8 @@
     <link rel="stylesheet" href="css/style.css" />
   </head>
   <body>
+    <a href="#grid" class="skip-link">דלג לתוכן</a>
+    <div id="recently-viewed"></div>
     <header>
       <button
         class="theme-toggle"
@@ -63,6 +116,17 @@
     </div>
 
     <div id="filter-bar"></div>
+
+    <div style="text-align: center">
+      <button id="shuffle-btn">⇄ ערבב</button>
+    </div>
+
+    <div
+      id="search-status"
+      role="status"
+      aria-live="polite"
+      aria-atomic="true"
+    ></div>
 
     <main>
       <div id="grid"></div>

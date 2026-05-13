@@ -1,4 +1,4 @@
-// accent colors: [dark, light]
+// ── Palette ───────────────────────────────────────────────────────────────────
 const PALETTE = {
   teal: { dark: "#4ecdc4", light: "#1a8f88" },
   gold: { dark: "#c4a05e", light: "#7a5c18" },
@@ -15,12 +15,14 @@ const CYCLE = [
   "gold",
 ];
 
+// ── Data ──────────────────────────────────────────────────────────────────────
 const SETUPS = [
   {
     id: "builder",
     name: "הבילדר",
     user: "@buildil",
-    color: "#4ecdc4",
+    time: "3 דק׳",
+    level: "מתחיל",
     description: "רעיון חדש כל שבוע. בונה MVP תוך יום ומשלח. לא מחכה לאף אחד.",
     tags: ["מהיר", "MVP", "שיחרור"],
     features: [
@@ -38,7 +40,8 @@ const SETUPS = [
     id: "influencer",
     name: "המשפיען",
     user: "@vibe_content",
-    color: "#c4a05e",
+    time: "5 דק׳",
+    level: "מתחיל",
     description:
       "יוצר תוכן ישראלי שבונה כלים לקהל שלו. אוטומציה של פוסטים, אנליטיקה, ניוזלטר.",
     tags: ["תוכן", "אוטומציה", "קהילה"],
@@ -57,7 +60,8 @@ const SETUPS = [
     id: "trader",
     name: "הסוחר",
     user: "@trade_vibe",
-    color: "#9b72cf",
+    time: "8 דק׳",
+    level: "בינוני",
     description:
       "סוחר שבונה דשבורדים, סורקים ובוטים לשוק ההון והקריפטו. ללא רקע בפיתוח.",
     tags: ["שוק ההון", "דשבורד", "בוטים"],
@@ -76,7 +80,8 @@ const SETUPS = [
     id: "bizowner",
     name: "בעל העסק",
     user: "@biz_il",
-    color: "#4ecdc4",
+    time: "3 דק׳",
+    level: "מתחיל",
     description:
       "מסעדן, מאמן, בעל קליניקה — בונה אתר, מערכת הזמנות ו-CRM לעצמו.",
     tags: ["עסק קטן", "אתר", "CRM"],
@@ -95,7 +100,8 @@ const SETUPS = [
     id: "teacher",
     name: "המורה",
     user: "@teacher_builds",
-    color: "#c4a05e",
+    time: "4 דק׳",
+    level: "מתחיל",
     description:
       "מורה שבונה חידונים, דפי עבודה ומערכי שיעור אינטרקטיביים — ללא ידע בקוד.",
     tags: ["חינוך", "חידונים", "כיתה"],
@@ -114,7 +120,8 @@ const SETUPS = [
     id: "artist",
     name: "האמן",
     user: "@art_vibe",
-    color: "#9b72cf",
+    time: "5 דק׳",
+    level: "מתחיל",
     description:
       "אמן דיגיטלי שבונה חוויות אינטרקטיביות, גנרטיב ארט ואתרי פורטפוליו.",
     tags: ["גנרטיב", "אינטרקטיב", "פורטפוליו"],
@@ -133,7 +140,8 @@ const SETUPS = [
     id: "freelancer",
     name: "הפרילנסר",
     user: "@freelance_il",
-    color: "#4ecdc4",
+    time: "3 דק׳",
+    level: "בינוני",
     description:
       "פרילנסר ישראלי שמאוטומט הצעות, חשבוניות ותיאום לקוחות — כדי לעבוד פחות.",
     tags: ["אוטומציה", "לקוחות", "חשבוניות"],
@@ -152,7 +160,8 @@ const SETUPS = [
     id: "parent",
     name: "ההורה",
     user: "@parent_builds",
-    color: "#c4a05e",
+    time: "3 דק׳",
+    level: "מתחיל",
     description:
       "הורה שבונה אפליקציות לבית הספר, לועד הורים ולילדים — מהנייד ומהמחשב.",
     tags: ["ילדים", "קהילה", "בית ספר"],
@@ -169,8 +178,7 @@ const SETUPS = [
   },
 ];
 
-// ── Toast ──────────────────────────────────────────────────────────────────
-
+// ── Toast ─────────────────────────────────────────────────────────────────────
 function showToast(msg) {
   const t = document.createElement("div");
   t.className = "toast";
@@ -179,24 +187,142 @@ function showToast(msg) {
   requestAnimationFrame(() => t.classList.add("toast-show"));
   setTimeout(() => {
     t.classList.remove("toast-show");
-    t.addEventListener("transitionend", () => t.remove());
+    t.addEventListener("transitionend", () => t.remove(), { once: true });
   }, 1800);
 }
 
-// ── Modal ─────────────────────────────────────────────────────────────────
+// ── Favorites ─────────────────────────────────────────────────────────────────
+function getFavs() {
+  try {
+    return new Set(JSON.parse(localStorage.getItem("favs") || "[]"));
+  } catch {
+    return new Set();
+  }
+}
 
+function toggleFav(id) {
+  const favs = getFavs();
+  if (favs.has(id)) favs.delete(id);
+  else favs.add(id);
+  localStorage.setItem("favs", JSON.stringify([...favs]));
+  updateFavButtons();
+}
+
+function updateFavButtons() {
+  const favs = getFavs();
+  document.querySelectorAll(".tile-fav").forEach((btn) => {
+    const active = favs.has(btn.dataset.id);
+    btn.classList.toggle("active", active);
+    btn.textContent = active ? "♥" : "♡";
+    btn.setAttribute("aria-label", active ? "הסר ממועדפים" : "שמור למועדפים");
+    btn.setAttribute("aria-pressed", String(active));
+  });
+}
+
+// ── Recently viewed ───────────────────────────────────────────────────────────
+function getRecentlyViewed() {
+  try {
+    return JSON.parse(localStorage.getItem("rv") || "[]");
+  } catch {
+    return [];
+  }
+}
+
+function trackRecentlyViewed(id) {
+  const rv = getRecentlyViewed().filter((x) => x !== id);
+  rv.unshift(id);
+  localStorage.setItem("rv", JSON.stringify(rv.slice(0, 5)));
+  renderRecentlyViewed();
+}
+
+function renderRecentlyViewed() {
+  const container = document.getElementById("recently-viewed");
+  if (!container) return;
+  const rv = getRecentlyViewed();
+  if (rv.length < 2) {
+    container.innerHTML = "";
+    return;
+  }
+  const items = rv.map((id) => SETUPS.find((s) => s.id === id)).filter(Boolean);
+  container.innerHTML = `
+    <div class="rv-strip">
+      <span class="rv-label">צפית לאחרונה:</span>
+      ${items.map((s) => `<button class="rv-chip" data-id="${s.id}">${s.name}</button>`).join("")}
+    </div>
+  `;
+  container.querySelectorAll(".rv-chip").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const s = SETUPS.find((x) => x.id === btn.dataset.id);
+      if (s) openModal(s);
+    });
+  });
+}
+
+// ── Focus trap ────────────────────────────────────────────────────────────────
+let _trapHandler = null;
+
+function enableFocusTrap() {
+  _trapHandler = (e) => {
+    if (e.key !== "Tab") return;
+    const els = [
+      ...modalContent.querySelectorAll(
+        "button:not([disabled]),[href],input,[tabindex]:not([tabindex='-1'])",
+      ),
+    ];
+    if (!els.length) return;
+    const first = els[0],
+      last = els[els.length - 1];
+    if (e.shiftKey && document.activeElement === first) {
+      e.preventDefault();
+      last.focus();
+    } else if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault();
+      first.focus();
+    }
+  };
+  document.addEventListener("keydown", _trapHandler);
+}
+
+function disableFocusTrap() {
+  if (_trapHandler) {
+    document.removeEventListener("keydown", _trapHandler);
+    _trapHandler = null;
+  }
+}
+
+// ── Modal ─────────────────────────────────────────────────────────────────────
 const modal = document.getElementById("modal");
 const modalContent = document.getElementById("modal-content");
+let _lastFocused = null;
+
+async function shareSetup(setup) {
+  const url = `${location.origin}${location.pathname}#${setup.id}`;
+  if (navigator.share) {
+    try {
+      await navigator.share({
+        title: setup.name,
+        text: setup.description,
+        url,
+      });
+      return;
+    } catch (err) {
+      if (err.name === "AbortError") return;
+    }
+  }
+  navigator.clipboard.writeText(url).then(() => showToast("קישור הועתק ✓"));
+}
 
 function openModal(setup) {
+  _lastFocused = document.activeElement;
+  const accent = setup.color;
   modalContent.innerHTML = `
-    <button class="modal-close" onclick="closeModal()" aria-label="סגור">✕</button>
+    <button class="modal-close" id="modal-close-btn" aria-label="סגור">✕</button>
     <div class="modal-header">
-      <span class="modal-accent" style="color:${setup.color}">◆</span>
+      <span class="modal-accent" style="color:${accent}">◆</span>
       <div>
         <h2>${setup.name}</h2>
         <span class="modal-user">${setup.user}</span>
-        <span class="modal-tags">${setup.tags.map((t) => `<span class="tag" style="border-color:${setup.color};color:${setup.color}">${t}</span>`).join("")}</span>
+        <span class="modal-tags">${setup.tags.map((t) => `<span class="tag" style="border-color:${accent};color:${accent}">${t}</span>`).join("")}</span>
       </div>
     </div>
     <p class="modal-desc">${setup.description}</p>
@@ -207,36 +333,85 @@ function openModal(setup) {
     <h3>התקנה</h3>
     <div class="install-block">
       <code id="cmd-${setup.id}">${setup.installCmd}</code>
-      <button class="copy-btn" onclick="copyCmd('${setup.id}')" title="העתק">⎘</button>
+      <button class="copy-btn" id="copy-btn-${setup.id}" title="העתק">⎘</button>
     </div>
-    <p class="prereqs">Prerequisites: macOS · Apple Silicon · Xcode CLI Tools</p>
+    <div class="modal-footer-row">
+      <p class="prereqs">Prerequisites: macOS · Apple Silicon · Xcode CLI Tools</p>
+      <button class="share-btn" id="share-btn-${setup.id}">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/>
+          <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
+        </svg>
+        שתף
+      </button>
+    </div>
   `;
+
+  document
+    .getElementById("modal-close-btn")
+    .addEventListener("click", closeModal);
+  document
+    .getElementById(`copy-btn-${setup.id}`)
+    .addEventListener("click", () => copyCmd(setup.id));
+  document
+    .getElementById(`share-btn-${setup.id}`)
+    .addEventListener("click", () => shareSetup(setup));
+
   modal.classList.add("open");
   document.body.style.overflow = "hidden";
   history.replaceState(null, "", `#${setup.id}`);
+  trackRecentlyViewed(setup.id);
+  enableFocusTrap();
+  setTimeout(() => document.getElementById("modal-close-btn")?.focus(), 50);
 }
 
 function closeModal() {
   modal.classList.remove("open");
   document.body.style.overflow = "";
   history.replaceState(null, "", location.pathname);
+  disableFocusTrap();
+  if (_lastFocused) {
+    _lastFocused.focus();
+    _lastFocused = null;
+  }
 }
 
 function copyCmd(id) {
   const text = document.getElementById(`cmd-${id}`).textContent;
-  navigator.clipboard.writeText(text).then(() => showToast("הועתק ✓"));
+  navigator.clipboard.writeText(text).then(() => {
+    showToast("הועתק ✓");
+    if (navigator.vibrate) navigator.vibrate(50);
+  });
 }
 
 modal.addEventListener("click", (e) => {
   if (e.target === modal) closeModal();
 });
+
 document.addEventListener("keydown", (e) => {
-  if (e.key === "Escape") closeModal();
+  if (e.key === "Escape" && modal.classList.contains("open")) closeModal();
 });
 
-// ── Deep link on load ─────────────────────────────────────────────────────
+// swipe down to close
+let _swipeStartY = 0;
+modal.addEventListener(
+  "touchstart",
+  (e) => {
+    _swipeStartY = e.touches[0].clientY;
+  },
+  { passive: true },
+);
+modal.addEventListener(
+  "touchend",
+  (e) => {
+    if (e.changedTouches[0].clientY - _swipeStartY > 80) closeModal();
+  },
+  { passive: true },
+);
 
+// ── Deep link ─────────────────────────────────────────────────────────────────
 window.addEventListener("DOMContentLoaded", () => {
+  renderRecentlyViewed();
   const hash = location.hash.slice(1);
   if (hash) {
     const setup = SETUPS.find((s) => s.id === hash);
@@ -244,13 +419,13 @@ window.addEventListener("DOMContentLoaded", () => {
   }
 });
 
-// ── Theme toggle ──────────────────────────────────────────────────────────
-
+// ── Theme ─────────────────────────────────────────────────────────────────────
 let currentTheme = localStorage.getItem("theme") || "dark";
 
 function getAccent(i) {
-  const key = CYCLE[i % CYCLE.length];
-  return PALETTE[key][currentTheme === "light" ? "light" : "dark"];
+  return PALETTE[CYCLE[i % CYCLE.length]][
+    currentTheme === "light" ? "light" : "dark"
+  ];
 }
 
 function applyTheme(theme) {
@@ -268,10 +443,15 @@ document.getElementById("theme-toggle").addEventListener("click", () => {
   applyTheme(currentTheme === "dark" ? "light" : "dark");
 });
 
-// ── Render tiles ──────────────────────────────────────────────────────────
-
+// ── Tile rendering ────────────────────────────────────────────────────────────
 const grid = document.getElementById("grid");
 const tileEls = [];
+
+function getGridCols() {
+  if (window.innerWidth > 960) return 4;
+  if (window.innerWidth > 560) return 2;
+  return 1;
+}
 
 SETUPS.forEach((setup, i) => {
   const tile = document.createElement("div");
@@ -279,29 +459,95 @@ SETUPS.forEach((setup, i) => {
   tile.dataset.tags = setup.tags.join(",");
   tile.style.setProperty("--accent", getAccent(i));
   tile.style.setProperty("--i", i);
+  tile.setAttribute("tabindex", "0");
+  tile.setAttribute("role", "button");
+  tile.setAttribute("aria-label", `פתח ${setup.name}`);
+
   tile.innerHTML = `
     <div class="tile-glow"></div>
+    <button class="tile-fav" data-id="${setup.id}" aria-label="שמור למועדפים" aria-pressed="false">♡</button>
+    <ul class="tile-tooltip" aria-hidden="true">
+      ${setup.features
+        .slice(0, 3)
+        .map((f) => `<li>${f}</li>`)
+        .join("")}
+    </ul>
     <div class="tile-body">
       <div class="tile-name">${setup.name}</div>
       <div class="tile-user">${setup.user}</div>
+      <div class="tile-meta">
+        <span class="badge badge-time">⏱ ${setup.time}</span>
+        <span class="badge badge-level">${setup.level}</span>
+      </div>
       <div class="tile-desc">${setup.description}</div>
       <div class="tile-tags">
         ${setup.tags.map((t) => `<span class="tag">${t}</span>`).join("")}
       </div>
     </div>
   `;
+
+  tile.querySelector(".tile-fav").addEventListener("click", (e) => {
+    e.stopPropagation();
+    toggleFav(setup.id);
+  });
+
   tile.addEventListener("click", () => openModal(setup));
+
+  tile.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      openModal(setup);
+      return;
+    }
+    const visible = tileEls.filter((t) => !t.classList.contains("hidden"));
+    const pos = visible.indexOf(tile);
+    if (pos === -1) return;
+    const cols = getGridCols();
+    let next = pos;
+    if (e.key === "ArrowLeft") next = pos + 1;
+    else if (e.key === "ArrowRight") next = pos - 1;
+    else if (e.key === "ArrowDown") next = pos + cols;
+    else if (e.key === "ArrowUp") next = pos - cols;
+    else return;
+    e.preventDefault();
+    next = Math.max(0, Math.min(next, visible.length - 1));
+    if (next !== pos) visible[next].focus();
+  });
+
   grid.appendChild(tile);
   tileEls.push(tile);
 });
 
-// ── Search ────────────────────────────────────────────────────────────────
+updateFavButtons();
 
+// ── Shuffle ───────────────────────────────────────────────────────────────────
+const shuffleBtn = document.getElementById("shuffle-btn");
+if (shuffleBtn) {
+  shuffleBtn.addEventListener("click", () => {
+    const copy = [...tileEls];
+    for (let i = copy.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [copy[i], copy[j]] = [copy[j], copy[i]];
+    }
+    copy.forEach((tile) => grid.appendChild(tile));
+    let idx = 0;
+    copy.forEach((tile) => {
+      if (!tile.classList.contains("hidden")) {
+        tile.style.setProperty("--i", idx++);
+        tile.style.animation = "none";
+        tile.offsetHeight;
+        tile.style.animation = "";
+      }
+    });
+  });
+}
+
+// ── Search ────────────────────────────────────────────────────────────────────
 const searchInput = document.getElementById("search-input");
 const searchClear = document.getElementById("search-clear");
+const searchStatus = document.getElementById("search-status");
 let searchQuery = "";
 
-// Build a searchable text blob per setup for fast matching
 const searchIndex = SETUPS.map((s) =>
   [s.name, s.user, s.description, ...s.tags, ...s.features]
     .join(" ")
@@ -322,8 +568,7 @@ searchClear.addEventListener("click", () => {
   applyFilter();
 });
 
-// ── Filter bar ────────────────────────────────────────────────────────────
-
+// ── Filter bar ────────────────────────────────────────────────────────────────
 const filterBar = document.getElementById("filter-bar");
 const allTags = [...new Set(SETUPS.flatMap((s) => s.tags))];
 let activeTag = null;
@@ -357,8 +602,8 @@ function renderFilterBar() {
 
 function applyFilter() {
   renderFilterBar();
-  let visibleIndex = 0;
-  let visibleCount = 0;
+  let visibleIndex = 0,
+    visibleCount = 0;
 
   tileEls.forEach((tile, i) => {
     const tags = tile.dataset.tags.split(",");
@@ -366,7 +611,6 @@ function applyFilter() {
     const searchMatch =
       searchQuery === "" || searchIndex[i].includes(searchQuery);
     const show = tagMatch && searchMatch;
-
     tile.classList.toggle("hidden", !show);
     if (show) {
       visibleCount++;
@@ -377,24 +621,24 @@ function applyFilter() {
     }
   });
 
-  // show/hide empty state
   let emptyEl = document.getElementById("no-results");
   if (visibleCount === 0) {
     if (!emptyEl) {
       emptyEl = document.createElement("p");
       emptyEl.id = "no-results";
       emptyEl.className = "no-results";
-      emptyEl.textContent = `אין תוצאות עבור "${searchInput.value}"`;
       grid.appendChild(emptyEl);
-    } else {
-      emptyEl.textContent = `אין תוצאות עבור "${searchInput.value}"`;
     }
+    emptyEl.textContent = `אין תוצאות עבור "${searchInput.value}"`;
   } else if (emptyEl) {
     emptyEl.remove();
+  }
+
+  if (searchStatus) {
+    searchStatus.textContent =
+      searchQuery || activeTag ? `נמצאו ${visibleCount} סביבות` : "";
   }
 }
 
 renderFilterBar();
-
-// apply saved theme after tiles exist
 applyTheme(currentTheme);
