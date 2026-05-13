@@ -208,11 +208,14 @@ document.addEventListener("keydown", (e) => {
 // ── Render tiles ──────────────────────────────────────────────────────────
 
 const grid = document.getElementById("grid");
+const tileEls = [];
 
-SETUPS.forEach((setup) => {
+SETUPS.forEach((setup, i) => {
   const tile = document.createElement("div");
   tile.className = "tile";
+  tile.dataset.tags = setup.tags.join(",");
   tile.style.setProperty("--accent", setup.color);
+  tile.style.setProperty("--i", i);
   tile.innerHTML = `
     <div class="tile-glow"></div>
     <div class="tile-body">
@@ -226,4 +229,56 @@ SETUPS.forEach((setup) => {
   `;
   tile.addEventListener("click", () => openModal(setup));
   grid.appendChild(tile);
+  tileEls.push(tile);
 });
+
+// ── Filter bar ────────────────────────────────────────────────────────────
+
+const filterBar = document.getElementById("filter-bar");
+const allTags = [...new Set(SETUPS.flatMap((s) => s.tags))];
+let activeTag = null;
+
+function renderFilterBar() {
+  filterBar.innerHTML = "";
+
+  const allBtn = document.createElement("button");
+  allBtn.className = "filter-btn" + (activeTag === null ? " active" : "");
+  allBtn.textContent = "הכל";
+  if (activeTag === null) allBtn.style.setProperty("--active-color", "#fff");
+  allBtn.addEventListener("click", () => {
+    activeTag = null;
+    applyFilter();
+  });
+  filterBar.appendChild(allBtn);
+
+  allTags.forEach((tag) => {
+    const color = SETUPS.find((s) => s.tags.includes(tag))?.color ?? "#fff";
+    const btn = document.createElement("button");
+    btn.className = "filter-btn" + (activeTag === tag ? " active" : "");
+    btn.textContent = tag;
+    if (activeTag === tag) btn.style.setProperty("--active-color", color);
+    btn.addEventListener("click", () => {
+      activeTag = activeTag === tag ? null : tag;
+      applyFilter();
+    });
+    filterBar.appendChild(btn);
+  });
+}
+
+function applyFilter() {
+  renderFilterBar();
+  let visibleIndex = 0;
+  tileEls.forEach((tile) => {
+    const tags = tile.dataset.tags.split(",");
+    const show = activeTag === null || tags.includes(activeTag);
+    tile.classList.toggle("hidden", !show);
+    if (show) {
+      tile.style.setProperty("--i", visibleIndex++);
+      tile.style.animation = "none";
+      tile.offsetHeight; // reflow to restart animation
+      tile.style.animation = "";
+    }
+  });
+}
+
+renderFilterBar();
