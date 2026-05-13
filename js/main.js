@@ -785,6 +785,127 @@ contrastToggle.addEventListener("click", () =>
 );
 applyContrast(!!localStorage.getItem("high-contrast"));
 
+// ── Quiz ──────────────────────────────────────────────────────────────────────
+const QUIZ_STEPS = [
+  {
+    q: "מה רמת הניסיון שלך בפיתוח?",
+    hint: "זה לא משנה — כולם מתאימים",
+    options: [
+      { text: "מתחיל לגמרי — בלי קוד", value: "beginner" },
+      { text: "יש לי בסיס בסיסי", value: "novice" },
+      { text: "מפתח / טכנאי מנוסה", value: "dev" },
+    ],
+  },
+  {
+    q: "מה הכי מתאר את מה שאתה רוצה לבנות?",
+    hint: "בחר את הקרוב ביותר אליך",
+    options: [
+      { text: "MVP ומוצרים מהירים", value: "builder" },
+      { text: "תוכן ופוסטים לרשתות", value: "influencer" },
+      { text: "דשבורדים לשוק ההון", value: "trader" },
+      { text: "אתר ומערכת לעסק שלי", value: "bizowner" },
+      { text: "חומרי לימוד ומערכי שיעור", value: "teacher" },
+      { text: "אמנות דיגיטלית וויזואלי", value: "artist" },
+      { text: "כלים לעבודה עצמאית", value: "freelancer" },
+      { text: "אפליקציות לבית הספר", value: "parent" },
+    ],
+  },
+];
+
+const QUIZ_MAP = {
+  builder: "builder",
+  influencer: "influencer",
+  trader: "trader",
+  bizowner: "bizowner",
+  teacher: "teacher",
+  artist: "artist",
+  freelancer: "freelancer",
+  parent: "parent",
+};
+
+const quizOverlay = document.getElementById("quiz-overlay");
+const quizBody = document.getElementById("quiz-body");
+let quizAnswers = [];
+
+function openQuiz() {
+  quizAnswers = [];
+  quizOverlay.hidden = false;
+  document.body.style.overflow = "hidden";
+  renderQuizStep(0);
+}
+
+function closeQuiz() {
+  quizOverlay.hidden = true;
+  document.body.style.overflow = "";
+}
+
+function renderQuizStep(stepIdx) {
+  if (stepIdx >= QUIZ_STEPS.length) {
+    renderQuizResult();
+    return;
+  }
+  const step = QUIZ_STEPS[stepIdx];
+  const total = QUIZ_STEPS.length;
+  const dots = Array.from(
+    { length: total },
+    (_, i) => `<div class="quiz-dot${i < stepIdx ? " done" : ""}"></div>`,
+  ).join("");
+
+  quizBody.innerHTML = `
+    <div class="quiz-step">
+      <div class="quiz-progress">${dots}</div>
+      <p class="quiz-q">${step.q}</p>
+      ${step.hint ? `<p class="quiz-hint">${step.hint}</p>` : ""}
+      <div class="quiz-options" style="grid-template-columns: ${step.options.length <= 3 ? "1fr" : "1fr 1fr"}">
+        ${step.options.map((o, i) => `<button class="quiz-option" data-idx="${i}">${o.text}</button>`).join("")}
+      </div>
+    </div>`;
+
+  quizBody.querySelectorAll(".quiz-option").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const val = step.options[parseInt(btn.dataset.idx)].value;
+      quizAnswers.push(val);
+      renderQuizStep(stepIdx + 1);
+    });
+  });
+}
+
+function renderQuizResult() {
+  const domainAnswer = quizAnswers[1] || quizAnswers[0];
+  const setupId = QUIZ_MAP[domainAnswer] || "builder";
+  const setup = SETUPS.find((s) => s.id === setupId);
+  if (!setup) return;
+
+  quizBody.innerHTML = `
+    <div class="quiz-result">
+      <span class="quiz-result-label">ההמלצה שלנו</span>
+      <h2 class="quiz-result-name">${setup.name}</h2>
+      <p class="quiz-result-desc">${setup.description}</p>
+      <div class="quiz-result-actions">
+        <button class="quiz-open-btn" id="quiz-open-setup">פתח את הסטאפ ←</button>
+        <button class="quiz-retry-btn" id="quiz-retry">נסה שוב</button>
+      </div>
+    </div>`;
+
+  document.getElementById("quiz-open-setup").addEventListener("click", () => {
+    closeQuiz();
+    openModal(setup);
+  });
+  document.getElementById("quiz-retry").addEventListener("click", () => {
+    quizAnswers = [];
+    renderQuizStep(0);
+  });
+}
+
+document.getElementById("quiz-btn").addEventListener("click", openQuiz);
+document.getElementById("quiz-close").addEventListener("click", closeQuiz);
+quizOverlay.addEventListener("click", (e) => {
+  if (e.target === quizOverlay) closeQuiz();
+});
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape" && !quizOverlay.hidden) closeQuiz();
+});
+
 // ── Search ────────────────────────────────────────────────────────────────────
 const searchInput = document.getElementById("search-input");
 const searchClear = document.getElementById("search-clear");

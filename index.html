@@ -138,6 +138,7 @@
 
     <div class="toolbar-row">
       <button id="shuffle-btn">⇄ ערבב</button>
+      <button id="quiz-btn">✦ מצא את הסטאפ שלך</button>
       <div id="density-toggle" role="group" aria-label="צפיפות תצוגה">
         <button class="density-btn" data-density="compact" title="צפוף">
           <svg
@@ -296,6 +297,19 @@
         >GitHub</a
       >
     </footer>
+
+    <div
+      id="quiz-overlay"
+      role="dialog"
+      aria-modal="true"
+      aria-label="מצא את הסטאפ שלך"
+      hidden
+    >
+      <div id="quiz-panel">
+        <button id="quiz-close" aria-label="סגור חידון">✕</button>
+        <div id="quiz-body"></div>
+      </div>
+    </div>
 
     <script src="js/main.js"></script>
   </body>
