@@ -361,7 +361,10 @@ function openModal(setup) {
   } else {
     _lastFocused = document.activeElement;
   }
+  tileEls.forEach((t) => t.setAttribute("aria-expanded", "false"));
   currentModalIndex = SETUPS.findIndex((s) => s.id === setup.id);
+  if (tileEls[currentModalIndex])
+    tileEls[currentModalIndex].setAttribute("aria-expanded", "true");
   const hasPrev = currentModalIndex > 0;
   const hasNext = currentModalIndex < SETUPS.length - 1;
   const accent = setup.color;
@@ -462,6 +465,8 @@ function closeModal() {
   document.body.style.overflow = "";
   history.replaceState(null, "", location.pathname);
   disableFocusTrap();
+  if (tileEls[currentModalIndex])
+    tileEls[currentModalIndex].setAttribute("aria-expanded", "false");
   if (_lastFocused) {
     _lastFocused.focus();
     _lastFocused = null;
@@ -636,6 +641,7 @@ SETUPS.forEach((setup, i) => {
   tile.setAttribute("tabindex", "0");
   tile.setAttribute("role", "button");
   tile.setAttribute("aria-label", `פתח ${setup.name}`);
+  tile.setAttribute("aria-expanded", "false");
 
   tile.innerHTML = `
     <div class="tile-glow"></div>
