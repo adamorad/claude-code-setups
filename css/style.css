@@ -157,91 +157,55 @@ body {
 
 /* ── Background grain texture (dark mode only) ── */
 
-/* ── Theme toggle ── */
-.theme-toggle {
+/* ── Header controls group ── */
+.header-controls {
   position: absolute;
   top: 20px;
   inset-inline-start: 24px;
-  background: var(--surface);
+  display: flex;
   border: 1px solid var(--border);
-  color: var(--text);
-  width: 38px;
-  height: 38px;
   border-radius: 10px;
+  overflow: hidden;
+  z-index: 10;
+}
+
+.theme-toggle,
+.contrast-toggle,
+.cb-toggle {
+  background: var(--surface);
+  border: none;
+  border-inline-end: 1px solid var(--border);
+  color: var(--text);
+  width: 36px;
+  height: 36px;
   cursor: pointer;
-  font-size: 1.1rem;
+  font-size: 1rem;
   display: flex;
   align-items: center;
   justify-content: center;
   transition:
     background 0.15s,
-    border-color 0.15s;
-  z-index: 10;
+    color 0.15s;
 }
 
-.theme-toggle:hover {
-  border-color: var(--muted);
+.cb-toggle {
+  border-inline-end: none;
 }
 
-.contrast-toggle {
-  position: absolute;
-  top: 20px;
-  inset-inline-start: 70px;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  color: var(--text);
-  width: 38px;
-  height: 38px;
-  border-radius: 10px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition:
-    background 0.15s,
-    border-color 0.15s;
-  z-index: 10;
-}
-
-.contrast-toggle:hover {
-  border-color: var(--muted);
+.theme-toggle:hover,
+.contrast-toggle:hover,
+.cb-toggle:hover {
+  background: color-mix(in srgb, var(--muted) 10%, var(--surface));
 }
 
 .contrast-toggle[aria-pressed="true"] {
   background: var(--text);
   color: var(--bg);
-  border-color: var(--text);
-}
-
-.cb-toggle {
-  position: absolute;
-  top: 20px;
-  inset-inline-start: 116px;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  color: var(--text);
-  width: 38px;
-  height: 38px;
-  border-radius: 10px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition:
-    background 0.15s,
-    border-color 0.15s,
-    color 0.15s;
-  z-index: 10;
-}
-
-.cb-toggle:hover {
-  border-color: var(--muted);
 }
 
 .cb-toggle.active {
-  border-color: var(--primary);
+  background: color-mix(in srgb, var(--primary) 12%, var(--surface));
   color: var(--primary);
-  background: color-mix(in srgb, var(--primary) 10%, transparent);
 }
 
 /* ── High contrast mode ── */
@@ -397,12 +361,32 @@ header p {
 /* ── Filter bar ── */
 #filter-bar {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
   gap: 8px;
   max-width: 1200px;
-  margin: 0 auto 32px;
+  margin: 0 auto 28px;
   padding: 0 24px;
+  -webkit-mask-image: linear-gradient(
+    to left,
+    transparent 0,
+    black 32px,
+    black calc(100% - 32px),
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to left,
+    transparent 0,
+    black 32px,
+    black calc(100% - 32px),
+    transparent 100%
+  );
+}
+
+#filter-bar::-webkit-scrollbar {
+  display: none;
 }
 
 .filter-btn {
@@ -415,6 +399,7 @@ header p {
   background: transparent;
   color: var(--muted);
   cursor: pointer;
+  flex-shrink: 0;
   transition:
     border-color 0.15s,
     color 0.15s,
@@ -1922,14 +1907,9 @@ body.compare-mode .tile.compare-selected::before {
     z-index: 50;
     padding: 10px 16px;
     margin-bottom: 16px;
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    justify-content: flex-start;
-    scrollbar-width: none;
     border-bottom: 1px solid var(--border);
-  }
-  #filter-bar::-webkit-scrollbar {
-    display: none;
+    -webkit-mask-image: none;
+    mask-image: none;
   }
 
   #grid {
@@ -1945,10 +1925,6 @@ body.compare-mode .tile.compare-selected::before {
     border-radius: 20px 20px 0 0;
     max-height: 90vh;
     padding: 24px 20px;
-  }
-
-  .filter-btn {
-    flex-shrink: 0;
   }
 
   .contact-links {
