@@ -83,6 +83,26 @@
   border-color: var(--muted);
 }
 
+/* ── Density tokens ── */
+:root {
+  --d-gap: 16px;
+  --d-pad: 24px 20px 20px;
+  --d-name: 1.15rem;
+  --d-desc: 0.84rem;
+}
+body.density-compact {
+  --d-gap: 8px;
+  --d-pad: 12px 14px 10px;
+  --d-name: 0.98rem;
+  --d-desc: 0.76rem;
+}
+body.density-spacious {
+  --d-gap: 28px;
+  --d-pad: 34px 26px 26px;
+  --d-name: 1.3rem;
+  --d-desc: 0.94rem;
+}
+
 :root {
   --bg: #140b06;
   --surface: #1e130e;
@@ -313,7 +333,7 @@ header p {
 #grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 16px;
+  gap: var(--d-gap);
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 24px 64px;
@@ -355,9 +375,28 @@ header p {
     border-color 0.18s ease,
     box-shadow 0.18s ease,
     opacity 0.18s ease;
-  border-inline-end: 3px solid var(--accent);
+  border-inline-end: 3px solid transparent;
   animation: tileIn 0.38s ease backwards;
   animation-delay: calc(var(--i, 0) * 55ms);
+}
+
+.tile::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  inset-inline-end: 0;
+  width: 3px;
+  background: linear-gradient(
+    to bottom,
+    var(--accent) 0%,
+    color-mix(in srgb, var(--accent) 40%, transparent) 60%,
+    transparent 100%
+  );
+  transition:
+    width 0.18s ease,
+    opacity 0.18s ease;
+  pointer-events: none;
 }
 
 .tile.hidden {
@@ -465,8 +504,20 @@ header p {
 
 .tile:hover {
   transform: translateY(-4px);
-  border-color: var(--accent);
+  border-color: transparent;
   box-shadow: 0 4px 20px color-mix(in srgb, var(--accent) 14%, transparent);
+}
+
+.tile:hover::after {
+  width: 4px;
+  opacity: 1;
+  background: linear-gradient(
+    to bottom,
+    color-mix(in srgb, var(--accent) 130%, #fff) 0%,
+    var(--accent) 40%,
+    color-mix(in srgb, var(--accent) 40%, transparent) 80%,
+    transparent 100%
+  );
 }
 
 .tile-glow {
@@ -481,7 +532,7 @@ header p {
 }
 
 .tile-body {
-  padding: 24px 20px 20px;
+  padding: var(--d-pad);
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -489,7 +540,7 @@ header p {
 }
 
 .tile-name {
-  font-size: 1.15rem;
+  font-size: var(--d-name);
   font-weight: 800;
   line-height: 1.2;
   color: var(--text);
@@ -504,7 +555,7 @@ header p {
 }
 
 .tile-desc {
-  font-size: 0.84rem;
+  font-size: var(--d-desc);
   color: var(--muted);
   line-height: 1.6;
   flex: 1;
@@ -966,6 +1017,50 @@ footer {
 
 .footer-link:hover {
   color: var(--text);
+}
+
+/* ── Toolbar row (shuffle + density) ── */
+.toolbar-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 24px;
+}
+
+/* ── Density toggle ── */
+#density-toggle {
+  display: flex;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.density-btn {
+  background: transparent;
+  border: none;
+  border-inline-end: 1px solid var(--border);
+  color: var(--muted);
+  padding: 6px 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    background 0.15s,
+    color 0.15s;
+  line-height: 1;
+}
+.density-btn:last-child {
+  border-inline-end: none;
+}
+.density-btn:hover {
+  color: var(--text);
+  background: color-mix(in srgb, var(--muted) 8%, transparent);
+}
+.density-btn.active {
+  color: var(--text);
+  background: color-mix(in srgb, var(--primary) 12%, transparent);
 }
 
 /* ── Shuffle button ── */
