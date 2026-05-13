@@ -219,6 +219,30 @@ function updateFavButtons() {
   });
 }
 
+// ── Install history ───────────────────────────────────────────────────────────
+function getHistory() {
+  try {
+    return new Set(JSON.parse(localStorage.getItem("install_history") || "[]"));
+  } catch {
+    return new Set();
+  }
+}
+
+function markCopied(id) {
+  const h = getHistory();
+  h.add(id);
+  localStorage.setItem("install_history", JSON.stringify([...h]));
+  updateHistoryIndicators();
+}
+
+function updateHistoryIndicators() {
+  const h = getHistory();
+  tileEls.forEach((tile, i) => {
+    const el = tile.querySelector(".tile-copied");
+    if (el) el.hidden = !h.has(SETUPS[i].id);
+  });
+}
+
 // ── Recently viewed ───────────────────────────────────────────────────────────
 function getRecentlyViewed() {
   try {
@@ -505,6 +529,7 @@ function copyCmd(id) {
   navigator.clipboard.writeText(text).then(() => {
     showToast("הועתק ✓");
     if (navigator.vibrate) navigator.vibrate(50);
+    markCopied(id);
     if (!localStorage.getItem("confetti_done")) {
       localStorage.setItem("confetti_done", "1");
       triggerConfetti();
@@ -632,6 +657,7 @@ SETUPS.forEach((setup, i) => {
       <div class="tile-tags">
         ${setup.tags.map((t) => `<span class="tag">${t}</span>`).join("")}
       </div>
+      <span class="tile-copied" hidden>✓ הורדת</span>
     </div>
   `;
 
@@ -668,6 +694,7 @@ SETUPS.forEach((setup, i) => {
 });
 
 updateFavButtons();
+updateHistoryIndicators();
 
 // ── Shuffle ───────────────────────────────────────────────────────────────────
 const shuffleBtn = document.getElementById("shuffle-btn");
