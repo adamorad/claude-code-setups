@@ -4,12 +4,6 @@ const PALETTE = {
   gold: { dark: "#c4a05e", light: "#7a5c18" },
   purple: { dark: "#9b72cf", light: "#5a3e9a" },
 };
-// Okabe-Ito palette — safe for deuteranopia & protanopia
-const PALETTE_CB = {
-  teal: { dark: "#56b4e9", light: "#0072b2" },
-  gold: { dark: "#e69f00", light: "#c07800" },
-  purple: { dark: "#009e73", light: "#007a58" },
-};
 const CYCLE = [
   "teal",
   "gold",
@@ -20,7 +14,6 @@ const CYCLE = [
   "teal",
   "gold",
 ];
-let colorBlindMode = !!localStorage.getItem("cb-palette");
 
 // ── Data ──────────────────────────────────────────────────────────────────────
 const SETUPS = [
@@ -869,8 +862,7 @@ window.addEventListener("DOMContentLoaded", () => {
 let currentTheme = localStorage.getItem("theme") || "dark";
 
 function getAccent(i) {
-  const pal = colorBlindMode ? PALETTE_CB : PALETTE;
-  return pal[CYCLE[i % CYCLE.length]][
+  return PALETTE[CYCLE[i % CYCLE.length]][
     currentTheme === "light" ? "light" : "dark"
   ];
 }
@@ -1044,30 +1036,6 @@ tileEls.forEach((tile) => {
 });
 
 restoreTileOrder();
-
-// ── High contrast toggle ──────────────────────────────────────────────────────
-const contrastToggle = document.getElementById("contrast-toggle");
-function applyContrast(on) {
-  document.body.classList.toggle("high-contrast", on);
-  localStorage.setItem("high-contrast", on ? "1" : "");
-  contrastToggle.setAttribute("aria-pressed", String(on));
-}
-contrastToggle.addEventListener("click", () =>
-  applyContrast(!document.body.classList.contains("high-contrast")),
-);
-applyContrast(!!localStorage.getItem("high-contrast"));
-
-// ── Color-blind palette toggle ────────────────────────────────────────────────
-const cbToggle = document.getElementById("cb-toggle");
-function applyCBPalette(on) {
-  colorBlindMode = on;
-  localStorage.setItem("cb-palette", on ? "1" : "");
-  cbToggle.setAttribute("aria-pressed", String(on));
-  cbToggle.classList.toggle("active", on);
-  reapplyAccents();
-}
-cbToggle.addEventListener("click", () => applyCBPalette(!colorBlindMode));
-applyCBPalette(colorBlindMode);
 
 // ── Quiz ──────────────────────────────────────────────────────────────────────
 const QUIZ_STEPS = [

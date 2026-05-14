@@ -150,24 +150,14 @@ body {
 
 /* ── Background grain texture (dark mode only) ── */
 
-/* ── Header controls group ── */
-.header-controls {
+/* ── Theme toggle ── */
+.theme-toggle {
   position: absolute;
-  top: 20px;
-  inset-inline-start: 24px;
-  display: flex;
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  overflow: hidden;
-  z-index: 10;
-}
-
-.theme-toggle,
-.contrast-toggle,
-.cb-toggle {
+  top: 16px;
+  inset-inline-start: 16px;
   background: var(--surface);
-  border: none;
-  border-inline-end: 1px solid var(--border);
+  border: 1px solid var(--border);
+  border-radius: 8px;
   color: var(--text);
   width: 36px;
   height: 36px;
@@ -176,61 +166,15 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 10;
   transition:
     background 0.15s,
-    color 0.15s;
+    border-color 0.15s;
 }
 
-.cb-toggle {
-  border-inline-end: none;
-}
-
-.theme-toggle:hover,
-.contrast-toggle:hover,
-.cb-toggle:hover {
+.theme-toggle:hover {
   background: color-mix(in srgb, var(--muted) 10%, var(--surface));
-}
-
-.contrast-toggle[aria-pressed="true"] {
-  background: var(--text);
-  color: var(--bg);
-}
-
-.cb-toggle.active {
-  background: color-mix(in srgb, var(--primary) 12%, var(--surface));
-  color: var(--primary);
-}
-
-/* ── High contrast mode ── */
-body.high-contrast {
-  --border: rgba(255, 255, 255, 0.85);
-  --text: #ffffff;
-  --muted: #e0e0e0;
-  --surface: #0a0505;
-  --bg: #000000;
-  --modal-bg: rgba(0, 0, 0, 0.95);
-}
-
-body.high-contrast[data-theme="light"] {
-  --border: rgba(0, 0, 0, 0.8);
-  --text: #000000;
-  --muted: #1a1a1a;
-  --surface: #ffffff;
-  --bg: #f0f0f0;
-  --modal-bg: rgba(0, 0, 0, 0.85);
-}
-
-body.high-contrast .tile {
-  box-shadow: none !important;
-}
-
-body.high-contrast .tile::after {
-  background: var(--accent);
-  opacity: 1;
-}
-
-body.high-contrast .tile:hover {
-  box-shadow: 0 0 0 2px var(--accent) !important;
+  border-color: var(--muted);
 }
 
 header {
@@ -1867,8 +1811,6 @@ body.compare-mode .tile.compare-selected::before {
 @media (pointer: coarse) {
   .filter-btn,
   .theme-toggle,
-  .contrast-toggle,
-  .cb-toggle,
   .copy-btn,
   .share-btn,
   .modal-close,
