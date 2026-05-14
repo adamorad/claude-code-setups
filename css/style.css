@@ -6,6 +6,11 @@
   padding: 0;
 }
 
+html,
+body {
+  overflow-x: hidden;
+}
+
 /* ── Skip link ── */
 .skip-link {
   position: absolute;
@@ -1667,16 +1672,30 @@ body.compare-mode .tile.compare-selected::before {
 @media (max-width: 560px) {
   /* Header */
   header {
-    padding: 52px 16px 28px;
+    padding: 48px 16px 24px;
+  }
+
+  header h1 {
+    font-size: 2rem;
+  }
+
+  header p {
+    font-size: 0.88rem;
   }
 
   .header-label {
-    font-size: 0.7rem;
+    display: none;
   }
 
   /* Search */
   #search-bar {
-    padding: 0 16px;
+    padding: 0 12px;
+    margin-bottom: 12px;
+  }
+
+  #search-input {
+    font-size: 1rem;
+    padding: 12px 36px 12px 14px;
   }
 
   /* Filter bar */
@@ -1685,32 +1704,57 @@ body.compare-mode .tile.compare-selected::before {
     top: 0;
     background: var(--bg);
     z-index: 50;
-    padding: 10px 16px;
-    margin-bottom: 16px;
+    padding: 10px 12px;
+    gap: 8px;
+    margin-bottom: 12px;
     border-bottom: 1px solid var(--border);
     -webkit-mask-image: none;
     mask-image: none;
   }
 
+  .filter-btn {
+    font-size: 0.82rem;
+    padding: 9px 16px;
+    height: 38px;
+  }
+
   /* Toolbar */
   .toolbar-row {
-    padding: 0 16px;
-    margin-bottom: 16px;
+    padding: 0 12px;
+    margin-bottom: 14px;
   }
 
   #quiz-btn {
     width: 100%;
     justify-content: center;
+    font-size: 0.9rem;
+    padding: 12px 20px;
   }
 
   /* Grid */
   #grid {
+    gap: 10px;
     padding: 0 12px 48px;
   }
 
-  /* Tiles — disable lift on touch to prevent sticky hover */
+  /* Tile body — more breathing room */
+  .tile-body {
+    padding: 18px 16px 14px;
+    gap: 10px;
+  }
+
+  .tile-name {
+    font-size: 1.1rem;
+  }
+
+  .tile-desc {
+    font-size: 0.85rem;
+  }
+
+  /* Disable lift on touch to prevent sticky hover */
   .tile:hover {
     transform: none;
+    box-shadow: none;
   }
 
   /* Disable hover tooltip on touch */
@@ -1718,20 +1762,21 @@ body.compare-mode .tile.compare-selected::before {
     display: none;
   }
 
-  /* Install block — stack on narrow screens */
+  /* Install block */
   .install-block {
-    flex-wrap: wrap;
-    gap: 8px;
+    flex-direction: column;
+    gap: 10px;
+    align-items: stretch;
   }
 
   .install-block code {
-    font-size: 0.7rem;
+    font-size: 0.72rem;
   }
 
   .copy-btn {
-    width: 44px;
+    width: 100%;
     height: 44px;
-    margin-inline-start: auto;
+    border-radius: 8px;
   }
 
   /* Modal — bottom sheet */
@@ -1742,8 +1787,9 @@ body.compare-mode .tile.compare-selected::before {
 
   #modal-content {
     border-radius: 20px 20px 0 0;
-    max-height: 90vh;
-    padding: 24px 16px 32px;
+    max-height: 92vh;
+    padding: 8px 16px 40px;
+    border-bottom: none;
   }
 
   #modal-content::before {
@@ -1753,11 +1799,11 @@ body.compare-mode .tile.compare-selected::before {
     height: 4px;
     background: var(--border);
     border-radius: 2px;
-    margin: -8px auto 20px;
+    margin: 12px auto 20px;
   }
 
   .modal-header h2 {
-    font-size: 1.3rem;
+    font-size: 1.25rem;
   }
 
   /* Quiz panel — bottom sheet */
@@ -1769,7 +1815,8 @@ body.compare-mode .tile.compare-selected::before {
   #quiz-panel {
     border-radius: 20px 20px 0 0;
     max-width: 100%;
-    padding: 28px 20px 32px;
+    padding: 8px 20px 40px;
+    border-bottom: none;
   }
 
   #quiz-panel::before {
@@ -1779,12 +1826,17 @@ body.compare-mode .tile.compare-selected::before {
     height: 4px;
     background: var(--border);
     border-radius: 2px;
-    margin: -12px auto 20px;
+    margin: 12px auto 20px;
+  }
+
+  .quiz-options button {
+    padding: 14px 16px;
+    font-size: 0.95rem;
   }
 
   /* Contact */
   .contact-section {
-    padding: 44px 16px 52px;
+    padding: 40px 16px 48px;
   }
 
   .contact-links {
@@ -1794,6 +1846,7 @@ body.compare-mode .tile.compare-selected::before {
 
   .contact-btn {
     justify-content: center;
+    padding: 14px 20px;
   }
 
   /* Footer */
@@ -1802,6 +1855,11 @@ body.compare-mode .tile.compare-selected::before {
     align-items: flex-end;
     gap: 12px;
     text-align: right;
+  }
+
+  /* Recently viewed */
+  #recently-viewed {
+    padding: 0 12px;
   }
 }
 
