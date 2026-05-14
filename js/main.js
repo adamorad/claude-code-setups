@@ -483,45 +483,6 @@ function updateHistoryIndicators() {
   });
 }
 
-// ── Recently viewed ───────────────────────────────────────────────────────────
-function getRecentlyViewed() {
-  try {
-    return JSON.parse(localStorage.getItem("rv") || "[]");
-  } catch {
-    return [];
-  }
-}
-
-function trackRecentlyViewed(id) {
-  const rv = getRecentlyViewed().filter((x) => x !== id);
-  rv.unshift(id);
-  localStorage.setItem("rv", JSON.stringify(rv.slice(0, 5)));
-  renderRecentlyViewed();
-}
-
-function renderRecentlyViewed() {
-  const container = document.getElementById("recently-viewed");
-  if (!container) return;
-  const rv = getRecentlyViewed();
-  if (rv.length < 2) {
-    container.innerHTML = "";
-    return;
-  }
-  const items = rv.map((id) => SETUPS.find((s) => s.id === id)).filter(Boolean);
-  container.innerHTML = `
-    <div class="rv-strip">
-      <span class="rv-label">צפית לאחרונה:</span>
-      ${items.map((s) => `<button class="rv-chip" data-id="${s.id}">${s.name}</button>`).join("")}
-    </div>
-  `;
-  container.querySelectorAll(".rv-chip").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      const s = SETUPS.find((x) => x.id === btn.dataset.id);
-      if (s) openModal(s);
-    });
-  });
-}
-
 // ── Focus trap ────────────────────────────────────────────────────────────────
 let _trapHandler = null;
 
@@ -715,7 +676,6 @@ function openModal(setup) {
   modal.classList.add("open");
   document.body.style.overflow = "hidden";
   history.replaceState(null, "", `#${setup.id}`);
-  trackRecentlyViewed(setup.id);
   enableFocusTrap();
   setTimeout(() => document.getElementById("modal-close-btn")?.focus(), 50);
 }
@@ -850,7 +810,6 @@ modal.addEventListener(
 
 // ── Deep link ─────────────────────────────────────────────────────────────────
 window.addEventListener("DOMContentLoaded", () => {
-  renderRecentlyViewed();
   const hash = location.hash.slice(1);
   if (hash) {
     const setup = SETUPS.find((s) => s.id === hash);

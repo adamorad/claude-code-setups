@@ -41,53 +41,6 @@ body {
   }
 }
 
-/* ── Recently viewed strip ── */
-#recently-viewed {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 24px;
-}
-
-.rv-strip {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 12px 0 4px;
-  flex-wrap: nowrap;
-  overflow-x: auto;
-  scrollbar-width: none;
-}
-.rv-strip::-webkit-scrollbar {
-  display: none;
-}
-
-.rv-label {
-  font-size: 0.7rem;
-  color: var(--muted);
-  white-space: nowrap;
-  flex-shrink: 0;
-}
-
-.rv-chip {
-  font-size: 0.72rem;
-  font-weight: 600;
-  padding: 4px 10px;
-  border-radius: 20px;
-  border: 1px solid var(--border);
-  color: var(--muted);
-  background: var(--surface);
-  cursor: pointer;
-  white-space: nowrap;
-  flex-shrink: 0;
-  transition:
-    border-color 0.15s,
-    color 0.15s;
-}
-.rv-chip:hover {
-  color: var(--text);
-  border-color: var(--muted);
-}
-
 /* ── Density tokens ── */
 :root {
   --d-gap: 16px;
@@ -1799,11 +1752,6 @@ body.compare-mode .tile.compare-selected::before {
     align-items: flex-end;
     gap: 12px;
     text-align: right;
-  }
-
-  /* Recently viewed */
-  #recently-viewed {
-    padding: 0 12px;
   }
 }
 
