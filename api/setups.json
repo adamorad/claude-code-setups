@@ -1,294 +1,115 @@
 {
-  "version": "2.0",
-  "generated": "2026-05-13",
+  "version": "3.0",
+  "generated": "2026-05-15",
+  "count": 18,
   "setups": [
     {
-      "id": "builder",
-      "name": "הבילדר",
-      "user": "@buildil",
-      "time": "3 דק׳",
-      "level": "מתחיל",
-      "description": "רעיון חדש כל שבוע. בונה MVP תוך יום ומשלח. לא מחכה לאף אחד.",
-      "tags": ["מהיר", "MVP", "שיחרור"],
-      "features": [
-        "Ruflo MCP — סוכנים מרובים שעובדים במקביל",
-        "Supabase plugin — DB + Auth + Storage בפקודה אחת",
-        "Bun מותקן — הרצת סקריפטים 3x מהיר מ-Node",
-        "פקודה /new-project — scaffold MVP תוך 10 שניות",
-        "Prettier hook אוטומטי — קוד מסודר אחרי כל שמירה",
-        "CLAUDE.md עם Stack decisions: Supabase, Vercel, Tailwind CDN"
-      ],
-      "installCmd": "bash <(curl -fsSL https://raw.githubusercontent.com/adamorad/claude-code-setups/main/setups/builder/install.sh)"
+      "id": "backend",
+      "name": "הבק-אנד",
+      "tags": ["API", "Python", "PostgreSQL"],
+      "level": "בינוני"
     },
     {
-      "id": "influencer",
-      "name": "המשפיען",
-      "user": "@vibe_content",
-      "time": "5 דק׳",
-      "level": "מתחיל",
-      "description": "יוצר תוכן ישראלי שבונה כלים לקהל שלו. אוטומציה של פוסטים, אנליטיקה, ניוזלטר.",
-      "tags": ["תוכן", "אוטומציה", "קהילה"],
-      "features": [
-        "פקודה /create-post — 3 גרסאות פוסט לכל פלטפורמה",
-        "Skill: LinkedIn ישראלי — voice, hooks, hashtag bank",
-        "Skill: Social Content — חוקים לאינסטגרם/TikTok/FB",
-        "CLAUDE.md עם זמני פרסום מדויקים לקהל ישראלי",
-        "Python + pandas לאנליטיקה בסיסית",
-        "אסטרטגיה: מה עובד בכל פלטפורמה בישראל"
-      ],
-      "installCmd": "bash <(curl -fsSL https://raw.githubusercontent.com/adamorad/claude-code-setups/main/setups/influencer/install.sh)"
+      "id": "frontend",
+      "name": "הפרונטאנד",
+      "tags": ["React", "Vue", "Playwright"],
+      "level": "מתחיל"
     },
     {
-      "id": "trader",
-      "name": "הסוחר",
-      "user": "@trade_vibe",
-      "time": "8 דק׳",
-      "level": "בינוני",
-      "description": "סוחר שבונה דשבורדים, סורקים ובוטים לשוק ההון והקריפטו. ללא רקע בפיתוח.",
-      "tags": ["שוק ההון", "דשבורד", "בוטים"],
-      "features": [
-        "yfinance + pandas-ta — RSI, MACD, Bollinger Bands מוכנים",
-        "Jupyter Lab לניסויים ומחקר",
-        "plotly לגרפים אינטרקטיביים בדפדפן",
-        "פקודה /stock-scan — סורק מניות TASE/NASDAQ",
-        "CLAUDE.md עם טיקרים ושעות מסחר TASE מדויקים",
-        "כלל ברזל: אין ביצוע עסקאות אוטומטי — רק התראות"
-      ],
-      "installCmd": "bash <(curl -fsSL https://raw.githubusercontent.com/adamorad/claude-code-setups/main/setups/trader/install.sh)"
+      "id": "saas",
+      "name": "בונה ה-SaaS",
+      "tags": ["SaaS", "Stripe", "Supabase"],
+      "level": "מתחיל"
     },
     {
-      "id": "bizowner",
-      "name": "בעל העסק",
-      "user": "@biz_il",
-      "time": "3 דק׳",
-      "level": "מתחיל",
-      "description": "מסעדן, מאמן, בעל קליניקה — בונה אתר, מערכת הזמנות ו-CRM לעצמו.",
-      "tags": ["עסק קטן", "אתר", "CRM"],
-      "features": [
-        "פקודה /landing-page — דף נחיתה RTL בעברית תוך דקות",
-        "תבנית הצעת מחיר עם מע״מ 18% מוכנה",
-        "CLAUDE.md: עוסק פטור (₪120k) vs מורשה, Bit/PayBox",
-        "Supabase plugin — ניהול לקוחות ותורים",
-        "ידע ישראלי: WhatsApp > מייל, ימי עסקים א'-ה'",
-        "הסברים בעברית פשוטה — ללא ז'רגון טכני"
-      ],
-      "installCmd": "bash <(curl -fsSL https://raw.githubusercontent.com/adamorad/claude-code-setups/main/setups/bizowner/install.sh)"
+      "id": "devops",
+      "name": "ה-DevOps",
+      "tags": ["CI/CD", "Docker", "Cloudflare"],
+      "level": "מתקדם"
     },
     {
-      "id": "teacher",
-      "name": "המורה",
-      "user": "@teacher_builds",
-      "time": "4 דק׳",
-      "level": "מתחיל",
-      "description": "מורה שבונה חידונים, דפי עבודה ומערכי שיעור אינטרקטיביים — ללא ידע בקוד.",
-      "tags": ["חינוך", "חידונים", "כיתה"],
-      "features": [
-        "פקודה /create-quiz — חידון HTML RTL בכל נושא",
-        "פקודה /worksheet — דף עבודה להדפסה (A4 RTL)",
-        "CLAUDE.md עם תוכנית לימודים ישראלית לפי כיתה",
-        "Reveal.js למצגות אינטרקטיביות — אין PowerPoint",
-        "כל כלי עובד מהטלפון — ללא הרשמה",
-        "גופן גדול, עברית, צבעים חמים — מותאם לכיתה"
-      ],
-      "installCmd": "bash <(curl -fsSL https://raw.githubusercontent.com/adamorad/claude-code-setups/main/setups/teacher/install.sh)"
+      "id": "ai-eng",
+      "name": "מהנדס ה-AI",
+      "tags": ["LLM", "Prompts", "RAG"],
+      "level": "מתקדם"
     },
     {
-      "id": "artist",
-      "name": "האמן",
-      "user": "@art_vibe",
-      "time": "5 דק׳",
-      "level": "מתחיל",
-      "description": "אמן דיגיטלי שבונה חוויות אינטרקטיביות, גנרטיב ארט ואתרי פורטפוליו.",
-      "tags": ["גנרטיב", "אינטרקטיב", "פורטפוליו"],
-      "features": [
-        "תבנית p5.js מוכנה — full-screen canvas, HSB colors",
-        "CLAUDE.md: מה CDN להשתמש לכל ספרייה (p5/Three/GSAP)",
-        "פקודה /new-artwork — scaffold ויזואלי מהרעיון",
-        "Tone.js למוזיקה גנרטיבית, Three.js לתלת-מימד",
-        "Bun לפיתוח מהיר ללא build step",
-        "GitHub Pages deployment — פרסום ב-3 פקודות"
-      ],
-      "installCmd": "bash <(curl -fsSL https://raw.githubusercontent.com/adamorad/claude-code-setups/main/setups/artist/install.sh)"
+      "id": "security",
+      "name": "מהנדס האבטחה",
+      "tags": ["AppSec", "Hooks", "OWASP"],
+      "level": "מתקדם"
     },
     {
-      "id": "freelancer",
+      "id": "data",
+      "name": "מדען הנתונים",
+      "tags": ["Python", "Jupyter", "ML"],
+      "level": "בינוני"
+    },
+    {
+      "id": "indie",
+      "name": "האינדי האקר",
+      "tags": ["Indie", "MRR", "Stripe"],
+      "level": "מתחיל"
+    },
+    {
+      "id": "mobile",
+      "name": "מפתח המובייל",
+      "tags": ["React Native", "Expo", "iOS/Android"],
+      "level": "בינוני"
+    },
+    {
+      "id": "pm",
+      "name": "ה-PM שמקודד",
+      "tags": ["Product", "Notion", "GitHub"],
+      "level": "מתחיל"
+    },
+    {
+      "id": "creator",
+      "name": "יוצר התוכן",
+      "tags": ["LinkedIn", "תוכן", "SEO"],
+      "level": "מתחיל"
+    },
+    {
+      "id": "docs",
+      "name": "כותב התיעוד",
+      "tags": ["Docs", "API", "Markdown"],
+      "level": "מתחיל"
+    },
+    {
+      "id": "freelance",
       "name": "הפרילנסר",
-      "user": "@freelance_il",
-      "time": "3 דק׳",
-      "level": "בינוני",
-      "description": "פרילנסר ישראלי שמאוטומט הצעות, חשבוניות ותיאום לקוחות — כדי לעבוד פחות.",
-      "tags": ["אוטומציה", "לקוחות", "חשבוניות"],
-      "features": [
-        "פקודה /generate-quote — הצעת מחיר עם מע״מ 18% נכון",
-        "פקודה /payment-reminder — תזכורת תשלום לפי ימי איחור",
-        "CLAUDE.md: עוסק פטור/מורשה, Bit/PayBox, ניכוי מס",
-        "תבנית הצעת מחיר מוכנה — פרטי עוסק, VAT, תנאים",
-        "ידע: ייצוא לחו\"ל = פטור ממע\"מ (0%)",
-        "Supabase plugin לניהול לקוחות ופרויקטים"
-      ],
-      "installCmd": "bash <(curl -fsSL https://raw.githubusercontent.com/adamorad/claude-code-setups/main/setups/freelancer/install.sh)"
+      "tags": ["לקוחות", "Proposals", "Handoff"],
+      "level": "מתחיל"
     },
     {
-      "id": "parent",
-      "name": "ההורה",
-      "user": "@parent_builds",
-      "time": "3 דק׳",
-      "level": "מתחיל",
-      "description": "הורה שבונה אפליקציות לבית הספר, לועד הורים ולילדים — מהנייד ומהמחשב.",
-      "tags": ["ילדים", "קהילה", "בית ספר"],
-      "features": [
-        "פקודה /parent-form — טופס הרשמה לאירוע בית ספר",
-        "פקודה /whatsapp-message — הודעת ועד מוכנה לשליחה",
-        "CLAUDE.md: ועד הורים, קבוצות WhatsApp, גיוס כספים",
-        "אין הרשמה/לוגין — הורים פותחים ישר מהטלפון",
-        "CSV export למרשמי נרשמים — פותח באקסל",
-        "הסברים בעברית פשוטה — אין צורך ב-terminal ידע"
-      ],
-      "installCmd": "bash <(curl -fsSL https://raw.githubusercontent.com/adamorad/claude-code-setups/main/setups/parent/install.sh)"
+      "id": "cto",
+      "name": "ה-CTO",
+      "tags": ["Architecture", "Team", "Leadership"],
+      "level": "מתקדם"
+    },
+    {
+      "id": "ecommerce",
+      "name": "האיקומרס",
+      "tags": ["Shopify", "Conversion", "אוטומציה"],
+      "level": "מתחיל"
+    },
+    {
+      "id": "gamedev",
+      "name": "מפתח המשחקים",
+      "tags": ["Godot", "Unity", "Gaming"],
+      "level": "בינוני"
     },
     {
       "id": "student",
       "name": "הסטודנט",
-      "user": "@student_builds",
-      "time": "3 דק׳",
-      "level": "מתחיל",
-      "description": "סטודנט שבונה כלים ללמידה, מחקר ועבודות גמר — Python, סיכומים ובחינות.",
-      "tags": ["לימודים", "מחקר", "Python"],
-      "features": [
-        "Jupyter Lab מוכן — ניתוח נתונים לקורסים",
-        "פקודה /summarize-paper — סיכום מאמר אקדמי ב-5 נקודות",
-        "CLAUDE.md עם APA7 referencing אוטומטי",
-        "Git workflow לעבודות — commit לכל שלב",
-        "Python + matplotlib + seaborn לוויזואליזציה",
-        "פקודה /study-quiz — חידון חזרה מהחומר שלך"
-      ],
-      "installCmd": "bash <(curl -fsSL https://raw.githubusercontent.com/adamorad/claude-code-setups/main/setups/student/install.sh)"
+      "tags": ["למידה", "Python", "שגיאות"],
+      "level": "מתחיל"
     },
     {
-      "id": "startup",
-      "name": "הסטארטאפר",
-      "user": "@startup_vibe",
-      "time": "5 דק׳",
-      "level": "בינוני",
-      "description": "מייסד שרץ לפגישת משקיעים. בונה MVP, pitch deck ו-metrics dashboard תוך ימים.",
-      "tags": ["סטארטאפ", "משקיעים", "MVP"],
-      "features": [
-        "פקודה /pitch-deck — מצגת משקיעים מהרעיון תוך דקות",
-        "פקודה /runway-calc — מחשבון runway עם תחזיות שרידות",
-        "CLAUDE.md עם YC template ו-unit economics",
-        "Supabase plugin לאנליטיקה ו-user tracking",
-        "Ruflo MCP — בניית features במקביל",
-        "פקודה /one-pager — executive summary PDF"
-      ],
-      "installCmd": "bash <(curl -fsSL https://raw.githubusercontent.com/adamorad/claude-code-setups/main/setups/startup/install.sh)"
-    },
-    {
-      "id": "gamer",
-      "name": "הגיימר",
-      "user": "@game_vibe",
-      "time": "6 דק׳",
-      "level": "בינוני",
-      "description": "מפתח משחקים עצמאי שבונה משחקי browser ו-2D — ללא ניסיון קודם.",
-      "tags": ["גיימינג", "Phaser", "2D"],
-      "features": [
-        "Phaser.js template מוכן — game loop, sprites, sound",
-        "פקודה /new-game — scaffold משחק חדש עם physics",
-        "CLAUDE.md עם game design patterns ו-mobile touch",
-        "itch.io deployment — פרסום ב-3 פקודות",
-        "Web Audio API — sound effects מוכנים",
-        "leaderboard עם Supabase — ציונים בזמן אמת"
-      ],
-      "installCmd": "bash <(curl -fsSL https://raw.githubusercontent.com/adamorad/claude-code-setups/main/setups/gamer/install.sh)"
-    },
-    {
-      "id": "podcaster",
-      "name": "הפודקאסטר",
-      "user": "@podcast_il",
-      "time": "4 דק׳",
-      "level": "מתחיל",
-      "description": "מפיק פודקאסט עברי שמאוטומט תמלול, שו נוטס וקטעים לרשתות חברתיות.",
-      "tags": ["פודקאסט", "תמלול", "תוכן"],
-      "features": [
-        "Whisper API — תמלול עברי אוטומטי",
-        "פקודה /show-notes — שו נוטס מוכן מהתמלול",
-        "פקודה /clips — 5 קטעים ויראליים לאינסטגרם",
-        "CLAUDE.md עם voice ו-tone של הפודקאסט",
-        "RSS feed generator — הפצה לכל הפלטפורמות",
-        "פקודה /episode-title — 10 כותרות לבחירה"
-      ],
-      "installCmd": "bash <(curl -fsSL https://raw.githubusercontent.com/adamorad/claude-code-setups/main/setups/podcaster/install.sh)"
-    },
-    {
-      "id": "coach",
-      "name": "המאמן",
-      "user": "@coach_builds",
-      "time": "4 דק׳",
-      "level": "מתחיל",
-      "description": "מאמן כושר או חיים שבונה מערכת ניהול לקוחות, תוכניות אימון ועקיבת התקדמות.",
-      "tags": ["כושר", "לקוחות", "תוכניות"],
-      "features": [
-        "פקודה /training-plan — תוכנית אימון ל-8 שבועות",
-        "Supabase לניהול לקוחות, מדידות ו-check-ins",
-        "פקודה /progress-report — דוח התקדמות ויזואלי",
-        "WhatsApp template — עדכון שבועי ללקוח",
-        "CLAUDE.md עם כללי תזונה ו-periodization",
-        "calendar integration — תזמון אימונים אוטומטי"
-      ],
-      "installCmd": "bash <(curl -fsSL https://raw.githubusercontent.com/adamorad/claude-code-setups/main/setups/coach/install.sh)"
-    },
-    {
-      "id": "realestate",
-      "name": "הסוכן",
-      "user": "@realestate_il",
-      "time": "5 דק׳",
-      "level": "מתחיל",
-      "description": "סוכן נדל\"ן שבונה כלים לחישוב משכנתאות, ניהול לידים ודפי נכס בעברית.",
-      "tags": ["נדל\"ן", "משכנתא", "לידים"],
-      "features": [
-        "פקודה /mortgage-calc — מחשבון משכנתא ישראלי מלא",
-        "פקודה /property-page — דף נכס RTL עם תמונות",
-        "CLAUDE.md עם שוק הנדל\"ן הישראלי ומסי רכישה",
-        "Supabase לניהול לידים ונכסים",
-        "מחשבון מס שבח ומס רכישה עדכני",
-        "WhatsApp follow-up אוטומטי ללידים"
-      ],
-      "installCmd": "bash <(curl -fsSL https://raw.githubusercontent.com/adamorad/claude-code-setups/main/setups/realestate/install.sh)"
-    },
-    {
-      "id": "musician",
-      "name": "המוזיקאי",
-      "user": "@music_builds",
-      "time": "5 דק׳",
-      "level": "מתחיל",
-      "description": "מוזיקאי עצמאי שבונה כלים להפצה, ניהול royalties ופרזנטציה מקצועית.",
-      "tags": ["מוזיקה", "הפצה", "קטלוג"],
-      "features": [
-        "פקודה /release-checklist — רשימת שחרור single/album",
-        "CLAUDE.md עם פלטפורמות הפצה ישראליות ובינלאומיות",
-        "פקודה /bio — bio מוכן ל-Spotify ו-press kit",
-        "royalties tracker עם Supabase",
-        "EPK generator — press kit PDF מקצועי",
-        "עמוד אמן עם embedded player"
-      ],
-      "installCmd": "bash <(curl -fsSL https://raw.githubusercontent.com/adamorad/claude-code-setups/main/setups/musician/install.sh)"
-    },
-    {
-      "id": "engineer",
-      "name": "המהנדס",
-      "user": "@eng_builds",
-      "time": "6 דק׳",
-      "level": "מתקדם",
-      "description": "מהנדס תוכנה שבונה CLI tools, automations ו-internal dashboards לצוות.",
-      "tags": ["CLI", "אוטומציה", "צוות"],
-      "features": [
-        "Bun + TypeScript — CLI tools מהירים לצוות",
-        "פקודה /new-tool — scaffold CLI חדש עם yargs",
-        "CLAUDE.md עם coding standards ו-PR conventions",
-        "Ruflo MCP — orchestration של וורקפלואים מורכבים",
-        "internal dashboard עם Supabase + React",
-        "Prettier + ESLint hooks אוטומטיים"
-      ],
-      "installCmd": "bash <(curl -fsSL https://raw.githubusercontent.com/adamorad/claude-code-setups/main/setups/engineer/install.sh)"
+      "id": "teacher",
+      "name": "המרצה",
+      "tags": ["קורסים", "תרגילים", "חינוך"],
+      "level": "מתחיל"
     }
   ]
 }

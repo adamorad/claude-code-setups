@@ -2,24 +2,26 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://adamorad.github.io/claude-code-setups/</loc>
-    <lastmod>2026-05-13</lastmod>
+    <lastmod>2026-05-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
-  <url><loc>https://adamorad.github.io/claude-code-setups/#builder</loc><priority>0.8</priority></url>
-  <url><loc>https://adamorad.github.io/claude-code-setups/#influencer</loc><priority>0.8</priority></url>
-  <url><loc>https://adamorad.github.io/claude-code-setups/#trader</loc><priority>0.8</priority></url>
-  <url><loc>https://adamorad.github.io/claude-code-setups/#bizowner</loc><priority>0.8</priority></url>
-  <url><loc>https://adamorad.github.io/claude-code-setups/#teacher</loc><priority>0.8</priority></url>
-  <url><loc>https://adamorad.github.io/claude-code-setups/#artist</loc><priority>0.8</priority></url>
-  <url><loc>https://adamorad.github.io/claude-code-setups/#freelancer</loc><priority>0.8</priority></url>
-  <url><loc>https://adamorad.github.io/claude-code-setups/#parent</loc><priority>0.8</priority></url>
+  <url><loc>https://adamorad.github.io/claude-code-setups/#backend</loc><priority>0.8</priority></url>
+  <url><loc>https://adamorad.github.io/claude-code-setups/#frontend</loc><priority>0.8</priority></url>
+  <url><loc>https://adamorad.github.io/claude-code-setups/#saas</loc><priority>0.8</priority></url>
+  <url><loc>https://adamorad.github.io/claude-code-setups/#devops</loc><priority>0.8</priority></url>
+  <url><loc>https://adamorad.github.io/claude-code-setups/#ai-eng</loc><priority>0.8</priority></url>
+  <url><loc>https://adamorad.github.io/claude-code-setups/#security</loc><priority>0.8</priority></url>
+  <url><loc>https://adamorad.github.io/claude-code-setups/#data</loc><priority>0.8</priority></url>
+  <url><loc>https://adamorad.github.io/claude-code-setups/#indie</loc><priority>0.8</priority></url>
+  <url><loc>https://adamorad.github.io/claude-code-setups/#mobile</loc><priority>0.8</priority></url>
+  <url><loc>https://adamorad.github.io/claude-code-setups/#pm</loc><priority>0.8</priority></url>
+  <url><loc>https://adamorad.github.io/claude-code-setups/#creator</loc><priority>0.8</priority></url>
+  <url><loc>https://adamorad.github.io/claude-code-setups/#docs</loc><priority>0.8</priority></url>
+  <url><loc>https://adamorad.github.io/claude-code-setups/#freelance</loc><priority>0.8</priority></url>
+  <url><loc>https://adamorad.github.io/claude-code-setups/#cto</loc><priority>0.8</priority></url>
+  <url><loc>https://adamorad.github.io/claude-code-setups/#ecommerce</loc><priority>0.8</priority></url>
+  <url><loc>https://adamorad.github.io/claude-code-setups/#gamedev</loc><priority>0.8</priority></url>
   <url><loc>https://adamorad.github.io/claude-code-setups/#student</loc><priority>0.8</priority></url>
-  <url><loc>https://adamorad.github.io/claude-code-setups/#startup</loc><priority>0.8</priority></url>
-  <url><loc>https://adamorad.github.io/claude-code-setups/#gamer</loc><priority>0.8</priority></url>
-  <url><loc>https://adamorad.github.io/claude-code-setups/#podcaster</loc><priority>0.8</priority></url>
-  <url><loc>https://adamorad.github.io/claude-code-setups/#coach</loc><priority>0.8</priority></url>
-  <url><loc>https://adamorad.github.io/claude-code-setups/#realestate</loc><priority>0.8</priority></url>
-  <url><loc>https://adamorad.github.io/claude-code-setups/#musician</loc><priority>0.8</priority></url>
-  <url><loc>https://adamorad.github.io/claude-code-setups/#engineer</loc><priority>0.8</priority></url>
+  <url><loc>https://adamorad.github.io/claude-code-setups/#teacher</loc><priority>0.8</priority></url>
 </urlset>
