@@ -1,7 +1,7 @@
 {
-  "version": "3.0",
+  "version": "3.1",
   "generated": "2026-05-15",
-  "count": 18,
+  "count": 20,
   "setups": [
     {
       "id": "backend",
@@ -110,6 +110,18 @@
       "name": "המרצה",
       "tags": ["קורסים", "תרגילים", "חינוך"],
       "level": "מתחיל"
+    },
+    {
+      "id": "designer",
+      "name": "מעצב ה-UI",
+      "tags": ["Figma", "CSS", "נגישות"],
+      "level": "מתחיל"
+    },
+    {
+      "id": "researcher",
+      "name": "החוקר",
+      "tags": ["Papers", "Python", "ניתוח"],
+      "level": "בינוני"
     }
   ]
 }

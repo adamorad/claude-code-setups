@@ -6,7 +6,7 @@
     <title>Claude Code Setups — לבוני הוייב</title>
     <meta
       name="description"
-      content="18 וורקפלואים מוכנים ל-Claude Code על Mac mini. פקודה אחת להתקנה."
+      content="20 וורקפלואים מוכנים ל-Claude Code על Mac mini. פקודה אחת להתקנה."
     />
 
     <!-- Open Graph -->
@@ -14,7 +14,7 @@
     <meta property="og:title" content="Claude Code Setups — לבוני הוייב" />
     <meta
       property="og:description"
-      content="18 וורקפלואים מוכנים ל-Claude Code על Mac mini. פקודה אחת להתקנה. בעברית."
+      content="20 וורקפלואים מוכנים ל-Claude Code על Mac mini. פקודה אחת להתקנה. בעברית."
     />
     <meta
       property="og:url"
@@ -28,7 +28,7 @@
     <meta name="twitter:title" content="Claude Code Setups — לבוני הוייב" />
     <meta
       name="twitter:description"
-      content="18 וורקפלואים מוכנים ל-Claude Code על Mac mini. פקודה אחת להתקנה."
+      content="20 וורקפלואים מוכנים ל-Claude Code על Mac mini. פקודה אחת להתקנה."
     />
 
     <!-- PWA -->
@@ -46,7 +46,7 @@
         "@context": "https://schema.org",
         "@type": "WebApplication",
         "name": "Claude Code Setups",
-        "description": "18 וורקפלואים מוכנים ל-Claude Code על Mac mini",
+        "description": "20 וורקפלואים מוכנים ל-Claude Code על Mac mini",
         "url": "https://adamorad.github.io/claude-code-setups/",
         "applicationCategory": "DeveloperApplication",
         "operatingSystem": "macOS",
@@ -70,17 +70,28 @@
   <body>
     <a href="#grid" class="skip-link">דלג לתוכן</a>
     <header>
-      <button
-        class="theme-toggle"
-        id="theme-toggle"
-        aria-label="החלף מצב תצוגה"
-      >
-        <span class="theme-icon">☀️</span>
-      </button>
+      <div class="header-controls" role="toolbar" aria-label="בקרות תצוגה">
+        <button
+          class="theme-toggle"
+          id="theme-toggle"
+          aria-label="החלף מצב תצוגה"
+          aria-pressed="false"
+        >
+          <span class="theme-icon" aria-hidden="true">🌙</span>
+        </button>
+        <button
+          class="lang-toggle"
+          id="lang-toggle"
+          aria-label="Switch to English"
+          aria-pressed="false"
+        >
+          EN
+        </button>
+      </div>
       <div class="header-label">Claude Code Setups</div>
       <h1>בנה מהר יותר עם AI</h1>
       <p>
-        18 וורקפלואים מוכנים ל-Mac mini &middot; פקודה אחת להתקנה &middot;
+        20 וורקפלואים מוכנים ל-Mac mini &middot; פקודה אחת להתקנה &middot;
         בעברית
       </p>
     </header>
@@ -147,10 +158,17 @@
         <div class="skeleton" aria-hidden="true"></div>
         <div class="skeleton" aria-hidden="true"></div>
         <div class="skeleton" aria-hidden="true"></div>
+        <div class="skeleton" aria-hidden="true"></div>
+        <div class="skeleton" aria-hidden="true"></div>
       </div>
     </main>
 
-    <div id="modal" role="dialog" aria-modal="true">
+    <div
+      id="modal"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="modal-title"
+    >
       <div id="modal-content"></div>
     </div>
 
@@ -212,7 +230,7 @@
         <div class="footer-brand">
           <span class="footer-logo">Claude Code Setups</span>
           <span class="footer-tagline"
-            >18 וורקפלואים מוכנים ל-Mac mini · Apple Silicon</span
+            >20 וורקפלואים מוכנים ל-Mac mini · Apple Silicon</span
           >
         </div>
         <nav class="footer-nav" aria-label="קישורים">

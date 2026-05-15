@@ -15,6 +15,65 @@ const CYCLE = [
   "gold",
 ];
 
+// ── i18n ─────────────────────────────────────────────────────────────────────
+const I18N = {
+  he: {
+    dir: "rtl",
+    lang: "he",
+    searchPlaceholder: "חפש וורקפלואו...",
+    searchStatus: (n) => `נמצאו ${n} סביבות`,
+    noResults: (q) => `אין תוצאות עבור "${q}"`,
+    filterAll: "הכל",
+    quizBtn: "✦ מצא את הוורקפלואו שלך",
+    whatsIncluded: "מה כלול",
+    week1Heading: "מה תבנה בשבוע הראשון",
+    installHeading: "התקנה",
+    prereqs: "דרישות קדם",
+    copyBtn: "⎘",
+    copyAriaLabel: "העתק פקודת התקנה",
+    runBtn: "▶ הרץ",
+    runAriaLabel: "הוראות הרצה",
+    shareBtn: "שתף",
+    runInstructions: `<strong>איך להריץ:</strong><ol>
+      <li>לחץ <kbd>⌘</kbd>+<kbd>Space</kbd> → הקלד <kbd>Terminal</kbd> → <kbd>Enter</kbd></li>
+      <li>הפקודה הועתקה — הדבק עם <kbd>⌘</kbd>+<kbd>V</kbd> ולחץ <kbd>Enter</kbd></li>
+      <li>חכה שההתקנה תסתיים (כ-5 דקות)</li>
+    </ol>`,
+    similarHeading: "אולי גם יעניין אותך",
+    langToggleLabel: "Switch to English",
+    langToggleText: "EN",
+    skipLink: "דלג לתוכן",
+  },
+  en: {
+    dir: "ltr",
+    lang: "en",
+    searchPlaceholder: "Search workflows...",
+    searchStatus: (n) => `Found ${n} setups`,
+    noResults: (q) => `No results for "${q}"`,
+    filterAll: "All",
+    quizBtn: "✦ Find your workflow",
+    whatsIncluded: "What's included",
+    week1Heading: "What you'll build in week 1",
+    installHeading: "Installation",
+    prereqs: "Prerequisites",
+    copyBtn: "⎘",
+    copyAriaLabel: "Copy install command",
+    runBtn: "▶ Run",
+    runAriaLabel: "Show run instructions",
+    shareBtn: "Share",
+    runInstructions: `<strong>How to run:</strong><ol>
+      <li>Press <kbd>⌘</kbd>+<kbd>Space</kbd> → type <kbd>Terminal</kbd> → <kbd>Enter</kbd></li>
+      <li>Command copied — paste with <kbd>⌘</kbd>+<kbd>V</kbd> and press <kbd>Enter</kbd></li>
+      <li>Wait for installation to complete (~5 minutes)</li>
+    </ol>`,
+    similarHeading: "You might also like",
+    langToggleLabel: "עבור לעברית",
+    langToggleText: "HE",
+    skipLink: "Skip to content",
+  },
+};
+let currentLang = localStorage.getItem("lang") || "he";
+
 // ── Data ──────────────────────────────────────────────────────────────────────
 const SETUPS = [
   {
@@ -33,6 +92,32 @@ const SETUPS = [
       "Hook: PostToolUse — ruff auto-fix לכל קובץ Python שנשמר",
       "Hook: PreToolUse — חוסם כתיבה ל-.env ו-secrets/",
       "פקודה /new-endpoint — scaffold endpoint + tests + migration",
+    ],
+    featureDetails: [
+      {
+        text: "GitHub MCP מחבר את Claude Code לכל GitHub API. יצירת PRs, סגירת issues, code search — בלי לעזוב terminal.",
+        url: "https://github.com/github/github-mcp-server",
+      },
+      {
+        text: "PostgreSQL MCP מאפשר ל-Claude Code לבצע queries, לשנות schemas ולבדוק data ישירות ב-DB שלך.",
+        url: "https://github.com/modelcontextprotocol/servers/tree/main/src/postgres",
+      },
+      {
+        text: "Context7 מביא תמיד את ה-docs העדכניים של FastAPI, Express, Django — לא docs שנה שעברה.",
+        url: "https://github.com/upstash/context7",
+      },
+      {
+        text: "Hook של PostToolUse שרץ אחרי כל שמירת קובץ Python ומריץ ruff --fix אוטומטית.",
+        url: "https://docs.anthropic.com/en/docs/claude-code/hooks",
+      },
+      {
+        text: "Hook של PreToolUse שחוסם כל write לנתיבים רגישים. כשנגיעה ב-.env קורית — Claude Code יקבל שגיאה ויעצור.",
+        url: "https://docs.anthropic.com/en/docs/claude-code/hooks",
+      },
+      {
+        text: "פקודה מותאמת שחיה ב-~/.claude/commands/ ומ-scaffold endpoint שלם: route + validation + tests + migration.",
+        url: "https://docs.anthropic.com/en/docs/claude-code/slash-commands",
+      },
     ],
     week1: [
       "API מלא עם auth, pagination ו-rate limiting",
@@ -467,7 +552,555 @@ const SETUPS = [
     installCmd:
       "bash <(curl -fsSL https://raw.githubusercontent.com/adamorad/claude-code-setups/main/setups/teacher/install.sh)",
   },
+  {
+    id: "designer",
+    name: "מעצב ה-UI",
+    user: "@design_il",
+    time: "4 דק׳",
+    level: "מתחיל",
+    description:
+      "מפתח שמעצב. Figma לקוד עובד — components נגישים, RTL, responsive. בלי להתפשר על UX.",
+    tags: ["Figma", "CSS", "נגישות"],
+    features: [
+      "Context7 MCP — MDN Web Docs, CSS specs, ARIA patterns עדכניים",
+      "Playwright MCP — visual regression testing על כל breakpoint",
+      "פקודה /figma-to-code — מ-Figma frame ל-React component RTL",
+      "פקודה /a11y-check — WCAG 2.1 AA audit עם תיקון אוטומטי",
+      "CLAUDE.md: Hebrew RTL rules, SI 5568 accessibility, design tokens",
+      "Hook: PostToolUse — Stylelint + Prettier על כל קובץ CSS/SCSS",
+    ],
+    week1: [
+      "Design system עם 12 רכיבים RTL-ready",
+      "Accessibility audit — אפס כשלים WCAG 2.1 AA",
+      "Storybook עם dark/light mode ו-RTL toggle",
+    ],
+    installCmd:
+      "bash <(curl -fsSL https://raw.githubusercontent.com/adamorad/claude-code-setups/main/setups/designer/install.sh)",
+  },
+  {
+    id: "researcher",
+    name: "החוקר",
+    user: "@research_il",
+    time: "3 דק׳",
+    level: "בינוני",
+    description:
+      "אקדמאי, אנליסט או חוקר שמעבד papers, מנהל ביבליוגרפיה ומייצר insights ממאות מקורות.",
+    tags: ["Papers", "Python", "ניתוח"],
+    features: [
+      "Context7 MCP — arXiv, Semantic Scholar, PubMed docs עדכניים",
+      "PostgreSQL MCP — citation database ו-research notes אישי",
+      "פקודה /paper-summary — סיכום paper: מסקנות + critique + gaps",
+      "פקודה /lit-review — literature review מ-10 papers בפורמט אקדמי",
+      "פקודה /citation-gen — APA/MLA/BibTeX מ-URL או DOI",
+      "CLAUDE.md: critical thinking, academic tone, Israeli research ethics",
+    ],
+    week1: [
+      "Literature review של 30 מקורות עם gaps map",
+      "Citation database מאורגן ב-PostgreSQL",
+      "Research brief מוכן לפרסום או פגישה",
+    ],
+    installCmd:
+      "bash <(curl -fsSL https://raw.githubusercontent.com/adamorad/claude-code-setups/main/setups/researcher/install.sh)",
+  },
 ];
+
+// ── Feature details lookup ────────────────────────────────────────────────────
+const FEATURE_DETAILS = {
+  frontend: [
+    {
+      text: "Playwright MCP מפעיל דפדפן אמיתי (Chromium/Firefox) ומאפשר ל-Claude Code לבדוק UI, למלא טפסים, ולצלם screenshots.",
+      url: "https://github.com/microsoft/playwright-mcp",
+    },
+    {
+      text: "Context7 שולף תמיד את ה-docs העדכניים של React 19, Vue 3, Tailwind — לא גרסאות ישנות שהיו ב-training data.",
+      url: "https://github.com/upstash/context7",
+    },
+    {
+      text: "Hook PostToolUse מריץ ESLint + Prettier על כל קובץ TSX/Vue שנשמר, כך שהקוד תמיד עקבי.",
+      url: "https://docs.anthropic.com/en/docs/claude-code/hooks",
+    },
+    {
+      text: "פקודה /new-component מ-scaffold component מלא: props TypeScript, unit tests, Storybook story.",
+      url: "https://docs.anthropic.com/en/docs/claude-code/slash-commands",
+    },
+    {
+      text: "פקודה /a11y-audit בודקת WCAG 2.1 AA — contrast, aria-labels, keyboard nav, focus order.",
+      url: "https://docs.anthropic.com/en/docs/claude-code/slash-commands",
+    },
+    {
+      text: "CLAUDE.md מגדיר naming conventions, CSS methodology (BEM/Tailwind), ו-folder structure שהצוות מסכים עליהם.",
+      url: "https://docs.anthropic.com/en/docs/claude-code/memory",
+    },
+  ],
+  saas: [
+    {
+      text: "Stripe MCP מחבר לכל Stripe API: subscriptions, one-time payments, webhooks, disputes — ישירות מ-Claude Code.",
+      url: "https://github.com/stripe/agent-toolkit",
+    },
+    {
+      text: "Supabase plugin מאפשר ניהול DB, Authentication, ו-Edge Functions ב-Supabase ישירות מהסביבה.",
+      url: "https://github.com/supabase/mcp-server-supabase",
+    },
+    {
+      text: "Vercel MCP מנהל deployments, domains, environment variables, ו-analytics — ללא dashboard.",
+      url: "https://github.com/vercel/mcp-server",
+    },
+    {
+      text: "פקודה /new-saas יוצרת scaffold SaaS מלא: landing page, auth, dashboard, Stripe checkout בפקודה אחת.",
+      url: "https://docs.anthropic.com/en/docs/claude-code/slash-commands",
+    },
+    {
+      text: "פקודה /deploy-checklist עוברת על 20+ סעיפים: security headers, env vars, error pages, analytics, legal pages.",
+      url: "https://docs.anthropic.com/en/docs/claude-code/slash-commands",
+    },
+    {
+      text: "CLAUDE.md מכיל knowledge על pricing psychology, churn prevention, onboarding flows — Claude יודע לייעץ על product.",
+      url: "https://docs.anthropic.com/en/docs/claude-code/memory",
+    },
+  ],
+  devops: [
+    {
+      text: "Cloudflare MCP מנהל Workers, KV, R2, DNS, Pages, ו-Tunnels — תשתית מלאה בלי לעזוב terminal.",
+      url: "https://github.com/cloudflare/mcp-server-cloudflare",
+    },
+    {
+      text: "GitHub MCP מנהל Actions workflows, secrets, environments, ו-deployment protection rules.",
+      url: "https://github.com/github/github-mcp-server",
+    },
+    {
+      text: "Hook PreToolUse חוסם פקודות הרסניות: rm -rf, kubectl delete, DROP TABLE — מחייב אישור מפורש.",
+      url: "https://docs.anthropic.com/en/docs/claude-code/hooks",
+    },
+    {
+      text: "Hook PreToolUse נוסף שמחייב confirmation לכל פעולה שמשפיעה על סביבת production.",
+      url: "https://docs.anthropic.com/en/docs/claude-code/hooks",
+    },
+    {
+      text: "פקודה /new-pipeline יוצרת GitHub Actions workflow: build, test, lint, deploy עם matrix strategy.",
+      url: "https://docs.anthropic.com/en/docs/claude-code/slash-commands",
+    },
+    {
+      text: "פקודה /incident-runbook מייצרת runbook מותאם לכל alert: diagnosis steps, remediation, escalation path.",
+      url: "https://docs.anthropic.com/en/docs/claude-code/slash-commands",
+    },
+  ],
+  "ai-eng": [
+    {
+      text: "Context7 מביא תמיד docs עדכניים של LangChain, LlamaIndex, Anthropic API — כולל changelog ו-migration guides.",
+      url: "https://github.com/upstash/context7",
+    },
+    {
+      text: "Ruflo MCP מאפשר multi-agent orchestration: spawning sub-agents, hive-mind consensus, cross-session memory.",
+      url: "https://github.com/ruvnet/ruflo",
+    },
+    {
+      text: "פקודה /eval-suite יוצרת eval harness שבודק prompt variants על dataset ומדווח accuracy, latency, ועלות.",
+      url: "https://docs.anthropic.com/en/docs/claude-code/slash-commands",
+    },
+    {
+      text: "פקודה /prompt-optimize מריצה A/B test על 3 גרסאות prompt ומחזירה ניתוח סטטיסטי.",
+      url: "https://docs.anthropic.com/en/docs/claude-code/slash-commands",
+    },
+    {
+      text: "Hook PostToolUse מחשב token cost לכל LLM call ומציג summary בסוף כל session.",
+      url: "https://docs.anthropic.com/en/docs/claude-code/hooks",
+    },
+    {
+      text: "CLAUDE.md מכיל RAG architecture patterns, eval metrics definitions, ו-cost limits per experiment.",
+      url: "https://docs.anthropic.com/en/docs/claude-code/memory",
+    },
+  ],
+  security: [
+    {
+      text: "Hook PreToolUse מיירט כל read/write ל-.env, secrets/, .ssh/, .git/config — ומבטל את הפעולה עם הסבר.",
+      url: "https://docs.anthropic.com/en/docs/claude-code/hooks",
+    },
+    {
+      text: "Hook PreToolUse נוסף שמחייב interactive confirmation לפני כל DROP TABLE, DELETE ללא WHERE, או truncate.",
+      url: "https://docs.anthropic.com/en/docs/claude-code/hooks",
+    },
+    {
+      text: "Hook PostToolUse מריץ git diff על כל commit לפני הדחיפה ומסמן secrets/credentials שנמצאו.",
+      url: "https://docs.anthropic.com/en/docs/claude-code/hooks",
+    },
+    {
+      text: "GitHub MCP מחפש CVEs ב-GitHub Advisory Database ו-NVD ומביא remediation steps.",
+      url: "https://github.com/github/github-mcp-server",
+    },
+    {
+      text: "פקודה /security-audit עוברת על OWASP Top 10: injection, broken auth, XSS, IDOR, SSRF, ועוד.",
+      url: "https://docs.anthropic.com/en/docs/claude-code/slash-commands",
+    },
+    {
+      text: "פקודה /deps-audit מריצה npm audit / pip-audit, מדרגת לפי severity, ומציעה upgrades אוטומטיים.",
+      url: "https://docs.anthropic.com/en/docs/claude-code/slash-commands",
+    },
+  ],
+  data: [
+    {
+      text: "PostgreSQL MCP מחבר לכל DB ישירות: queries, table inspection, index analysis — בלי pgAdmin.",
+      url: "https://github.com/modelcontextprotocol/servers/tree/main/src/postgres",
+    },
+    {
+      text: "Context7 שולף docs עדכניים של pandas, scikit-learn, Polars, PyTorch — API references ו-examples.",
+      url: "https://github.com/upstash/context7",
+    },
+    {
+      text: "Jupyter Lab עם extensions: variable inspector, git integration, ו-AI completion.",
+      url: "https://docs.anthropic.com/en/docs/claude-code/overview",
+    },
+    {
+      text: "פקודה /eda-report מייצרת EDA מלא: distributions, correlations, missing values, outliers — בפורמט HTML.",
+      url: "https://docs.anthropic.com/en/docs/claude-code/slash-commands",
+    },
+    {
+      text: "פקודה /train-model מריצה pipeline מלא: load → clean → feature engineering → train → evaluate → report.",
+      url: "https://docs.anthropic.com/en/docs/claude-code/slash-commands",
+    },
+    {
+      text: "CLAUDE.md מגדיר data pipeline standards: reproducibility, versioning, documentation format.",
+      url: "https://docs.anthropic.com/en/docs/claude-code/memory",
+    },
+  ],
+  indie: [
+    {
+      text: "Stripe MCP מנהל תשלומים, subscriptions, free trials, coupons, ו-revenue analytics — ב-realtime.",
+      url: "https://github.com/stripe/agent-toolkit",
+    },
+    {
+      text: "Supabase plugin: backend שלם ב-minutes — DB, auth, realtime, storage, ו-Edge Functions.",
+      url: "https://github.com/supabase/mcp-server-supabase",
+    },
+    {
+      text: "פקודה /launch-day עוברת על כל checklist launch: uptime monitoring, error tracking, analytics, backups.",
+      url: "https://docs.anthropic.com/en/docs/claude-code/slash-commands",
+    },
+    {
+      text: "פקודה /feature-request הופכת user feedback לו-ticket מלא: user story, acceptance criteria, priority.",
+      url: "https://docs.anthropic.com/en/docs/claude-code/slash-commands",
+    },
+    {
+      text: "CLAUDE.md מכיל philosophy of indie building: ship fast, measure, iterate — לא over-engineer.",
+      url: "https://docs.anthropic.com/en/docs/claude-code/memory",
+    },
+    {
+      text: "Analytics tracking: MRR, churn rate, LTV מחושבים אוטומטית ממערכת Stripe.",
+      url: "https://github.com/stripe/agent-toolkit",
+    },
+  ],
+  mobile: [
+    {
+      text: "Context7 שולף Expo SDK docs, React Native API, ו-platform-specific guides עבור iOS ו-Android.",
+      url: "https://github.com/upstash/context7",
+    },
+    {
+      text: "Playwright MCP בודק UI באמצעות mobile viewport — לא simulator, אלא בדיקת responsive CSS אמיתית.",
+      url: "https://github.com/microsoft/playwright-mcp",
+    },
+    {
+      text: "Hook PostToolUse מריץ TypeScript type check אחרי כל שמירה — תופס errors מוקדם.",
+      url: "https://docs.anthropic.com/en/docs/claude-code/hooks",
+    },
+    {
+      text: "פקודה /new-screen מ-scaffold screen: navigation params, TypeScript types, loading state, error boundary.",
+      url: "https://docs.anthropic.com/en/docs/claude-code/slash-commands",
+    },
+    {
+      text: "פקודה /ota-update מכינה ו-push OTA update עם Expo Updates — deploy ב-דקות בלי App Store review.",
+      url: "https://docs.anthropic.com/en/docs/claude-code/slash-commands",
+    },
+    {
+      text: "CLAUDE.md מכיל Expo conventions, platform-specific code patterns, ו-performance tips לאנדרואיד/iOS.",
+      url: "https://docs.anthropic.com/en/docs/claude-code/memory",
+    },
+  ],
+  pm: [
+    {
+      text: "GitHub MCP פותח issues, יוצר milestones, מנהל labels, ו-assignees — ישירות מה-conversation.",
+      url: "https://github.com/github/github-mcp-server",
+    },
+    {
+      text: "Notion MCP קורא וכותב לכל Notion page, database, ו-block — syncs PRDs ומeeting notes אוטומטית.",
+      url: "https://github.com/makenotion/notion-mcp-server",
+    },
+    {
+      text: "פקודה /prd-to-tickets קוראת PRD מ-Notion ויוצרת GitHub issues מפורטים עם acceptance criteria.",
+      url: "https://docs.anthropic.com/en/docs/claude-code/slash-commands",
+    },
+    {
+      text: "פקודה /spec-generate הופכת user story ל-spec מלא: context, requirements, edge cases, success metrics.",
+      url: "https://docs.anthropic.com/en/docs/claude-code/slash-commands",
+    },
+    {
+      text: "פקודה /sprint-retro מנתחת git history ומייצרת retrospective: what shipped, blockers, velocity.",
+      url: "https://docs.anthropic.com/en/docs/claude-code/slash-commands",
+    },
+    {
+      text: "CLAUDE.md מכיל user story format, OKR alignment framework, ו-acceptance criteria templates.",
+      url: "https://docs.anthropic.com/en/docs/claude-code/memory",
+    },
+  ],
+  creator: [
+    {
+      text: "Notion MCP מסנכרן content calendar, ideas, drafts — כל הכתיבה במקום אחד שמחובר ל-Claude.",
+      url: "https://github.com/makenotion/notion-mcp-server",
+    },
+    {
+      text: "פקודה /post-linkedin מייצרת 3 גרסאות שונות לכל post: formal, casual, ו-story-driven.",
+      url: "https://docs.anthropic.com/en/docs/claude-code/slash-commands",
+    },
+    {
+      text: "פקודה /newsletter מייצרת draft newsletter שבועי מ-highlights שאתה מספק — format, tone, CTA.",
+      url: "https://docs.anthropic.com/en/docs/claude-code/slash-commands",
+    },
+    {
+      text: "פקודה /seo-brief מבצעת keyword research ומייצרת content brief מלא: H1, H2s, word count, meta.",
+      url: "https://docs.anthropic.com/en/docs/claude-code/slash-commands",
+    },
+    {
+      text: "CLAUDE.md מכיל Israeli audience preferences, LinkedIn algorithm insights, posting time optimization.",
+      url: "https://docs.anthropic.com/en/docs/claude-code/memory",
+    },
+    {
+      text: "Hook PostToolUse שומר כל תוכן שנוצר ב-Notion database אוטומטית עם timestamp.",
+      url: "https://docs.anthropic.com/en/docs/claude-code/hooks",
+    },
+  ],
+  docs: [
+    {
+      text: "GitHub MCP מסנכרן תיעוד עם code changes: כשמדדים PR, Claude מזהה functions שהשתנו ומציע לעדכן docs.",
+      url: "https://github.com/github/github-mcp-server",
+    },
+    {
+      text: "Context7 מביא best practices ב-technical writing מ-Stripe Docs, Twilio, ו-MDN כ-reference.",
+      url: "https://github.com/upstash/context7",
+    },
+    {
+      text: "פקודה /api-docs מייצרת OpenAPI 3.0 spec מ-codebase: endpoints, schemas, examples, error codes.",
+      url: "https://docs.anthropic.com/en/docs/claude-code/slash-commands",
+    },
+    {
+      text: "פקודה /changelog מייצרת CHANGELOG.md מ-git log עם categorization: Breaking, Features, Fixes.",
+      url: "https://docs.anthropic.com/en/docs/claude-code/slash-commands",
+    },
+    {
+      text: "פקודה /readme-gen מייצרת README מלא: badges, installation, quick start, examples, contributing.",
+      url: "https://docs.anthropic.com/en/docs/claude-code/slash-commands",
+    },
+    {
+      text: "CLAUDE.md מכיל docs-as-code philosophy, plain language guidelines, ו-progressive disclosure patterns.",
+      url: "https://docs.anthropic.com/en/docs/claude-code/memory",
+    },
+  ],
+  freelance: [
+    {
+      text: "GitHub MCP מרכז כל client repos, PRs, ו-code reviews — dashboard אחד לכל הלקוחות.",
+      url: "https://github.com/github/github-mcp-server",
+    },
+    {
+      text: "Notion MCP מנהל client docs, invoices, project status, ו-meeting notes — הכל מסונכרן.",
+      url: "https://github.com/makenotion/notion-mcp-server",
+    },
+    {
+      text: "פקודה /proposal מייצרת הצעת מחיר מפורטת עם breakdown של שלבים, deliverables, timeline.",
+      url: "https://docs.anthropic.com/en/docs/claude-code/slash-commands",
+    },
+    {
+      text: "פקודה /client-handoff מכינה package מסירה: docs, credentials, deployment notes, training materials.",
+      url: "https://docs.anthropic.com/en/docs/claude-code/slash-commands",
+    },
+    {
+      text: "פקודה /scope-check משווה את ה-current work לה-original scope ומזהה scope creep באופן אוטומטי.",
+      url: "https://docs.anthropic.com/en/docs/claude-code/slash-commands",
+    },
+    {
+      text: "CLAUDE.md מכיל red flags recognition, Israeli VAT rules, contract language, ו-client communication templates.",
+      url: "https://docs.anthropic.com/en/docs/claude-code/memory",
+    },
+  ],
+  cto: [
+    {
+      text: "GitHub MCP מאפשר PR reviews מעמיקים: security vulnerabilities, performance regressions, architecture concerns.",
+      url: "https://github.com/github/github-mcp-server",
+    },
+    {
+      text: "Notion MCP שומר ADRs, architecture docs, ו-team wiki מסונכרן עם כל decision שמתקבל.",
+      url: "https://github.com/makenotion/notion-mcp-server",
+    },
+    {
+      text: "פקודה /adr מייצרת Architecture Decision Record מלא: context, decision, consequences, alternatives.",
+      url: "https://docs.anthropic.com/en/docs/claude-code/slash-commands",
+    },
+    {
+      text: "פקודה /pr-review מבצעת deep review: security (OWASP), performance, test coverage, breaking changes.",
+      url: "https://docs.anthropic.com/en/docs/claude-code/slash-commands",
+    },
+    {
+      text: "פקודה /tech-debt-audit ממפה tech debt לפי severity, effort, ו-ROI — backlog מוכן לתכנון.",
+      url: "https://docs.anthropic.com/en/docs/claude-code/slash-commands",
+    },
+    {
+      text: "CLAUDE.md מכיל engineering principles, on-call rotation, incident severity levels, ו-coding standards.",
+      url: "https://docs.anthropic.com/en/docs/claude-code/memory",
+    },
+  ],
+  ecommerce: [
+    {
+      text: "Stripe MCP מנהל revenue analytics, refunds, disputes, ו-payout schedules ישירות.",
+      url: "https://github.com/stripe/agent-toolkit",
+    },
+    {
+      text: "פקודה /product-desc מייצרת 3 גרסאות תיאור מוצר: SEO-optimized, emotional, ו-feature-focused.",
+      url: "https://docs.anthropic.com/en/docs/claude-code/slash-commands",
+    },
+    {
+      text: "פקודה /email-campaign מייצרת email sequence מלא לסגמנט ספציפי עם A/B testing variants.",
+      url: "https://docs.anthropic.com/en/docs/claude-code/slash-commands",
+    },
+    {
+      text: "פקודה /discount-calc מחשבת impact של הנחות על margin, LTV, ו-breakeven — לפני שמחליטים.",
+      url: "https://docs.anthropic.com/en/docs/claude-code/slash-commands",
+    },
+    {
+      text: "CLAUDE.md מכיל Israeli consumer behavior insights, Shopify Liquid template patterns, ו-conversion tips.",
+      url: "https://docs.anthropic.com/en/docs/claude-code/memory",
+    },
+    {
+      text: "Script Python שמייצר daily sales digest ושולח ל-Telegram: revenue, orders, top products, alerts.",
+      url: "https://docs.anthropic.com/en/docs/claude-code/overview",
+    },
+  ],
+  gamedev: [
+    {
+      text: "Context7 מביא Unity API docs, Godot GDScript reference, ו-game design patterns תמיד עדכניים.",
+      url: "https://github.com/upstash/context7",
+    },
+    {
+      text: "Playwright MCP מריץ automated playtesting ל-browser games: path finding, hitboxes, ו-performance.",
+      url: "https://github.com/microsoft/playwright-mcp",
+    },
+    {
+      text: "פקודה /new-game מ-scaffold project structure: scenes, scripts, assets, ו-CI pipeline לפי engine.",
+      url: "https://docs.anthropic.com/en/docs/claude-code/slash-commands",
+    },
+    {
+      text: "פקודה /game-loop מייצרת state machine מלא: Idle, Playing, Paused, GameOver עם transitions.",
+      url: "https://docs.anthropic.com/en/docs/claude-code/slash-commands",
+    },
+    {
+      text: "CLAUDE.md מכיל game feel principles, juice patterns, ו-monetization models לפי genre.",
+      url: "https://docs.anthropic.com/en/docs/claude-code/memory",
+    },
+    {
+      text: "Supabase leaderboard עם realtime scores, ו-asset pipeline scripts לאוטומציית sprite sheets.",
+      url: "https://github.com/supabase/mcp-server-supabase",
+    },
+  ],
+  student: [
+    {
+      text: "Context7 מביא Python / JavaScript docs לתלמידים — עם examples פשוטים ו-tutorials.",
+      url: "https://github.com/upstash/context7",
+    },
+    {
+      text: "Hook PreToolUse שמחייב אישור לפני כל deletion — מגן על קוד שתלמידים כתבו.",
+      url: "https://docs.anthropic.com/en/docs/claude-code/hooks",
+    },
+    {
+      text: "Hook PostToolUse מסביר כל שינוי שנעשה בקוד בשפה פשוטה — לא רק עושה, גם מלמד.",
+      url: "https://docs.anthropic.com/en/docs/claude-code/hooks",
+    },
+    {
+      text: "פקודה /explain מסבירה כל שורת קוד: מה היא עושה, למה, ואיך היא מתחברת לשאר.",
+      url: "https://docs.anthropic.com/en/docs/claude-code/slash-commands",
+    },
+    {
+      text: "פקודה /debug-guide מנחה debugging: breakpoints, print statements, error messages — step by step.",
+      url: "https://docs.anthropic.com/en/docs/claude-code/slash-commands",
+    },
+    {
+      text: "CLAUDE.md מגדיר Socratic method: Claude מכוון לתשובה בשאלות, לא נותן אותה ישירות.",
+      url: "https://docs.anthropic.com/en/docs/claude-code/memory",
+    },
+  ],
+  teacher: [
+    {
+      text: "Notion MCP מסנכרן syllabus, lesson plans, student notes — הכל מתעדכן ב-Notion אוטומטית.",
+      url: "https://github.com/makenotion/notion-mcp-server",
+    },
+    {
+      text: "פקודה /lesson-plan מייצרת תכנית שיעור מלאה: objectives, activities, timing, assessments.",
+      url: "https://docs.anthropic.com/en/docs/claude-code/slash-commands",
+    },
+    {
+      text: "פקודה /exercise-gen מייצרת 10 תרגילים ב-3 רמות קושי עם hints ו-solutions נסתרות.",
+      url: "https://docs.anthropic.com/en/docs/claude-code/slash-commands",
+    },
+    {
+      text: "פקודה /quiz-gen מייצרת 20 שאלות: multiple choice, short answer, ו-code debugging — עם answer key.",
+      url: "https://docs.anthropic.com/en/docs/claude-code/slash-commands",
+    },
+    {
+      text: "CLAUDE.md מכיל Bloom's taxonomy levels, active learning techniques, ו-Hebrew pedagogy conventions.",
+      url: "https://docs.anthropic.com/en/docs/claude-code/memory",
+    },
+    {
+      text: "פקודה /code-review-rubric מייצרת rubric להערכת קוד תלמידים: readability, correctness, style.",
+      url: "https://docs.anthropic.com/en/docs/claude-code/slash-commands",
+    },
+  ],
+  designer: [
+    {
+      text: "Context7 מביא MDN Web Docs, CSS specs, ו-ARIA authoring practices — always up to date.",
+      url: "https://github.com/upstash/context7",
+    },
+    {
+      text: "Playwright MCP בודק visual regressions על כל breakpoint: mobile, tablet, desktop — PNG diff.",
+      url: "https://github.com/microsoft/playwright-mcp",
+    },
+    {
+      text: "פקודה /figma-to-code הופכת Figma frame ל-React component RTL-ready עם Tailwind/CSS modules.",
+      url: "https://docs.anthropic.com/en/docs/claude-code/slash-commands",
+    },
+    {
+      text: "פקודה /a11y-check מריצה WCAG 2.1 AA audit: contrast ratios, focus order, aria-labels, keyboard traps.",
+      url: "https://docs.anthropic.com/en/docs/claude-code/slash-commands",
+    },
+    {
+      text: "CLAUDE.md מכיל Hebrew RTL rules, Israeli standard SI 5568, ו-design token conventions.",
+      url: "https://docs.anthropic.com/en/docs/claude-code/memory",
+    },
+    {
+      text: "Hook PostToolUse מריץ Stylelint + Prettier על כל קובץ CSS/SCSS שנשמר.",
+      url: "https://docs.anthropic.com/en/docs/claude-code/hooks",
+    },
+  ],
+  researcher: [
+    {
+      text: "Context7 מביא arXiv, Semantic Scholar, ו-PubMed API docs — לחיפוש papers ב-real time.",
+      url: "https://github.com/upstash/context7",
+    },
+    {
+      text: "PostgreSQL MCP מנהל citation database אישי: papers, authors, tags, notes — searchable.",
+      url: "https://github.com/modelcontextprotocol/servers/tree/main/src/postgres",
+    },
+    {
+      text: "פקודה /paper-summary מייצרת סיכום מובנה: problem, method, results, limitations, future work.",
+      url: "https://docs.anthropic.com/en/docs/claude-code/slash-commands",
+    },
+    {
+      text: "פקודה /lit-review מייצרת literature review בפורמט אקדמי מ-10 papers: themes, gaps, contradictions.",
+      url: "https://docs.anthropic.com/en/docs/claude-code/slash-commands",
+    },
+    {
+      text: "פקודה /citation-gen מייצרת APA, MLA, ו-BibTeX מ-URL, DOI, או ISBN — עם validation.",
+      url: "https://docs.anthropic.com/en/docs/claude-code/slash-commands",
+    },
+    {
+      text: "CLAUDE.md מכיל critical thinking frameworks, academic tone guide, ו-Israeli research ethics standards.",
+      url: "https://docs.anthropic.com/en/docs/claude-code/memory",
+    },
+  ],
+};
 
 // ── Toast ─────────────────────────────────────────────────────────────────────
 function showToast(msg) {
@@ -634,31 +1267,39 @@ function openModal(setup) {
     </div>
     <button class="modal-close" id="modal-close-btn" aria-label="סגור">✕</button>
     <div class="modal-header">
-      <span class="modal-accent" style="color:${accent}">◆</span>
+      <span class="modal-accent" style="color:${accent}" aria-hidden="true">◆</span>
       <div>
-        <h2>${setup.name}</h2>
+        <h2 id="modal-title">${setup.name}</h2>
         <span class="modal-user">${setup.user}</span>
         <span class="modal-tags">${setup.tags.map((t) => `<span class="tag" style="border-color:${accent};color:${accent}">${t}</span>`).join("")}</span>
       </div>
     </div>
     <p class="modal-desc">${setup.description}</p>
-    <h3>מה כלול</h3>
+    <h3>${I18N[currentLang].whatsIncluded}</h3>
     <ul class="feature-list">
-      ${setup.features.map((f) => `<li>${f}</li>`).join("")}
+      ${setup.features
+        .map((f, i) => {
+          const d =
+            setup.featureDetails?.[i] ?? (FEATURE_DETAILS[setup.id] || [])[i];
+          return d
+            ? `<li><details class="feature-detail"><summary>${f}</summary><div class="feature-detail-body"><p>${d.text}</p>${d.url ? `<a href="${d.url}" target="_blank" rel="noopener noreferrer" class="feature-ref">↗ ${d.url.replace("https://", "")}</a>` : ""}</div></details></li>`
+            : `<li>${f}</li>`;
+        })
+        .join("")}
     </ul>
     ${
       setup.week1
-        ? `<h3 class="week1-heading">מה תבנה בשבוע הראשון</h3>
+        ? `<h3 class="week1-heading">${I18N[currentLang].week1Heading}</h3>
     <ul class="week1-list">
       ${setup.week1.map((p) => `<li class="week1-item"><span class="week1-check" aria-hidden="true">→</span>${p}</li>`).join("")}
     </ul>`
         : ""
     }
-    <h3>התקנה</h3>
+    <h3>${I18N[currentLang].installHeading}</h3>
     <details class="prereqs-details">
       <summary class="prereqs-summary">
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
-        דרישות קדם
+        ${I18N[currentLang].prereqs}
       </summary>
       <ul class="prereqs-list">
         <li><label class="prereq-item"><input type="checkbox" class="prereq-check"><span>macOS עם Apple Silicon (M1/M2/M3/M4)</span></label></li>
@@ -669,7 +1310,11 @@ function openModal(setup) {
     </details>
     <div class="install-block">
       <code id="cmd-${setup.id}">${setup.installCmd}</code>
-      <button class="copy-btn" id="copy-btn-${setup.id}" title="העתק">⎘</button>
+      <button class="copy-btn" id="copy-btn-${setup.id}" title="${I18N[currentLang].copyBtn}" aria-label="${I18N[currentLang].copyAriaLabel}">⎘</button>
+      <button class="run-btn" id="run-btn-${setup.id}" aria-label="${I18N[currentLang].runAriaLabel}">${I18N[currentLang].runBtn}</button>
+    </div>
+    <div class="run-instructions" id="run-instructions-${setup.id}" aria-live="polite">
+      ${I18N[currentLang].runInstructions}
     </div>
     <div class="modal-footer-row">
       <p class="prereqs" style="display:none"></p>
@@ -678,11 +1323,11 @@ function openModal(setup) {
           <circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/>
           <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
         </svg>
-        שתף
+        ${I18N[currentLang].shareBtn}
       </button>
     </div>
     <div class="similar-section">
-      <h3>אולי גם יעניין אותך</h3>
+      <h3>${I18N[currentLang].similarHeading}</h3>
       <div class="similar-grid">
         ${getSimilarSetups(setup)
           .map(
@@ -708,6 +1353,13 @@ function openModal(setup) {
   document
     .getElementById(`share-btn-${setup.id}`)
     .addEventListener("click", () => shareSetup(setup));
+  document
+    .getElementById(`run-btn-${setup.id}`)
+    .addEventListener("click", () => {
+      copyCmd(setup.id);
+      const panel = document.getElementById(`run-instructions-${setup.id}`);
+      if (panel) panel.classList.toggle("visible");
+    });
   if (hasPrev)
     document
       .getElementById("modal-prev")
@@ -869,7 +1521,7 @@ window.addEventListener("DOMContentLoaded", () => {
 });
 
 // ── Theme ─────────────────────────────────────────────────────────────────────
-let currentTheme = localStorage.getItem("theme") || "dark";
+let currentTheme = localStorage.getItem("theme") || "light";
 
 function getAccent(i) {
   return PALETTE[CYCLE[i % CYCLE.length]][
@@ -894,6 +1546,33 @@ function applyTheme(theme) {
 
 document.getElementById("theme-toggle").addEventListener("click", () => {
   applyTheme(currentTheme === "dark" ? "light" : "dark");
+});
+
+// ── Language ──────────────────────────────────────────────────────────────────
+function applyLang(lang) {
+  currentLang = lang;
+  localStorage.setItem("lang", lang);
+  const t = I18N[lang];
+  document.documentElement.lang = t.lang;
+  document.documentElement.dir = t.dir;
+  document.body.style.direction = t.dir;
+  const langBtn = document.getElementById("lang-toggle");
+  if (langBtn) {
+    langBtn.textContent = t.langToggleText;
+    langBtn.setAttribute("aria-label", t.langToggleLabel);
+    langBtn.setAttribute("aria-pressed", lang === "en" ? "true" : "false");
+  }
+  const si = document.getElementById("search-input");
+  if (si) si.placeholder = t.searchPlaceholder;
+  const qb = document.getElementById("quiz-btn");
+  if (qb) qb.textContent = t.quizBtn;
+  const sl = document.querySelector(".skip-link");
+  if (sl) sl.textContent = t.skipLink;
+  renderFilterBar();
+}
+
+document.getElementById("lang-toggle").addEventListener("click", () => {
+  applyLang(currentLang === "he" ? "en" : "he");
 });
 
 // ── Tile rendering ────────────────────────────────────────────────────────────
@@ -1204,7 +1883,7 @@ function renderFilterBar() {
 
   const allBtn = document.createElement("button");
   allBtn.className = "filter-btn" + (activeTag === null ? " active" : "");
-  allBtn.textContent = "הכל";
+  allBtn.textContent = I18N[currentLang].filterAll;
   if (activeTag === null) allBtn.style.setProperty("--active-color", "#fff");
   allBtn.addEventListener("click", () => {
     activeTag = null;
@@ -1255,16 +1934,19 @@ function applyFilter() {
       emptyEl.className = "no-results";
       grid.appendChild(emptyEl);
     }
-    emptyEl.textContent = `אין תוצאות עבור "${searchInput.value}"`;
+    emptyEl.textContent = I18N[currentLang].noResults(searchInput.value);
   } else if (emptyEl) {
     emptyEl.remove();
   }
 
   if (searchStatus) {
     searchStatus.textContent =
-      searchQuery || activeTag ? `נמצאו ${visibleCount} סביבות` : "";
+      searchQuery || activeTag
+        ? I18N[currentLang].searchStatus(visibleCount)
+        : "";
   }
 }
 
 renderFilterBar();
 applyTheme(currentTheme);
+applyLang(currentLang);
