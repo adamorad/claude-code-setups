@@ -1354,49 +1354,12 @@ footer {
 .footer-inner {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 20px 24px;
+  padding: 16px 24px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 16px;
+  gap: 12px;
   flex-wrap: wrap;
-}
-
-.footer-brand {
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
-}
-
-.footer-logo {
-  font-size: 0.8rem;
-  font-weight: 700;
-  color: var(--text);
-  font-family: monospace;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-}
-
-.footer-tagline {
-  font-size: 0.7rem;
-  color: var(--muted);
-}
-
-.footer-nav {
-  display: flex;
-  gap: 20px;
-  align-items: center;
-}
-
-.footer-link {
-  font-size: 0.78rem;
-  color: var(--muted);
-  text-decoration: none;
-  transition: color 0.15s;
-}
-
-.footer-link:hover {
-  color: var(--text);
 }
 
 .footer-copy {
@@ -1404,6 +1367,17 @@ footer {
   color: var(--muted);
   direction: ltr;
   white-space: nowrap;
+}
+
+.footer-link {
+  font-size: 0.72rem;
+  color: var(--muted);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+
+.footer-link:hover {
+  color: var(--text);
 }
 
 /* ── Toolbar row ── */
@@ -1957,10 +1931,8 @@ body.compare-mode .tile.compare-selected::before {
 
   /* Footer */
   .footer-inner {
-    flex-direction: column;
-    align-items: flex-end;
-    gap: 12px;
-    text-align: right;
+    justify-content: center;
+    gap: 16px;
   }
 }
 
