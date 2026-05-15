@@ -30,6 +30,26 @@ body {
   top: 16px;
 }
 
+/* ── Global focus ring (WCAG 2.4.7 / SI 5568) ── */
+:focus-visible {
+  outline: 2px solid var(--primary, #396fc8);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* ── Visually hidden (for screen-reader-only text) ── */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 /* ── Reduced motion ── */
 @media (prefers-reduced-motion: reduce) {
   *,
@@ -1918,4 +1938,74 @@ body.compare-mode .tile.compare-selected::before {
   overflow: hidden;
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
+}
+
+/* ── LTR language override ── */
+[dir="ltr"] body {
+  direction: ltr;
+}
+
+[dir="ltr"] #search-input {
+  direction: ltr;
+  text-align: left;
+}
+
+[dir="ltr"] .footer-inner {
+  direction: ltr;
+}
+
+[dir="ltr"] .quiz-option {
+  text-align: left;
+}
+
+[dir="ltr"] .quiz-result {
+  align-items: flex-start;
+  text-align: left;
+}
+
+[dir="ltr"] .modal-user {
+  direction: ltr;
+}
+
+/* ── High-contrast mode support (Windows/macOS forced colors) ── */
+@media (forced-colors: active) {
+  .tile {
+    border: 1px solid ButtonText;
+  }
+  .copy-btn,
+  .run-btn,
+  .lang-toggle,
+  .theme-toggle {
+    border: 1px solid ButtonText;
+    forced-color-adjust: none;
+  }
+  .skip-link:focus {
+    outline: 3px solid Highlight;
+  }
+}
+
+/* ── Print styles ── */
+@media print {
+  header,
+  #search-bar,
+  #filter-bar,
+  .toolbar-row,
+  .tile-fav,
+  .tile-tooltip,
+  .copy-btn,
+  .run-btn,
+  .share-btn,
+  .contact-section,
+  footer {
+    display: none !important;
+  }
+  #grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+  .tile {
+    break-inside: avoid;
+    box-shadow: none;
+    border: 1px solid #ccc;
+  }
 }

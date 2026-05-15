@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>התחלה עם Claude Code — Claude Code Setups</title>
+    <meta
+      name="description"
+      content="מדריך מלא להתקנת Claude Code CLI, הגדרת CLAUDE.md ופרויקט ראשון."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../css/style.css" />
+    <link rel="stylesheet" href="tutorial.css" />
+  </head>
+  <body>
+    <a href="#content" class="skip-link">דלג לתוכן</a>
+    <nav class="tutorial-nav" aria-label="ניווט">
+      <a href="../index.html" class="nav-back">← חזרה לסטאפים</a>
+      <span class="nav-title">Claude Code Setups</span>
+      <a href="index.html" class="nav-tutorials">כל הטוטוריאלים</a>
+    </nav>
+    <main id="content">
+      <article class="tutorial-article">
+        <header class="tutorial-header">
+          <span class="tutorial-badge">התחלה מהירה</span>
+          <h1>התחלה עם Claude Code</h1>
+          <p class="tutorial-lead">
+            Claude Code הוא CLI שמאפשר לכם לעבוד עם Claude ישירות מהטרמינל —
+            כותב קוד, מנהל קבצים, מריץ פקודות, ומבין את כל הפרויקט בהקשר אחד.
+          </p>
+          <div class="tutorial-meta">
+            <span>⏱ 8 דקות קריאה</span>
+            <span>רמה: מתחיל</span>
+          </div>
+        </header>
+
+        <h2>התקנה</h2>
+        <p>Claude Code מחייב Node.js 18 ומעלה. ניתן להתקין דרך npm:</p>
+        <div class="code-block">
+          <div class="code-block-header">
+            <span class="code-lang">bash</span>
+          </div>
+          <pre>npm install -g @anthropic-ai/claude-code</pre>
+        </div>
+        <p>
+          לאחר ההתקנה, מריצים <code>claude</code> בטרמינל ומתחברים עם API key של
+          Anthropic. ניתן לקבל מפתח ב-<a
+            href="https://console.anthropic.com"
+            target="_blank"
+            rel="noopener"
+            >console.anthropic.com</a
+          >.
+        </p>
+        <div class="code-block">
+          <div class="code-block-header">
+            <span class="code-lang">bash</span>
+          </div>
+          <pre>
+claude
+# או עם API key ישירות:
+ANTHROPIC_API_KEY=sk-ant-... claude</pre
+          >
+        </div>
+        <div class="tip-box">
+          <strong>טיפ</strong>
+          מוסיפים את <code>ANTHROPIC_API_KEY</code> ל-<code>~/.zshrc</code> או
+          <code>~/.bashrc</code> כדי לא להקליד בכל פעם.
+        </div>
+
+        <h2>קובץ CLAUDE.md</h2>
+        <p>
+          <code>CLAUDE.md</code> הוא קובץ הגדרות שנמצא בתיקיית הפרויקט (או
+          ב-<code>~/.claude/</code> להגדרות גלובליות). Claude קורא אותו אוטומטית
+          בכל שיחה ומשתמש בו כהקשר.
+        </p>
+        <p>
+          זה המקום להגדיר: שפת הפרויקט, conventions, פקודות בנייה, כללי סגנון
+          קוד, ומה לא לגעת בו.
+        </p>
+        <div class="code-block">
+          <div class="code-block-header">
+            <span class="code-lang">markdown — CLAUDE.md</span>
+          </div>
+          <pre>
+# My Project
+
+## Stack
+- Python 3.12, FastAPI, PostgreSQL
+- Tests: pytest
+- Linting: ruff
+
+## Commands
+- Run: `uvicorn main:app --reload`
+- Test: `pytest -v`
+- Lint: `ruff check .`
+
+## Style
+- Type hints everywhere
+- No print() — use logging
+- Max line length: 100</pre
+          >
+        </div>
+        <div class="tip-box">
+          <strong>טיפ</strong>
+          ניתן ליצור <code>CLAUDE.md</code> אוטומטית עם הפקודה
+          <code>claude init</code> בתיקיית הפרויקט.
+        </div>
+
+        <h2>פרויקט ראשון</h2>
+        <p>
+          הדרך הטובה ביותר להתחיל היא לפתוח טרמינל בתיקיית פרויקט קיים ולהריץ
+          <code>claude</code>. Claude יסרוק את הקבצים ויהיה מוכן לשאלות.
+        </p>
+        <ol class="step-list">
+          <li>
+            <div class="step-content">
+              <strong>פתיחת Claude בפרויקט</strong>
+              <p>ניגשים לתיקיית הפרויקט ומפעילים את ה-CLI:</p>
+              <div class="code-block">
+                <pre>
+cd ~/my-project
+claude</pre
+                >
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="step-content">
+              <strong>שאלה ראשונה</strong>
+              <p>
+                מתחילים עם שאלה כללית על הפרויקט כדי לוודא ש-Claude הבין את
+                המבנה:
+              </p>
+              <div class="code-block">
+                <pre>explain the project structure and main entry points</pre>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="step-content">
+              <strong>משימה אמיתית</strong>
+              <p>
+                עוברים למשימה ספציפית. Claude יכתוב קוד, יריץ בדיקות, ויתקן
+                שגיאות אוטומטית:
+              </p>
+              <div class="code-block">
+                <pre>
+add a /health endpoint that returns {"status": "ok", "version": "1.0"}
+then run the tests to make sure nothing broke</pre
+                >
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="step-content">
+              <strong>מצב Headless לאוטומציה</strong>
+              <p>ניתן להריץ Claude ללא אינטראקציה — מושלם לסקריפטים ו-CI:</p>
+              <div class="code-block">
+                <pre>claude --print "run tests and return exit code"</pre>
+              </div>
+            </div>
+          </li>
+        </ol>
+
+        <h2>קיצורי דרך שימושיים</h2>
+        <p>בתוך שיחה עם Claude Code יש מספר פקודות מובנות שמאיצות את העבודה:</p>
+        <div class="code-block">
+          <div class="code-block-header">
+            <span class="code-lang">claude commands</span>
+          </div>
+          <pre>
+/help          — רשימת כל הפקודות
+/clear         — ניקוי ההיסטוריה של השיחה
+/compact       — דחיסת ההקשר לחסוך tokens
+/model         — החלפת מודל (Sonnet / Opus / Haiku)
+/vim           — עריכת prompt ב-vim
+Ctrl+C         — עצירת פעולה באמצע</pre
+          >
+        </div>
+
+        <div class="warning-box">
+          <strong>שימו לב</strong>
+          Claude Code יכול לכתוב ולמחוק קבצים. עדיף לעבוד בתוך git repo כדי
+          שתמיד תוכלו לבצע <code>git diff</code> ו-<code>git checkout</code> אם
+          משהו לא הלך כמו שציפיתם.
+        </div>
+
+        <div class="next-steps">
+          <h3>צעדים הבאים</h3>
+          <ul>
+            <li><a href="mcps.html">הוספת שרתי MCP להרחבת יכולות Claude</a></li>
+            <li><a href="git.html">אוטומציה של Git workflow עם Claude</a></li>
+            <li><a href="../index.html">בחירת סטאפ מוכן לפי תחום</a></li>
+          </ul>
+        </div>
+      </article>
+    </main>
+    <footer class="tutorial-footer">
+      <a href="../index.html">← חזרה לכל הסטאפים</a>
+    </footer>
+  </body>
+</html>

@@ -96,8 +96,9 @@
       </p>
     </header>
 
-    <div id="search-bar">
+    <div id="search-bar" role="search" aria-label="חיפוש סביבות עבודה">
       <div class="search-wrap">
+        <label for="search-input" class="sr-only">חפש וורקפלואו</label>
         <svg
           class="search-icon"
           width="16"
@@ -118,6 +119,8 @@
           type="search"
           placeholder="חפש וורקפלואו..."
           autocomplete="off"
+          aria-autocomplete="list"
+          aria-controls="grid"
         />
         <button id="search-clear" class="search-clear" aria-label="נקה חיפוש">
           ✕

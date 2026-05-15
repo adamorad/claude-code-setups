@@ -1879,6 +1879,11 @@ const allTags = [...new Set(SETUPS.flatMap((s) => s.tags))];
 let activeTag = null;
 
 function renderFilterBar() {
+  filterBar.setAttribute("role", "navigation");
+  filterBar.setAttribute(
+    "aria-label",
+    currentLang === "he" ? "סינון לפי תחום" : "Filter by topic",
+  );
   filterBar.innerHTML = "";
 
   const allBtn = document.createElement("button");
