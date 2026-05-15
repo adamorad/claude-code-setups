@@ -43,6 +43,12 @@ const I18N = {
     langToggleLabel: "Switch to English",
     langToggleText: "EN",
     skipLink: "דלג לתוכן",
+    navSetups: "סטאפים",
+    navTutorials: "טוטוריאלים",
+    levelBeginner: "מתחיל",
+    levelMid: "בינוני",
+    levelAdv: "מתקדם",
+    timeLabel: "⏱",
   },
   en: {
     dir: "ltr",
@@ -70,6 +76,12 @@ const I18N = {
     langToggleLabel: "עבור לעברית",
     langToggleText: "HE",
     skipLink: "Skip to content",
+    navSetups: "Setups",
+    navTutorials: "Tutorials",
+    levelBeginner: "Beginner",
+    levelMid: "Intermediate",
+    levelAdv: "Advanced",
+    timeLabel: "⏱",
   },
 };
 let currentLang = localStorage.getItem("lang") || "he";
@@ -603,6 +615,230 @@ const SETUPS = [
       "bash <(curl -fsSL https://raw.githubusercontent.com/adamorad/claude-code-setups/main/setups/researcher/install.sh)",
   },
 ];
+
+// ── English content lookup ────────────────────────────────────────────────────
+const EN = {
+  backend: {
+    name: "The Backend Dev",
+    level: "Intermediate",
+    description:
+      "Python/Node developer building APIs, microservices and DB schemas. Clean code, CI that runs itself, high coverage.",
+    week1: [
+      "Full API with auth, pagination and rate limiting",
+      "Safe schema migration with rollback",
+      "CI in GitHub Actions running on every PR",
+    ],
+  },
+  frontend: {
+    name: "The Frontend Dev",
+    level: "Beginner",
+    description:
+      "React/Vue developer turning Figma into working code. Accessible components, animations and E2E tests.",
+    week1: [
+      "Design system with 10 components and Storybook",
+      "E2E tests with Playwright for every critical flow",
+      "Lighthouse score 90+ in performance and accessibility",
+    ],
+  },
+  saas: {
+    name: "The SaaS Builder",
+    level: "Beginner",
+    description:
+      "Building SaaS from 0 to paying customers. Stripe, Supabase, Vercel — the full stack in one command.",
+    week1: [
+      "Landing page with trial signup connected to Stripe",
+      "Dashboard with usage metrics and billing portal",
+      "Automated email onboarding sequence",
+    ],
+  },
+  devops: {
+    name: "The DevOps Engineer",
+    level: "Advanced",
+    description:
+      "Engineer managing infra, CI/CD and observability. Cloudflare, Docker, GitHub Actions — everything automated.",
+    week1: [
+      "Full CI/CD pipeline with tests, build, deploy",
+      "Monitoring alerts with Cloudflare Workers",
+      "Automated runbook for 5 common incidents",
+    ],
+  },
+  "ai-eng": {
+    name: "The AI Engineer",
+    level: "Advanced",
+    description:
+      "Building products on LLMs. Prompt engineering, evals, RAG — without wasting tokens or hallucinations.",
+    week1: [
+      "RAG system on your project docs",
+      "Eval suite measuring accuracy, latency and cost",
+      "Agent completing a complex task in 3 steps",
+    ],
+  },
+  security: {
+    name: "The Security Engineer",
+    level: "Advanced",
+    description:
+      "AppSec scanning, detecting and fixing vulnerabilities. Hooks that block dangers before they happen.",
+    week1: [
+      "Full audit of dependencies + fixing critical ones",
+      "Hooks blocking 10 common attack patterns",
+      "Automated security checklist for every PR",
+    ],
+  },
+  data: {
+    name: "The Data Scientist",
+    level: "Intermediate",
+    description:
+      "Analyzing data, building models and dashboards. Jupyter, pandas, PostgreSQL — without writing boilerplate.",
+    week1: [
+      "Full EDA on first dataset with insights",
+      "Data cleaning pipeline that runs itself",
+      "Interactive dashboard with Plotly",
+    ],
+  },
+  indie: {
+    name: "The Indie Hacker",
+    level: "Beginner",
+    description:
+      "Shipping every week. No meetings, no investors — just code, users and growing MRR.",
+    week1: [
+      "First product live with Stripe payments working",
+      "Landing page with waitlist and email capture",
+      "Live MRR dashboard in real time",
+    ],
+  },
+  mobile: {
+    name: "The Mobile Developer",
+    level: "Intermediate",
+    description:
+      "React Native / Expo developer shipping to Android and iOS at once — without Xcode headaches.",
+    week1: [
+      "App with Tab navigation and 5 screens",
+      "Full auth flow with Supabase",
+      "OTA update pipeline — deploy without App Store review",
+    ],
+  },
+  pm: {
+    name: "The PM Who Codes",
+    level: "Beginner",
+    description:
+      "PM writing specs, managing backlog and tickets — and now adding features without waiting for the dev.",
+    week1: [
+      "Organized backlog with priorities and epics",
+      "First PRD the team understood in 30 minutes",
+      "Metrics dashboard the CEO sees every morning",
+    ],
+  },
+  creator: {
+    name: "The Content Creator",
+    level: "Beginner",
+    description:
+      "Creating content for LinkedIn, TikTok and newsletters. With AI — 3x output in half the time.",
+    week1: [
+      "7 LinkedIn posts ready for next week",
+      "First newsletter sent on Beehiiv/Substack",
+      "Content calendar for a full month",
+    ],
+  },
+  docs: {
+    name: "The Docs Writer",
+    level: "Beginner",
+    description:
+      "Turning code into documentation people want to read. API docs, guides, changelogs — writing that sells.",
+    week1: [
+      "README that brings GitHub stars",
+      "Full API reference generated automatically",
+      "Automated changelog workflow for every release",
+    ],
+  },
+  freelance: {
+    name: "The Freelancer",
+    level: "Beginner",
+    description:
+      "Working with 3–5 clients in parallel. Proposals, handoffs and scope — everything faster.",
+    week1: [
+      "Proposal template that closes 50% more deals",
+      "Onboarding checklist for new clients",
+      "Handoff package that saves 3 hours per project",
+    ],
+  },
+  cto: {
+    name: "The CTO",
+    level: "Advanced",
+    description:
+      "Managing tech team, architecture decisions and PR reviews — with Claude as staff engineer.",
+    week1: [
+      "Updated architecture diagram of the full system",
+      "PR review checklist the team agrees on",
+      "Tech debt backlog with ROI per item",
+    ],
+  },
+  ecommerce: {
+    name: "The E-Commerce Owner",
+    level: "Beginner",
+    description:
+      "Managing a Shopify store. Conversion rate, automation and inventory — more sales, less manual work.",
+    week1: [
+      "50 revamped product descriptions with SEO",
+      "Email automation for cart abandonment",
+      "Daily KPI dashboard to Telegram",
+    ],
+  },
+  gamedev: {
+    name: "The Game Developer",
+    level: "Intermediate",
+    description:
+      "Developing indie games in Godot, Unity or browser — from game design doc to playable prototype.",
+    week1: [
+      "Playable prototype in browser within 3 days",
+      "Game design doc: mechanics, art style, monetization",
+      "Live leaderboard with Supabase",
+    ],
+  },
+  student: {
+    name: "The Student",
+    level: "Beginner",
+    description:
+      "Learning to code with AI as pair programmer. Protects your code, explains every error, doesn't do homework for you.",
+    week1: [
+      "3 portfolio-worthy projects completed",
+      "Confidence to open terminal and run code",
+      "GitHub profile with green contributions",
+    ],
+  },
+  teacher: {
+    name: "The Instructor",
+    level: "Beginner",
+    description:
+      "Lecturer, bootcamp mentor or online course creator. Generates materials, exercises and quizzes in minutes.",
+    week1: [
+      "Full syllabus for an 8-week course",
+      "40 exercises ready with explanations",
+      "Quiz bank of 100 questions",
+    ],
+  },
+  designer: {
+    name: "The UI Designer",
+    level: "Beginner",
+    description:
+      "Developer who designs. Figma to working code — accessible, RTL, responsive components. No UX compromises.",
+    week1: [
+      "Design system with 12 RTL-ready components",
+      "Accessibility audit — zero WCAG 2.1 AA failures",
+      "Storybook with dark/light mode and RTL toggle",
+    ],
+  },
+  researcher: {
+    name: "The Researcher",
+    level: "Intermediate",
+    description:
+      "Academic, analyst or researcher processing papers, managing bibliography and generating insights from hundreds of sources.",
+    week1: [
+      "Literature review of 30 sources with gaps map",
+      "Organized citation database in PostgreSQL",
+      "Research brief ready for publication or meeting",
+    ],
+  },
+};
 
 // ── Feature details lookup ────────────────────────────────────────────────────
 const FEATURE_DETAILS = {
@@ -1253,28 +1489,49 @@ function openModal(setup) {
   const hasPrev = currentModalIndex > 0;
   const hasNext = currentModalIndex < SETUPS.length - 1;
   const accent = setup.color;
+  const isEn = currentLang === "en";
+  const en = EN[setup.id];
+  const displayName = isEn && en ? en.name : setup.name;
+  const displayDesc = isEn && en ? en.description : setup.description;
+  const displayWeek1 = isEn && en ? en.week1 : setup.week1;
+  const prevLabel = isEn ? "Previous" : "הקודם";
+  const nextLabel = isEn ? "Next" : "הבא";
+  const closeLabel = isEn ? "Close" : "סגור";
+  const prereqItems = isEn
+    ? [
+        "macOS with Apple Silicon (M1/M2/M3/M4)",
+        'Xcode Command Line Tools — <code class="inline-cmd">xcode-select --install</code>',
+        "Terminal open (Terminal.app or iTerm2)",
+        "Internet connection",
+      ]
+    : [
+        "macOS עם Apple Silicon (M1/M2/M3/M4)",
+        'Xcode Command Line Tools — <code class="inline-cmd">xcode-select --install</code>',
+        "Terminal פתוח (Terminal.app או iTerm2)",
+        "חיבור לאינטרנט",
+      ];
   modalContent.innerHTML = `
     <div class="modal-nav-row">
-      <button class="modal-nav-btn" id="modal-prev" ${!hasPrev ? "disabled" : ""} aria-label="הסטאפ הקודם">
+      <button class="modal-nav-btn" id="modal-prev" ${!hasPrev ? "disabled" : ""} aria-label="${isEn ? "Previous setup" : "הסטאפ הקודם"}">
         <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
-        הקודם
+        ${prevLabel}
       </button>
       <span class="modal-nav-pos">${currentModalIndex + 1} / ${SETUPS.length}</span>
-      <button class="modal-nav-btn" id="modal-next" ${!hasNext ? "disabled" : ""} aria-label="הסטאפ הבא">
-        הבא
+      <button class="modal-nav-btn" id="modal-next" ${!hasNext ? "disabled" : ""} aria-label="${isEn ? "Next setup" : "הסטאפ הבא"}">
+        ${nextLabel}
         <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
       </button>
     </div>
-    <button class="modal-close" id="modal-close-btn" aria-label="סגור">✕</button>
+    <button class="modal-close" id="modal-close-btn" aria-label="${closeLabel}">✕</button>
     <div class="modal-header">
       <span class="modal-accent" style="color:${accent}" aria-hidden="true">◆</span>
       <div>
-        <h2 id="modal-title">${setup.name}</h2>
+        <h2 id="modal-title">${displayName}</h2>
         <span class="modal-user">${setup.user}</span>
         <span class="modal-tags">${setup.tags.map((t) => `<span class="tag" style="border-color:${accent};color:${accent}">${t}</span>`).join("")}</span>
       </div>
     </div>
-    <p class="modal-desc">${setup.description}</p>
+    <p class="modal-desc">${displayDesc}</p>
     <h3>${I18N[currentLang].whatsIncluded}</h3>
     <ul class="feature-list">
       ${setup.features
@@ -1288,10 +1545,10 @@ function openModal(setup) {
         .join("")}
     </ul>
     ${
-      setup.week1
+      displayWeek1
         ? `<h3 class="week1-heading">${I18N[currentLang].week1Heading}</h3>
     <ul class="week1-list">
-      ${setup.week1.map((p) => `<li class="week1-item"><span class="week1-check" aria-hidden="true">→</span>${p}</li>`).join("")}
+      ${displayWeek1.map((p) => `<li class="week1-item"><span class="week1-check" aria-hidden="true">→</span>${p}</li>`).join("")}
     </ul>`
         : ""
     }
@@ -1302,10 +1559,7 @@ function openModal(setup) {
         ${I18N[currentLang].prereqs}
       </summary>
       <ul class="prereqs-list">
-        <li><label class="prereq-item"><input type="checkbox" class="prereq-check"><span>macOS עם Apple Silicon (M1/M2/M3/M4)</span></label></li>
-        <li><label class="prereq-item"><input type="checkbox" class="prereq-check"><span>Xcode Command Line Tools — <code class="inline-cmd">xcode-select --install</code></span></label></li>
-        <li><label class="prereq-item"><input type="checkbox" class="prereq-check"><span>Terminal פתוח (Terminal.app או iTerm2)</span></label></li>
-        <li><label class="prereq-item"><input type="checkbox" class="prereq-check"><span>חיבור לאינטרנט</span></label></li>
+        ${prereqItems.map((item) => `<li><label class="prereq-item"><input type="checkbox" class="prereq-check"><span>${item}</span></label></li>`).join("")}
       </ul>
     </details>
     <div class="install-block">
@@ -1334,7 +1588,7 @@ function openModal(setup) {
             (s) => `
           <button class="similar-card" data-id="${s.id}" style="--s-accent:${s.color}">
             <span class="similar-dot" style="background:${s.color}"></span>
-            <span class="similar-name">${s.name}</span>
+            <span class="similar-name">${isEn && EN[s.id] ? EN[s.id].name : s.name}</span>
             <span class="similar-tags">${s.tags.slice(0, 2).join(" · ")}</span>
           </button>
         `,
@@ -1562,13 +1816,13 @@ function applyLang(lang) {
     langBtn.setAttribute("aria-label", t.langToggleLabel);
     langBtn.setAttribute("aria-pressed", lang === "en" ? "true" : "false");
   }
-  const si = document.getElementById("search-input");
-  if (si) si.placeholder = t.searchPlaceholder;
-  const qb = document.getElementById("quiz-btn");
-  if (qb) qb.textContent = t.quizBtn;
   const sl = document.querySelector(".skip-link");
   if (sl) sl.textContent = t.skipLink;
-  renderFilterBar();
+  const navSetups = document.getElementById("nav-link-setups");
+  if (navSetups) navSetups.textContent = t.navSetups;
+  const navTutorials = document.getElementById("nav-link-tutorials");
+  if (navTutorials) navTutorials.textContent = t.navTutorials;
+  refreshTileLang();
 }
 
 document.getElementById("lang-toggle").addEventListener("click", () => {
@@ -1621,6 +1875,7 @@ SETUPS.forEach((setup, i) => {
       <span class="tile-copied" hidden>✓ הורדת</span>
     </div>
   `;
+  tile.dataset.setupId = setup.id;
 
   tile.querySelector(".tile-fav").addEventListener("click", (e) => {
     e.stopPropagation();
@@ -1658,6 +1913,34 @@ SETUPS.forEach((setup, i) => {
 
 updateFavButtons();
 updateHistoryIndicators();
+
+function refreshTileLang() {
+  const isEn = currentLang === "en";
+  const levelMap = {
+    מתחיל: "Beginner",
+    בינוני: "Intermediate",
+    מתקדם: "Advanced",
+  };
+  tileEls.forEach((tile) => {
+    const id = tile.dataset.setupId;
+    const setup = SETUPS.find((s) => s.id === id);
+    if (!setup) return;
+    const en = EN[id];
+    tile.querySelector(".tile-name").textContent =
+      isEn && en ? en.name : setup.name;
+    tile.querySelector(".tile-desc").textContent =
+      isEn && en ? en.description : setup.description;
+    tile.querySelector(".badge-level").textContent = isEn
+      ? levelMap[setup.level] || setup.level
+      : setup.level;
+    const copied = tile.querySelector(".tile-copied");
+    if (copied) copied.textContent = isEn ? "✓ Copied" : "✓ הורדת";
+    tile.setAttribute(
+      "aria-label",
+      isEn && en ? `Open ${en.name}` : `פתח ${setup.name}`,
+    );
+  });
+}
 
 // ── Drag to reorder ───────────────────────────────────────────────────────────
 let draggedTile = null;
@@ -1726,232 +2009,5 @@ tileEls.forEach((tile) => {
 
 restoreTileOrder();
 
-// ── Quiz ──────────────────────────────────────────────────────────────────────
-const QUIZ_STEPS = [
-  {
-    q: "מה רמת הניסיון שלך בפיתוח?",
-    hint: "זה לא משנה — כולם מתאימים",
-    options: [
-      { text: "מתחיל לגמרי — בלי קוד", value: "beginner" },
-      { text: "יש לי בסיס בסיסי", value: "novice" },
-      { text: "מפתח / טכנאי מנוסה", value: "dev" },
-    ],
-  },
-  {
-    q: "מה הכי מתאר את מה שאתה רוצה לבנות?",
-    hint: "בחר את הקרוב ביותר אליך",
-    options: [
-      { text: "MVP ומוצרים מהירים", value: "builder" },
-      { text: "תוכן ופוסטים לרשתות", value: "influencer" },
-      { text: "דשבורדים לשוק ההון", value: "trader" },
-      { text: "אתר ומערכת לעסק שלי", value: "bizowner" },
-      { text: "חומרי לימוד ומערכי שיעור", value: "teacher" },
-      { text: "אמנות דיגיטלית וויזואלי", value: "artist" },
-      { text: "כלים לעבודה עצמאית", value: "freelancer" },
-      { text: "אפליקציות לבית הספר", value: "parent" },
-    ],
-  },
-];
-
-const QUIZ_MAP = {
-  builder: "builder",
-  influencer: "influencer",
-  trader: "trader",
-  bizowner: "bizowner",
-  teacher: "teacher",
-  artist: "artist",
-  freelancer: "freelancer",
-  parent: "parent",
-};
-
-const quizOverlay = document.getElementById("quiz-overlay");
-const quizBody = document.getElementById("quiz-body");
-let quizAnswers = [];
-
-function openQuiz() {
-  quizAnswers = [];
-  quizOverlay.hidden = false;
-  document.body.style.overflow = "hidden";
-  renderQuizStep(0);
-}
-
-function closeQuiz() {
-  quizOverlay.hidden = true;
-  document.body.style.overflow = "";
-}
-
-function renderQuizStep(stepIdx) {
-  if (stepIdx >= QUIZ_STEPS.length) {
-    renderQuizResult();
-    return;
-  }
-  const step = QUIZ_STEPS[stepIdx];
-  const total = QUIZ_STEPS.length;
-  const dots = Array.from(
-    { length: total },
-    (_, i) => `<div class="quiz-dot${i < stepIdx ? " done" : ""}"></div>`,
-  ).join("");
-
-  quizBody.innerHTML = `
-    <div class="quiz-step">
-      <div class="quiz-progress">${dots}</div>
-      <p class="quiz-q">${step.q}</p>
-      ${step.hint ? `<p class="quiz-hint">${step.hint}</p>` : ""}
-      <div class="quiz-options" style="grid-template-columns: ${step.options.length <= 3 ? "1fr" : "1fr 1fr"}">
-        ${step.options.map((o, i) => `<button class="quiz-option" data-idx="${i}">${o.text}</button>`).join("")}
-      </div>
-    </div>`;
-
-  quizBody.querySelectorAll(".quiz-option").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      const val = step.options[parseInt(btn.dataset.idx)].value;
-      quizAnswers.push(val);
-      renderQuizStep(stepIdx + 1);
-    });
-  });
-}
-
-function renderQuizResult() {
-  const domainAnswer = quizAnswers[1] || quizAnswers[0];
-  const setupId = QUIZ_MAP[domainAnswer] || "builder";
-  const setup = SETUPS.find((s) => s.id === setupId);
-  if (!setup) return;
-
-  quizBody.innerHTML = `
-    <div class="quiz-result">
-      <span class="quiz-result-label">ההמלצה שלנו</span>
-      <h2 class="quiz-result-name">${setup.name}</h2>
-      <p class="quiz-result-desc">${setup.description}</p>
-      <div class="quiz-result-actions">
-        <button class="quiz-open-btn" id="quiz-open-setup">פתח את הסטאפ ←</button>
-        <button class="quiz-retry-btn" id="quiz-retry">נסה שוב</button>
-      </div>
-    </div>`;
-
-  document.getElementById("quiz-open-setup").addEventListener("click", () => {
-    closeQuiz();
-    openModal(setup);
-  });
-  document.getElementById("quiz-retry").addEventListener("click", () => {
-    quizAnswers = [];
-    renderQuizStep(0);
-  });
-}
-
-document.getElementById("quiz-btn").addEventListener("click", openQuiz);
-document.getElementById("quiz-close").addEventListener("click", closeQuiz);
-quizOverlay.addEventListener("click", (e) => {
-  if (e.target === quizOverlay) closeQuiz();
-});
-document.addEventListener("keydown", (e) => {
-  if (e.key === "Escape" && !quizOverlay.hidden) closeQuiz();
-});
-
-// ── Search ────────────────────────────────────────────────────────────────────
-const searchInput = document.getElementById("search-input");
-const searchClear = document.getElementById("search-clear");
-const searchStatus = document.getElementById("search-status");
-let searchQuery = "";
-
-const searchIndex = SETUPS.map((s) =>
-  [s.name, s.user, s.description, ...s.tags, ...s.features]
-    .join(" ")
-    .toLowerCase(),
-);
-
-searchInput.addEventListener("input", () => {
-  searchQuery = searchInput.value.trim().toLowerCase();
-  searchClear.classList.toggle("visible", searchQuery.length > 0);
-  applyFilter();
-});
-
-searchClear.addEventListener("click", () => {
-  searchInput.value = "";
-  searchQuery = "";
-  searchClear.classList.remove("visible");
-  searchInput.focus();
-  applyFilter();
-});
-
-// ── Filter bar ────────────────────────────────────────────────────────────────
-const filterBar = document.getElementById("filter-bar");
-const allTags = [...new Set(SETUPS.flatMap((s) => s.tags))];
-let activeTag = null;
-
-function renderFilterBar() {
-  filterBar.setAttribute("role", "navigation");
-  filterBar.setAttribute(
-    "aria-label",
-    currentLang === "he" ? "סינון לפי תחום" : "Filter by topic",
-  );
-  filterBar.innerHTML = "";
-
-  const allBtn = document.createElement("button");
-  allBtn.className = "filter-btn" + (activeTag === null ? " active" : "");
-  allBtn.textContent = I18N[currentLang].filterAll;
-  if (activeTag === null) allBtn.style.setProperty("--active-color", "#fff");
-  allBtn.addEventListener("click", () => {
-    activeTag = null;
-    applyFilter();
-  });
-  filterBar.appendChild(allBtn);
-
-  allTags.forEach((tag) => {
-    const color = SETUPS.find((s) => s.tags.includes(tag))?.color ?? "#fff";
-    const btn = document.createElement("button");
-    btn.className = "filter-btn" + (activeTag === tag ? " active" : "");
-    btn.textContent = tag;
-    if (activeTag === tag) btn.style.setProperty("--active-color", color);
-    btn.addEventListener("click", () => {
-      activeTag = activeTag === tag ? null : tag;
-      applyFilter();
-    });
-    filterBar.appendChild(btn);
-  });
-}
-
-function applyFilter() {
-  renderFilterBar();
-  let visibleIndex = 0,
-    visibleCount = 0;
-
-  tileEls.forEach((tile, i) => {
-    const tags = tile.dataset.tags.split(",");
-    const tagMatch = activeTag === null || tags.includes(activeTag);
-    const searchMatch =
-      searchQuery === "" || searchIndex[i].includes(searchQuery);
-    const show = tagMatch && searchMatch;
-    tile.classList.toggle("hidden", !show);
-    if (show) {
-      visibleCount++;
-      tile.style.setProperty("--i", visibleIndex++);
-      tile.style.animation = "none";
-      tile.offsetHeight;
-      tile.style.animation = "";
-    }
-  });
-
-  let emptyEl = document.getElementById("no-results");
-  if (visibleCount === 0) {
-    if (!emptyEl) {
-      emptyEl = document.createElement("p");
-      emptyEl.id = "no-results";
-      emptyEl.className = "no-results";
-      grid.appendChild(emptyEl);
-    }
-    emptyEl.textContent = I18N[currentLang].noResults(searchInput.value);
-  } else if (emptyEl) {
-    emptyEl.remove();
-  }
-
-  if (searchStatus) {
-    searchStatus.textContent =
-      searchQuery || activeTag
-        ? I18N[currentLang].searchStatus(visibleCount)
-        : "";
-  }
-}
-
-renderFilterBar();
 applyTheme(currentTheme);
 applyLang(currentLang);
