@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>בדיקות Playwright — Claude Code Setups</title>
+    <meta
+      name="description"
+      content="אוטומציה של דפדפן, בדיקות E2E, ורגרסיה ויזואלית עם Playwright ו-Claude Code."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../css/style.css" />
+    <link rel="stylesheet" href="tutorial.css" />
+  </head>
+  <body>
+    <a href="#content" class="skip-link">דלג לתוכן</a>
+    <nav class="tutorial-nav" aria-label="ניווט">
+      <a href="../index.html" class="nav-back">← חזרה לסטאפים</a>
+      <span class="nav-title">Claude Code Setups</span>
+      <a href="index.html" class="nav-tutorials">כל הטוטוריאלים</a>
+    </nav>
+    <main id="content">
+      <article class="tutorial-article">
+        <header class="tutorial-header">
+          <span class="tutorial-badge">Testing</span>
+          <h1>בדיקות Playwright עם Claude Code</h1>
+          <p class="tutorial-lead">
+            Playwright הוא הכלי המוביל לאוטומציה של דפדפן ובדיקות E2E. Claude
+            יכול לכתוב בדיקות, לנפות שגיאות, ולצלם screenshots — עם MCP שמחבר
+            אותו ישירות לדפדפן.
+          </p>
+          <div class="tutorial-meta">
+            <span>⏱ 11 דקות קריאה</span>
+            <span>רמה: בינוני</span>
+          </div>
+        </header>
+
+        <h2>התקנת Playwright</h2>
+        <p>התקנה מהירה של Playwright עם כל הדפדפנים הנדרשים:</p>
+        <div class="code-block">
+          <div class="code-block-header">
+            <span class="code-lang">bash</span>
+          </div>
+          <pre>
+npm init playwright@latest
+# בחרו: TypeScript, tests/ directory, GitHub Actions CI</pre
+          >
+        </div>
+        <p>
+          לאחר מכן, מוסיפים את Playwright MCP כדי ש-Claude יוכל לשלוט בדפדפן
+          ישירות:
+        </p>
+        <div class="code-block">
+          <div class="code-block-header">
+            <span class="code-lang">json — claude_desktop_config.json</span>
+          </div>
+          <pre>
+{
+  "mcpServers": {
+    "playwright": {
+      "command": "npx",
+      "args": ["@playwright/mcp@latest"]
+    }
+  }
+}</pre
+          >
+        </div>
+
+        <h2>כתיבת בדיקות E2E</h2>
+        <p>
+          Claude יכתוב בדיקות E2E מתיאור פשוט בעברית. הוא מכיר את ה-best
+          practices של Playwright — שימוש ב-role locators, המתנה לאלמנטים,
+          וטיפול ב-async.
+        </p>
+        <div class="code-block">
+          <div class="code-block-header">
+            <span class="code-lang">שיחה עם claude</span>
+          </div>
+          <pre>
+write E2E tests for the user registration flow:
+1. navigate to /register
+2. fill email, password, confirm password
+3. submit and verify redirect to /dashboard
+4. check that welcome email toast appears
+test both happy path and error cases (duplicate email, weak password)</pre
+          >
+        </div>
+        <div class="code-block">
+          <div class="code-block-header">
+            <span class="code-lang">typescript — תוצאה</span>
+          </div>
+          <pre>
+import { test, expect } from '@playwright/test';
+
+test.describe('User Registration', () => {
+  test('successful registration redirects to dashboard', async ({ page }) => {
+    await page.goto('/register');
+
+    await page.getByRole('textbox', { name: 'Email' }).fill('new@example.com');
+    await page.getByRole('textbox', { name: 'Password' }).fill('SecurePass123!');
+    await page.getByRole('textbox', { name: 'Confirm' }).fill('SecurePass123!');
+    await page.getByRole('button', { name: 'Create account' }).click();
+
+    await expect(page).toHaveURL('/dashboard');
+    await expect(page.getByRole('alert')).toContainText('ברוכים הבאים');
+  });
+
+  test('duplicate email shows error', async ({ page }) => {
+    await page.goto('/register');
+    await page.getByRole('textbox', { name: 'Email' }).fill('existing@example.com');
+    await page.getByRole('textbox', { name: 'Password' }).fill('SecurePass123!');
+    await page.getByRole('button', { name: 'Create account' }).click();
+
+    await expect(page.getByRole('alert')).toContainText('כתובת המייל כבר קיימת');
+  });
+});</pre
+          >
+        </div>
+
+        <h2>רגרסיה ויזואלית</h2>
+        <p>
+          Playwright תומך בהשוואה ויזואלית — בדיקה שהממשק לא השתנה בין גרסאות.
+          Claude יגדיר את הבדיקות ואת ה-threshold:
+        </p>
+        <ol class="step-list">
+          <li>
+            <div class="step-content">
+              <strong>יצירת Snapshots בסיסיים</strong>
+              <div class="code-block">
+                <pre>
+add visual regression tests for:
+- homepage hero section
+- pricing page (all 3 tiers visible)
+- dashboard main view (logged in state)
+set threshold to 0.1% pixel difference</pre
+                >
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="step-content">
+              <strong>הרצת בדיקות ויזואליות</strong>
+              <div class="code-block">
+                <pre>
+npx playwright test --update-snapshots  # יצירת baseline
+npx playwright test                      # בדיקה מול baseline</pre
+                >
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="step-content">
+              <strong>ניתוח כשלונות</strong>
+              <p>כאשר בדיקה ויזואלית נכשלת, שולחים ל-Claude את ה-diff:</p>
+              <div class="code-block">
+                <pre>
+the visual test for homepage failed. here's the diff image path:
+test-results/homepage-diff.png
+what changed and is it expected?</pre
+                >
+              </div>
+            </div>
+          </li>
+        </ol>
+
+        <h2>שימוש ב-MCP לדיבוג חי</h2>
+        <p>
+          עם Playwright MCP, Claude יכול לנווט לאתר שלכם ולבדוק בעיות בזמן אמת —
+          בלי לכתוב קוד:
+        </p>
+        <div class="code-block">
+          <div class="code-block-header">
+            <span class="code-lang">שיחה עם claude</span>
+          </div>
+          <pre>
+go to http://localhost:3000/checkout and complete a purchase
+using test card 4242 4242 4242 4242. take a screenshot at each step
+and tell me if anything looks broken</pre
+          >
+        </div>
+        <div class="tip-box">
+          <strong>טיפ — CI Integration</strong>
+          הוסיפו את הבדיקות ל-GitHub Actions כדי שיריצו בכל PR. Claude יכתוב את
+          קובץ ה-workflow עבורכם — בקשו: "add Playwright tests to GitHub Actions
+          CI".
+        </div>
+
+        <div class="warning-box">
+          <strong>ביצועים</strong>
+          בדיקות E2E הן איטיות — הריצו אותן במקביל עם
+          <code>workers: 4</code> ב-<code>playwright.config.ts</code>. בקשו
+          מ-Claude לאופטמז את ה-config.
+        </div>
+
+        <div class="next-steps">
+          <h3>צעדים הבאים</h3>
+          <ul>
+            <li><a href="git.html">שילוב בדיקות ב-Git hooks</a></li>
+            <li><a href="mcps.html">הגדרת Playwright MCP</a></li>
+            <li><a href="apis.html">בדיקות API עם Claude Code</a></li>
+          </ul>
+        </div>
+      </article>
+    </main>
+    <footer class="tutorial-footer">
+      <a href="../index.html">← חזרה לכל הסטאפים</a>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>שרתי MCP — Claude Code Setups</title>
+    <meta
+      name="description"
+      content="מה זה MCP, איך מוסיפים שרתים ל-Claude Code, ו-6 שרתים חיוניים: GitHub, PostgreSQL, Context7, Playwright, Stripe, Supabase."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../css/style.css" />
+    <link rel="stylesheet" href="tutorial.css" />
+  </head>
+  <body>
+    <a href="#content" class="skip-link">דלג לתוכן</a>
+    <nav class="tutorial-nav" aria-label="ניווט">
+      <a href="../index.html" class="nav-back">← חזרה לסטאפים</a>
+      <span class="nav-title">Claude Code Setups</span>
+      <a href="index.html" class="nav-tutorials">כל הטוטוריאלים</a>
+    </nav>
+    <main id="content">
+      <article class="tutorial-article">
+        <header class="tutorial-header">
+          <span class="tutorial-badge">MCP</span>
+          <h1>שרתי MCP — הרחבות ל-Claude</h1>
+          <p class="tutorial-lead">
+            Model Context Protocol (MCP) הוא תקן פתוח שמאפשר ל-Claude להתחבר
+            לכלים חיצוניים — בסיסי נתונים, APIs, דפדפנים ועוד. כל MCP הוא שרת
+            קטן שרץ מקומית ומוסיף יכולות חדשות.
+          </p>
+          <div class="tutorial-meta">
+            <span>⏱ 10 דקות קריאה</span>
+            <span>רמה: מתחיל</span>
+          </div>
+        </header>
+
+        <h2>מה זה MCP ולמה זה חשוב</h2>
+        <p>
+          ברירת המחדל של Claude Code היא לעבוד עם קבצים וטרמינל. MCP מרחיב את זה
+          — Claude יכול לשאול את ה-MCP שאלות ולקבל מידע אמיתי בזמן אמת: לפתוח PR
+          ב-GitHub, לבצע query ב-Postgres, לבדוק תשלום ב-Stripe.
+        </p>
+        <p>
+          MCP שרתים מוגדרים בקובץ
+          <code>~/.claude/claude_desktop_config.json</code> (בגירסה הדסקטופ) או
+          ב-<code>claude_code_config.json</code> בפרויקט.
+        </p>
+
+        <h2>הוספת MCP שרת</h2>
+        <p>
+          יש שתי דרכים להוסיף MCP: דרך פקודת <code>claude mcp add</code> (הדרך
+          המהירה), או ידנית בקובץ ה-JSON.
+        </p>
+        <ol class="step-list">
+          <li>
+            <div class="step-content">
+              <strong>הוספה מהירה עם CLI</strong>
+              <p>הפקודה הבאה מוסיפה MCP ומגדירה אותו אוטומטית:</p>
+              <div class="code-block">
+                <pre>
+claude mcp add github -- npx -y @modelcontextprotocol/server-github</pre
+                >
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="step-content">
+              <strong>הגדרה ידנית ב-JSON</strong>
+              <p>
+                פותחים
+                <code>~/.claude/claude_desktop_config.json</code> ומוסיפים:
+              </p>
+              <div class="code-block">
+                <pre>
+{
+  "mcpServers": {
+    "github": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-github"],
+      "env": {
+        "GITHUB_PERSONAL_ACCESS_TOKEN": "ghp_..."
+      }
+    }
+  }
+}</pre
+                >
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="step-content">
+              <strong>אימות ההתקנה</strong>
+              <p>בתוך Claude, בודקים שה-MCP פעיל:</p>
+              <div class="code-block">
+                <pre>/mcp</pre>
+              </div>
+            </div>
+          </li>
+        </ol>
+
+        <div class="warning-box">
+          <strong>אבטחה</strong>
+          לעולם אל תשמרו API keys ישירות בקוד. השתמשו במשתני סביבה
+          (<code>env</code>) בתוך הגדרת ה-MCP, או בכלי ניהול סודות כמו
+          <code>direnv</code>.
+        </div>
+
+        <h2>6 שרתי MCP חיוניים</h2>
+        <div class="mcp-grid">
+          <div class="mcp-card">
+            <div class="mcp-icon">🐙</div>
+            <div>
+              <div class="mcp-name">GitHub</div>
+              <div class="mcp-desc">
+                פתיחת PR, קריאת issues, חיפוש קוד, ניהול repos — ישירות מהשיחה
+                עם Claude.
+              </div>
+            </div>
+          </div>
+          <div class="mcp-card">
+            <div class="mcp-icon">🐘</div>
+            <div>
+              <div class="mcp-name">PostgreSQL</div>
+              <div class="mcp-desc">
+                ביצוע queries, בדיקת schema, ניתוח נתונים — בלי לצאת מהשיחה.
+              </div>
+            </div>
+          </div>
+          <div class="mcp-card">
+            <div class="mcp-icon">📚</div>
+            <div>
+              <div class="mcp-name">Context7</div>
+              <div class="mcp-desc">
+                גישה לתיעוד עדכני של ספריות (React, FastAPI, Next.js ועוד) בזמן
+                כתיבת קוד.
+              </div>
+            </div>
+          </div>
+          <div class="mcp-card">
+            <div class="mcp-icon">🎭</div>
+            <div>
+              <div class="mcp-name">Playwright</div>
+              <div class="mcp-desc">
+                אוטומציה של דפדפן — Claude יכול לנווט, ללחוץ, ולצלם screenshot
+                בזמן אמת.
+              </div>
+            </div>
+          </div>
+          <div class="mcp-card">
+            <div class="mcp-icon">💳</div>
+            <div>
+              <div class="mcp-name">Stripe</div>
+              <div class="mcp-desc">
+                בדיקת תשלומים, ניהול customers, פתרון בעיות webhook — ישירות
+                מהשיחה.
+              </div>
+            </div>
+          </div>
+          <div class="mcp-card">
+            <div class="mcp-icon">⚡</div>
+            <div>
+              <div class="mcp-name">Supabase</div>
+              <div class="mcp-desc">
+                ניהול בסיס נתונים, auth, ו-storage ב-Supabase — ללא כניסה
+                ל-dashboard.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <h2>דוגמת שימוש — GitHub MCP</h2>
+        <p>
+          לאחר הגדרת ה-MCP, ניתן לבקש מ-Claude לפתוח PR, לבדוק issues פתוחים, או
+          לחפש קוד ב-repo:
+        </p>
+        <div class="code-block">
+          <div class="code-block-header">
+            <span class="code-lang">שיחה עם claude</span>
+          </div>
+          <pre>
+open a PR for the current branch against main.
+title: "feat: add /health endpoint"
+include a summary of the changes in the PR body</pre
+          >
+        </div>
+        <p>
+          Claude ישתמש ב-GitHub MCP כדי לקרוא את ה-diff, לכתוב תיאור, וליצור את
+          ה-PR — הכל בלחיצה אחת.
+        </p>
+
+        <div class="tip-box">
+          <strong>טיפ</strong>
+          ניתן להגדיר MCP שרתים ברמת פרויקט (בתיקיית <code>.claude/</code>) ולא
+          רק גלובלית. כך כל פרויקט יכול להשתמש ב-MCP שונים בהתאם לצרכיו.
+        </div>
+
+        <div class="next-steps">
+          <h3>צעדים הבאים</h3>
+          <ul>
+            <li>
+              <a href="databases.html"
+                >PostgreSQL MCP — מדריך מעמיק לבסיסי נתונים</a
+              >
+            </li>
+            <li><a href="stripe.html">Stripe MCP — תשלומים ו-webhooks</a></li>
+            <li>
+              <a href="playwright.html">Playwright MCP — אוטומציה של דפדפן</a>
+            </li>
+          </ul>
+        </div>
+      </article>
+    </main>
+    <footer class="tutorial-footer">
+      <a href="../index.html">← חזרה לכל הסטאפים</a>
+    </footer>
+  </body>
+</html>

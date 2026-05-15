@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>בניית API — Claude Code Setups</title>
+    <meta
+      name="description"
+      content="בניית API עם Claude Code: Context7 לתיעוד עדכני, FastAPI ו-Express, דוקומנטציה אוטומטית ובדיקות."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../css/style.css" />
+    <link rel="stylesheet" href="tutorial.css" />
+  </head>
+  <body>
+    <a href="#content" class="skip-link">דלג לתוכן</a>
+    <nav class="tutorial-nav" aria-label="ניווט">
+      <a href="../index.html" class="nav-back">← חזרה לסטאפים</a>
+      <span class="nav-title">Claude Code Setups</span>
+      <a href="index.html" class="nav-tutorials">כל הטוטוריאלים</a>
+    </nav>
+    <main id="content">
+      <article class="tutorial-article">
+        <header class="tutorial-header">
+          <span class="tutorial-badge">API</span>
+          <h1>בניית API עם Claude Code</h1>
+          <p class="tutorial-lead">
+            עם Context7 MCP, Claude מקבל גישה לתיעוד עדכני של FastAPI, Express,
+            ו-frameworks אחרים — ולא מסתמך על ידע ישן. התוצאה: קוד שעובד עם
+            הגרסה שלכם, לא עם גרסה ישנה.
+          </p>
+          <div class="tutorial-meta">
+            <span>⏱ 13 דקות קריאה</span>
+            <span>רמה: מתקדם</span>
+          </div>
+        </header>
+
+        <h2>הגדרת Context7 MCP</h2>
+        <p>
+          Context7 הוא MCP שמביא תיעוד עדכני של ספריות ישירות לתוך ההקשר של
+          Claude — כך הוא יכול לכתוב קוד שמתאים לגרסה שאתם משתמשים בה.
+        </p>
+        <div class="code-block">
+          <div class="code-block-header">
+            <span class="code-lang">json — claude_desktop_config.json</span>
+          </div>
+          <pre>
+{
+  "mcpServers": {
+    "context7": {
+      "command": "npx",
+      "args": ["-y", "@upstash/context7-mcp"]
+    }
+  }
+}</pre
+          >
+        </div>
+        <p>לאחר ההגדרה, מציינים בשיחה שרוצים שימוש ב-Context7:</p>
+        <div class="code-block">
+          <pre>
+use context7 to get the latest FastAPI docs, then build a REST API</pre
+          >
+        </div>
+
+        <h2>API עם FastAPI (Python)</h2>
+        <p>
+          FastAPI הוא framework פייתון מודרני עם תיעוד אוטומטי
+          (Swagger/OpenAPI). Claude יבנה את כל המבנה:
+        </p>
+        <ol class="step-list">
+          <li>
+            <div class="step-content">
+              <strong>מבנה הפרויקט</strong>
+              <div class="code-block">
+                <pre>
+create a FastAPI project structure for a task management API:
+- routers/ (tasks, users, auth)
+- models/ (SQLAlchemy)
+- schemas/ (Pydantic)
+- dependencies.py (DB session, current user)
+use context7 for the latest FastAPI patterns</pre
+                >
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="step-content">
+              <strong>endpoint ראשון עם validation</strong>
+              <div class="code-block">
+                <pre>
+# routers/tasks.py
+from fastapi import APIRouter, Depends, HTTPException, status
+from sqlalchemy.orm import Session
+from ..dependencies import get_db, get_current_user
+from ..schemas import TaskCreate, TaskResponse
+from ..models import Task, User
+
+router = APIRouter(prefix="/tasks", tags=["tasks"])
+
+@router.post("/", response_model=TaskResponse, status_code=201)
+async def create_task(
+    task: TaskCreate,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    db_task = Task(**task.model_dump(), owner_id=current_user.id)
+    db.add(db_task)
+    db.commit()
+    db.refresh(db_task)
+    return db_task</pre
+                >
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="step-content">
+              <strong>תיעוד אוטומטי</strong>
+              <p>
+                FastAPI מייצר Swagger UI אוטומטית. Claude יוסיף תיאורים
+                ודוגמאות:
+              </p>
+              <div class="code-block">
+                <pre>
+add docstrings and example values to all endpoints so the
+auto-generated Swagger docs are useful for API consumers</pre
+                >
+              </div>
+            </div>
+          </li>
+        </ol>
+
+        <h2>API עם Express (Node.js)</h2>
+        <p>
+          לפרויקטים ב-TypeScript/Node.js, Claude יעבוד עם Express ו-Zod
+          לvalidation:
+        </p>
+        <div class="code-block">
+          <div class="code-block-header">
+            <span class="code-lang">שיחה עם claude</span>
+          </div>
+          <pre>
+build an Express REST API for a blog platform:
+- POST /posts (create, auth required)
+- GET /posts (list, with pagination and filters)
+- GET /posts/:slug (single post)
+- PUT /posts/:id (update, owner only)
+- DELETE /posts/:id (soft delete)
+use Zod for request validation, return consistent error shapes</pre
+          >
+        </div>
+        <div class="code-block">
+          <div class="code-block-header">
+            <span class="code-lang">typescript — תוצאה חלקית</span>
+          </div>
+          <pre>
+// routes/posts.ts
+import { Router } from 'express';
+import { z } from 'zod';
+import { validate } from '../middleware/validate';
+import { requireAuth } from '../middleware/auth';
+import { PostService } from '../services/PostService';
+
+const router = Router();
+
+const CreatePostSchema = z.object({
+  title: z.string().min(3).max(200),
+  content: z.string().min(10),
+  tags: z.array(z.string()).max(5).optional(),
+  published: z.boolean().default(false),
+});
+
+router.post('/', requireAuth, validate(CreatePostSchema), async (req, res) => {
+  const post = await PostService.create({
+    ...req.body,
+    authorId: req.user.id,
+  });
+  res.status(201).json({ data: post });
+});
+
+export default router;</pre
+          >
+        </div>
+
+        <h2>בדיקות API אוטומטיות</h2>
+        <p>
+          Claude יכתוב בדיקות לכל endpoint — unit tests ו-integration tests:
+        </p>
+        <div class="code-block">
+          <div class="code-block-header">
+            <span class="code-lang">שיחה עם claude</span>
+          </div>
+          <pre>
+write pytest tests for all task endpoints.
+use httpx for async requests, use fixtures for test DB and auth tokens.
+aim for 90% coverage of the routers/ directory</pre
+          >
+        </div>
+        <div class="tip-box">
+          <strong>טיפ — OpenAPI ללא קוד</strong>
+          אפשר לבקש מ-Claude ליצור OpenAPI spec מתיאור טקסטואלי בלבד, ואז לייצר
+          ממנו קוד שרת ו-client SDK אוטומטית עם <code>openapi-generator</code>.
+        </div>
+
+        <h2>Rate Limiting ו-Auth</h2>
+        <p>
+          כל API בייצור צריך rate limiting ו-authentication. Claude יוסיף אותם
+          בצורה נכונה:
+        </p>
+        <div class="code-block">
+          <div class="code-block-header">
+            <span class="code-lang">שיחה עם claude</span>
+          </div>
+          <pre>
+add to the Express API:
+1. JWT auth middleware (verify Bearer token, attach user to req)
+2. rate limiting: 100 req/min per IP globally, 20 req/min per user for write endpoints
+3. request logging with response time
+4. helmet for security headers</pre
+          >
+        </div>
+        <div class="warning-box">
+          <strong>לפני Production</strong>
+          בקשו מ-Claude לעשות security review לפני העלאה: "review all API
+          endpoints for common vulnerabilities: SQL injection, missing auth
+          checks, sensitive data exposure, and missing input sanitization".
+        </div>
+
+        <div class="next-steps">
+          <h3>צעדים הבאים</h3>
+          <ul>
+            <li>
+              <a href="databases.html">חיבור API לבסיס נתונים PostgreSQL</a>
+            </li>
+            <li><a href="playwright.html">בדיקות E2E לממשק שמשתמש ב-API</a></li>
+            <li><a href="mcps.html">הגדרת Context7 MCP</a></li>
+          </ul>
+        </div>
+      </article>
+    </main>
+    <footer class="tutorial-footer">
+      <a href="../index.html">← חזרה לכל הסטאפים</a>
+    </footer>
+  </body>
+</html>

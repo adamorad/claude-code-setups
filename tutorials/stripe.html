@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>תשלומי Stripe — Claude Code Setups</title>
+    <meta
+      name="description"
+      content="Stripe MCP עם Claude Code: מנויים, webhooks, מצב טסט ופתרון בעיות תשלומים."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../css/style.css" />
+    <link rel="stylesheet" href="tutorial.css" />
+  </head>
+  <body>
+    <a href="#content" class="skip-link">דלג לתוכן</a>
+    <nav class="tutorial-nav" aria-label="ניווט">
+      <a href="../index.html" class="nav-back">← חזרה לסטאפים</a>
+      <span class="nav-title">Claude Code Setups</span>
+      <a href="index.html" class="nav-tutorials">כל הטוטוריאלים</a>
+    </nav>
+    <main id="content">
+      <article class="tutorial-article">
+        <header class="tutorial-header">
+          <span class="tutorial-badge">Payments</span>
+          <h1>תשלומי Stripe עם Claude Code</h1>
+          <p class="tutorial-lead">
+            Stripe MCP מאפשר ל-Claude לבדוק תשלומים, לנהל customers, ולפתור
+            בעיות — ישירות מהשיחה. בנוסף, Claude יכול לכתוב את כל קוד האינטגרציה
+            עם Stripe SDK.
+          </p>
+          <div class="tutorial-meta">
+            <span>⏱ 12 דקות קריאה</span>
+            <span>רמה: בינוני</span>
+          </div>
+        </header>
+
+        <h2>הגדרת Stripe MCP</h2>
+        <p>Stripe מספקת MCP רשמי שמאפשר גישה ל-API שלהם ישירות מ-Claude:</p>
+        <div class="code-block">
+          <div class="code-block-header">
+            <span class="code-lang">json — claude_desktop_config.json</span>
+          </div>
+          <pre>
+{
+  "mcpServers": {
+    "stripe": {
+      "command": "npx",
+      "args": ["-y", "@stripe/agent-toolkit/mcp"],
+      "env": {
+        "STRIPE_SECRET_KEY": "sk_test_..."
+      }
+    }
+  }
+}</pre
+          >
+        </div>
+        <div class="warning-box">
+          <strong>השתמשו תמיד ב-Test Mode</strong>
+          המפתח צריך להתחיל ב-<code>sk_test_</code> ולא ב-<code>sk_live_</code>.
+          לעולם אל תתנו ל-MCP גישה ל-live keys בסביבת פיתוח. לכו ל-<a
+            href="https://dashboard.stripe.com/test/apikeys"
+            target="_blank"
+            rel="noopener"
+            >Stripe Dashboard</a
+          >
+          להשגת test key.
+        </div>
+
+        <h2>בניית מנויים (Subscriptions)</h2>
+        <p>
+          Claude יכול לכתוב את כל הקוד הנדרש למנויים — יצירת products, prices,
+          וחיבור Checkout:
+        </p>
+        <ol class="step-list">
+          <li>
+            <div class="step-content">
+              <strong>יצירת Products ו-Prices</strong>
+              <div class="code-block">
+                <pre>
+create a Stripe subscription setup with 3 tiers:
+- Free: $0/month, 100 API calls
+- Pro: $29/month, 10,000 API calls
+- Enterprise: $99/month, unlimited
+create the products and prices in test mode via the MCP</pre
+                >
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="step-content">
+              <strong>Checkout Session</strong>
+              <p>Claude יכתוב את הקוד לפתיחת Checkout:</p>
+              <div class="code-block">
+                <pre>
+// server/stripe/checkout.ts
+export async function createCheckoutSession(
+  customerId: string,
+  priceId: string,
+  successUrl: string,
+  cancelUrl: string
+) {
+  const session = await stripe.checkout.sessions.create({
+    customer: customerId,
+    mode: 'subscription',
+    line_items: [{ price: priceId, quantity: 1 }],
+    success_url: successUrl,
+    cancel_url: cancelUrl,
+    subscription_data: {
+      trial_period_days: 14,
+    },
+  });
+  return session.url;
+}</pre
+                >
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="step-content">
+              <strong>Customer Portal</strong>
+              <p>לאפשר למשתמשים לנהל את המנוי שלהם:</p>
+              <div class="code-block">
+                <pre>
+add a "manage subscription" button that redirects to
+the Stripe Customer Portal for self-service cancellation and upgrades</pre
+                >
+              </div>
+            </div>
+          </li>
+        </ol>
+
+        <h2>Webhooks</h2>
+        <p>
+          Webhooks הם האופן שבו Stripe מודיע לאפליקציה שלכם על אירועים — תשלום
+          הצליח, מנוי בוטל, חיוב נכשל. Claude יכתוב את כל הלוגיקה:
+        </p>
+        <div class="code-block">
+          <div class="code-block-header">
+            <span class="code-lang">שיחה עם claude</span>
+          </div>
+          <pre>
+write a webhook handler for these Stripe events:
+- payment_intent.succeeded: activate user subscription in DB
+- customer.subscription.deleted: downgrade user to free tier
+- invoice.payment_failed: send email and mark account as past_due
+include signature verification</pre
+          >
+        </div>
+        <div class="code-block">
+          <div class="code-block-header">
+            <span class="code-lang">typescript — תוצאה</span>
+          </div>
+          <pre>
+// server/webhooks/stripe.ts
+export async function handleStripeWebhook(req: Request, res: Response) {
+  const sig = req.headers['stripe-signature']!;
+  let event: Stripe.Event;
+
+  try {
+    event = stripe.webhooks.constructEvent(
+      req.body,
+      sig,
+      process.env.STRIPE_WEBHOOK_SECRET!
+    );
+  } catch (err) {
+    return res.status(400).send(`Webhook Error: ${err.message}`);
+  }
+
+  switch (event.type) {
+    case 'payment_intent.succeeded':
+      await activateSubscription(event.data.object as Stripe.PaymentIntent);
+      break;
+    case 'customer.subscription.deleted':
+      await downgradeToFree(event.data.object as Stripe.Subscription);
+      break;
+    case 'invoice.payment_failed':
+      await handleFailedPayment(event.data.object as Stripe.Invoice);
+      break;
+  }
+
+  res.json({ received: true });
+}</pre
+          >
+        </div>
+
+        <h2>פתרון בעיות עם MCP</h2>
+        <p>כאשר יש בעיה בתשלום, Claude יכול לחקור ישירות דרך ה-MCP:</p>
+        <div class="code-block">
+          <div class="code-block-header">
+            <span class="code-lang">שיחה עם claude</span>
+          </div>
+          <pre>
+customer cus_ABC123 says their subscription is active but
+they can't access pro features. check their subscription status,
+last payment, and any failed invoices in Stripe</pre
+          >
+        </div>
+        <div class="tip-box">
+          <strong>טיפ — בדיקת Webhooks מקומית</strong>
+          השתמשו ב-Stripe CLI לבדיקת webhooks בסביבה מקומית:
+          <code>stripe listen --forward-to localhost:3000/webhooks/stripe</code
+          >. בקשו מ-Claude לעזור בהגדרת הכלי.
+        </div>
+
+        <div class="next-steps">
+          <h3>צעדים הבאים</h3>
+          <ul>
+            <li>
+              <a href="databases.html">שמירת נתוני מנויים ב-PostgreSQL</a>
+            </li>
+            <li><a href="mcps.html">הגדרת MCP שרתים נוספים</a></li>
+            <li><a href="../index.html">סטאפ SaaS מוכן עם Stripe</a></li>
+          </ul>
+        </div>
+      </article>
+    </main>
+    <footer class="tutorial-footer">
+      <a href="../index.html">← חזרה לכל הסטאפים</a>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Git עם Claude Code — Claude Code Setups</title>
+    <meta
+      name="description"
+      content="ניהול ברנצ'ים, יצירת PR אוטומטי, והוקים לאבטחת קומיטים עם Claude Code."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../css/style.css" />
+    <link rel="stylesheet" href="tutorial.css" />
+  </head>
+  <body>
+    <a href="#content" class="skip-link">דלג לתוכן</a>
+    <nav class="tutorial-nav" aria-label="ניווט">
+      <a href="../index.html" class="nav-back">← חזרה לסטאפים</a>
+      <span class="nav-title">Claude Code Setups</span>
+      <a href="index.html" class="nav-tutorials">כל הטוטוריאלים</a>
+    </nav>
+    <main id="content">
+      <article class="tutorial-article">
+        <header class="tutorial-header">
+          <span class="tutorial-badge">Git</span>
+          <h1>Git Workflow עם Claude Code</h1>
+          <p class="tutorial-lead">
+            Claude Code מבין Git באופן מלא — הוא יכול ליצור ברנצ'ים, לכתוב
+            commit messages, לפתוח PRs, ולהגדיר hooks שישמרו על איכות הקוד בכל
+            קומיט.
+          </p>
+          <div class="tutorial-meta">
+            <span>⏱ 10 דקות קריאה</span>
+            <span>רמה: בינוני</span>
+          </div>
+        </header>
+
+        <h2>עבודה עם ברנצ'ים</h2>
+        <p>
+          הדרך הנכונה לעבוד עם Claude Code היא תמיד על ברנץ' נפרד — כך קל לבדוק
+          את השינויים לפני מיזוג ל-main.
+        </p>
+        <div class="code-block">
+          <div class="code-block-header">
+            <span class="code-lang">שיחה עם claude</span>
+          </div>
+          <pre>
+create a new branch called feat/user-auth and implement
+JWT authentication middleware for the Express app</pre
+          >
+        </div>
+        <p>
+          Claude ייצור את הברנץ', יכתוב את הקוד, ויבצע קומיט עם הודעה תיאורית.
+          ניתן גם לבקש ממנו לחלק את העבודה למספר קומיטים לוגיים.
+        </p>
+        <div class="tip-box">
+          <strong>טיפ</strong>
+          בקשו מ-Claude לעבוד בקומיטים קטנים עם הודעות ברורות. זה עוזר לעשות
+          code review ולחזור לנקודות מסוימות אם צריך.
+        </div>
+
+        <h2>Commit Messages אוטומטיים</h2>
+        <p>
+          Claude כותב commit messages לפי Conventional Commits כברירת מחדל, אבל
+          ניתן להתאים את הסגנון ב-CLAUDE.md:
+        </p>
+        <div class="code-block">
+          <div class="code-block-header">
+            <span class="code-lang">markdown — CLAUDE.md</span>
+          </div>
+          <pre>
+## Git Conventions
+- Commit format: `type(scope): description`
+- Types: feat, fix, docs, refactor, test, chore
+- Max subject line: 72 chars
+- Always write in English
+- Include issue number if relevant: `fix(auth): resolve token expiry (#42)`</pre
+          >
+        </div>
+
+        <h2>יצירת PR אוטומטית</h2>
+        <p>
+          עם GitHub MCP מותקן, Claude יכול לפתוח PR עם תיאור מלא בלחיצה אחת:
+        </p>
+        <ol class="step-list">
+          <li>
+            <div class="step-content">
+              <strong>סיום הפיצ'ר</strong>
+              <p>לאחר שהקוד מוכן ונבדק, מבקשים מ-Claude לסכם את השינויים:</p>
+              <div class="code-block">
+                <pre>
+summarize all changes made in this branch compared to main</pre
+                >
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="step-content">
+              <strong>פתיחת PR</strong>
+              <p>Claude ישתמש ב-GitHub MCP ליצור PR עם כותרת ותיאור:</p>
+              <div class="code-block">
+                <pre>
+open a PR from feat/user-auth to main.
+mark it as draft if tests haven't passed yet</pre
+                >
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="step-content">
+              <strong>Code Review אוטומטי</strong>
+              <p>ניתן לבקש מ-Claude לעבור על ה-diff לפני שליחה:</p>
+              <div class="code-block">
+                <pre>
+review the diff of this branch. flag any security issues,
+missing error handling, or tests that should be added</pre
+                >
+              </div>
+            </div>
+          </li>
+        </ol>
+
+        <h2>Git Hooks לאבטחת קומיטים</h2>
+        <p>
+          Git hooks הם סקריפטים שרצים אוטומטית לפני או אחרי פעולות Git. Claude
+          יכול ליצור אותם כדי לאכוף איכות קוד.
+        </p>
+        <div class="code-block">
+          <div class="code-block-header">
+            <span class="code-lang">שיחה עם claude</span>
+          </div>
+          <pre>
+create a pre-commit hook that:
+1. runs eslint and blocks commit if there are errors
+2. runs prettier and auto-formats changed files
+3. checks for console.log statements and warns (but doesn't block)</pre
+          >
+        </div>
+        <p>
+          Claude ייצור את הקובץ <code>.git/hooks/pre-commit</code> עם כל
+          הלוגיקה:
+        </p>
+        <div class="code-block">
+          <div class="code-block-header">
+            <span class="code-lang">bash — .git/hooks/pre-commit</span>
+          </div>
+          <pre>
+#!/bin/sh
+set -e
+
+# Run ESLint on staged files
+STAGED=$(git diff --cached --name-only --diff-filter=ACM | grep -E '\.(js|ts|jsx|tsx)$')
+if [ -n "$STAGED" ]; then
+  echo "$STAGED" | xargs npx eslint --max-warnings 0
+fi
+
+# Auto-format with Prettier
+if [ -n "$STAGED" ]; then
+  echo "$STAGED" | xargs npx prettier --write
+  echo "$STAGED" | xargs git add
+fi</pre
+          >
+        </div>
+        <div class="warning-box">
+          <strong>שימו לב</strong>
+          אחרי יצירת ה-hook, יש להפוך אותו לקובץ הניתן להרצה:
+          <code>chmod +x .git/hooks/pre-commit</code>. Claude יזכיר לכם זאת
+          אוטומטית.
+        </div>
+
+        <h2>Rebase ו-Conflict Resolution</h2>
+        <p>
+          Claude יכול לעזור גם במקרים מסובכים — rebase, merge conflicts, וניקוי
+          היסטוריה:
+        </p>
+        <div class="code-block">
+          <div class="code-block-header">
+            <span class="code-lang">שיחה עם claude</span>
+          </div>
+          <pre>
+I have merge conflicts in src/api/users.ts and src/models/user.ts.
+resolve them — keep the incoming changes for the schema fields
+but keep my version of the validation logic</pre
+          >
+        </div>
+
+        <div class="next-steps">
+          <h3>צעדים הבאים</h3>
+          <ul>
+            <li><a href="mcps.html">הגדרת GitHub MCP לאוטומציה מלאה</a></li>
+            <li>
+              <a href="playwright.html">בדיקות E2E אוטומטיות עם Playwright</a>
+            </li>
+            <li><a href="../index.html">סטאפים מוכנים לפי תפקיד</a></li>
+          </ul>
+        </div>
+      </article>
+    </main>
+    <footer class="tutorial-footer">
+      <a href="../index.html">← חזרה לכל הסטאפים</a>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>בסיסי נתונים — Claude Code Setups</title>
+    <meta
+      name="description"
+      content="PostgreSQL MCP עם Claude Code: מיגרציות סכמה, query בטוח, ו-schema exploration."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../css/style.css" />
+    <link rel="stylesheet" href="tutorial.css" />
+  </head>
+  <body>
+    <a href="#content" class="skip-link">דלג לתוכן</a>
+    <nav class="tutorial-nav" aria-label="ניווט">
+      <a href="../index.html" class="nav-back">← חזרה לסטאפים</a>
+      <span class="nav-title">Claude Code Setups</span>
+      <a href="index.html" class="nav-tutorials">כל הטוטוריאלים</a>
+    </nav>
+    <main id="content">
+      <article class="tutorial-article">
+        <header class="tutorial-header">
+          <span class="tutorial-badge">Database</span>
+          <h1>בסיסי נתונים עם Claude Code</h1>
+          <p class="tutorial-lead">
+            PostgreSQL MCP מאפשר ל-Claude לחקור schemas, לכתוב queries, ולנהל
+            מיגרציות — ישירות בשיחה, עם הבנה מלאה של מבנה הנתונים שלכם.
+          </p>
+          <div class="tutorial-meta">
+            <span>⏱ 12 דקות קריאה</span>
+            <span>רמה: בינוני</span>
+          </div>
+        </header>
+
+        <h2>הגדרת PostgreSQL MCP</h2>
+        <p>
+          שרת ה-MCP של PostgreSQL מתחבר לבסיס הנתונים שלכם ומאפשר ל-Claude להריץ
+          queries בזמן אמת.
+        </p>
+        <div class="code-block">
+          <div class="code-block-header">
+            <span class="code-lang">json — claude_desktop_config.json</span>
+          </div>
+          <pre>
+{
+  "mcpServers": {
+    "postgres": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-postgres",
+        "postgresql://localhost:5432/mydb"
+      ]
+    }
+  }
+}</pre
+          >
+        </div>
+        <div class="warning-box">
+          <strong>אבטחה קריטית</strong>
+          לעולם אל תחברו את ה-MCP ל-production database ישירות. השתמשו
+          ב-read-only user לסביבת פיתוח, ובסביבת production — חיברו רק דרך VPN
+          עם הרשאות מינימליות.
+        </div>
+
+        <h2>חקירת Schema</h2>
+        <p>
+          אחרי החיבור, Claude יכול לחקור את כל המבנה של בסיס הנתונים ולהשתמש בו
+          כהקשר לכתיבת קוד:
+        </p>
+        <div class="code-block">
+          <div class="code-block-header">
+            <span class="code-lang">שיחה עם claude</span>
+          </div>
+          <pre>
+explore the database schema and describe all tables,
+their relationships, and any missing indexes you notice</pre
+          >
+        </div>
+        <p>
+          Claude יחזיר סיכום מפורט של הטבלאות, foreign keys, indexes קיימים,
+          ויציע שיפורים אם יש.
+        </p>
+
+        <h2>מיגרציות סכמה</h2>
+        <p>
+          מיגרציות הן הדרך הבטוחה לשנות schema בצורה מבוקרת. Claude יכתוב אותן
+          עם up ו-down בכל מיגרציה:
+        </p>
+        <ol class="step-list">
+          <li>
+            <div class="step-content">
+              <strong>תיאור השינוי הרצוי</strong>
+              <div class="code-block">
+                <pre>
+add a "subscription_tier" column to the users table.
+values: 'free', 'pro', 'enterprise'. default: 'free'.
+not null. add an index on this column.</pre
+                >
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="step-content">
+              <strong>Claude יכתוב את המיגרציה</strong>
+              <div class="code-block">
+                <pre>
+-- migrations/20260515_add_subscription_tier.sql
+-- Up
+ALTER TABLE users
+  ADD COLUMN subscription_tier VARCHAR(20)
+    NOT NULL DEFAULT 'free'
+    CHECK (subscription_tier IN ('free', 'pro', 'enterprise'));
+
+CREATE INDEX idx_users_subscription_tier
+  ON users(subscription_tier);
+
+-- Down
+DROP INDEX IF EXISTS idx_users_subscription_tier;
+ALTER TABLE users DROP COLUMN subscription_tier;</pre
+                >
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="step-content">
+              <strong>בדיקה לפני הרצה</strong>
+              <p>בקשו מ-Claude לנתח השפעות לפני שמריצים:</p>
+              <div class="code-block">
+                <pre>
+what's the impact of this migration on existing data and queries?
+will it lock the table? estimate the time for a table with 1M rows.</pre
+                >
+              </div>
+            </div>
+          </li>
+        </ol>
+
+        <h2>דפוסי Query בטוחים</h2>
+        <p>Claude מודע לסכנות נפוצות ב-SQL ויכתוב קוד שמגן מפניהן:</p>
+        <div class="code-block">
+          <div class="code-block-header">
+            <span class="code-lang">שיחה עם claude</span>
+          </div>
+          <pre>
+write a function to get user orders with pagination.
+use parameterized queries, avoid N+1, add query timeout of 5 seconds</pre
+          >
+        </div>
+        <div class="code-block">
+          <div class="code-block-header">
+            <span class="code-lang">python — תוצאה</span>
+          </div>
+          <pre>
+async def get_user_orders(
+    user_id: int,
+    page: int = 1,
+    page_size: int = 20,
+    conn: asyncpg.Connection = None
+) -> list[dict]:
+    offset = (page - 1) * page_size
+    query = """
+        SELECT
+            o.id, o.created_at, o.total_amount, o.status,
+            json_agg(json_build_object(
+                'product_id', oi.product_id,
+                'quantity', oi.quantity,
+                'price', oi.unit_price
+            )) AS items
+        FROM orders o
+        JOIN order_items oi ON oi.order_id = o.id
+        WHERE o.user_id = $1
+        GROUP BY o.id
+        ORDER BY o.created_at DESC
+        LIMIT $2 OFFSET $3
+    """
+    return await conn.fetch(query, user_id, page_size, offset)</pre
+          >
+        </div>
+
+        <h2>ניתוח ביצועים</h2>
+        <p>Claude יכול לנתח queries איטיות ולהציע אופטימיזציות:</p>
+        <div class="code-block">
+          <div class="code-block-header">
+            <span class="code-lang">שיחה עם claude</span>
+          </div>
+          <pre>
+this query takes 3 seconds on the orders table (50M rows):
+SELECT * FROM orders WHERE status = 'pending' AND created_at > NOW() - INTERVAL '7 days'
+run EXPLAIN ANALYZE and suggest indexes</pre
+          >
+        </div>
+        <div class="tip-box">
+          <strong>טיפ</strong>
+          בקשו מ-Claude לכתוב את כל ה-queries עם
+          <code>EXPLAIN ANALYZE</code> בסביבת פיתוח לפני שמעלים ל-production. זה
+          חוסך הפתעות.
+        </div>
+
+        <div class="next-steps">
+          <h3>צעדים הבאים</h3>
+          <ul>
+            <li><a href="mcps.html">הגדרת MCP שרתים נוספים</a></li>
+            <li>
+              <a href="stripe.html">חיבור Stripe לבסיס הנתונים לניהול מנויים</a>
+            </li>
+            <li><a href="../index.html">סטאפ Backend מוכן עם PostgreSQL</a></li>
+          </ul>
+        </div>
+      </article>
+    </main>
+    <footer class="tutorial-footer">
+      <a href="../index.html">← חזרה לכל הסטאפים</a>
+    </footer>
+  </body>
+</html>
